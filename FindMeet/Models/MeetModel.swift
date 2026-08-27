@@ -11,7 +11,7 @@ import Foundation
 
 
 @Generable
-struct MeetModel {
+struct Meet {
     @Guide(description: "The title of the meet")
     let title: String
     
