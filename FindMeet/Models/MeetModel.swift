@@ -8,8 +8,6 @@
 import FoundationModels
 import Foundation
 
-
-
 @Generable
 struct Meet {
     @Guide(description: "The title of the meet")
@@ -21,4 +19,10 @@ struct Meet {
     @Guide(description: "The tip for the meet")
     let tip: String
 
+}
+
+@Generable
+struct SearchMeetsOutput {
+    @Guide(description: "Meets found")
+    let places: [Meet]
 }
