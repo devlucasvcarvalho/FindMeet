@@ -136,8 +136,7 @@ struct CarouselCardView: View {
     CarouselCardView(meets: [
         Meet(title: "Picnic", description: "Parque", ideas: ["Levar champagne", "Manta", "Vinho"]),
         Meet(title: "Cinema", description: "Filme", ideas: ["Levar pipoca", "Filme de comédia", "Sentar atrás"]),
-        Meet(title: "Praia", description: "Biquininho", ideas: ["Beach tennis", "Protetor solar", "Água de coco"]),
-        Meet(title: "Shopping", description: "compras", ideas: ["Comer depois", "Cinema junto", "Passear"])
+        Meet(title: "Praia", description: "Biquininho", ideas: ["Beach tennis", "Protetor solar", "Água de coco"])
     ]) { selected in
         print("Confirmado: \(selected.title)")
     }
