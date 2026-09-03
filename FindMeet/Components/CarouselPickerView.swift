@@ -56,7 +56,9 @@ struct InfiniteCarousel: View {
 
                 HStack(spacing: spacing) {
                     ForEach(meets.indices, id: \.self) { index in
+                        
                         CardView(
+                            index: index,
                             card: meets[index]
                         )
                         .id(index)
@@ -115,12 +117,22 @@ struct InfiniteCarousel: View {
                         snapToNearestCard(geometry: geometry)
                     }
                 }
+                
+                
             }
             .frame(height: cardHeight + 40)
             .clipped()
             
             
-            
+            HStack {
+                ForEach(0..<meets.count, id: \.self) { i in
+                    Circle()
+                        .fill(i == currentIndex
+                              ? Color(red: 0.55, green: 0.02, blue: 0.05)
+                              : Color.gray.opacity(0.4))
+                        .frame(width: 8, height: 8)
+                }
+            }
             Spacer()
         }
     }
@@ -134,8 +146,8 @@ struct InfiniteCarousel: View {
         var targetOffset: CGFloat = offset
         var targetIndex: Int = 0
         
-        let startIndex = max(0, currentIndex - 2)
-            let endIndex = min(meets.count - 1, currentIndex + 2)
+        _ = max(0, currentIndex - 2)
+        _ = min(meets.count - 1, currentIndex + 2)
         
         for i in meets.indices {
             let cardPosition = CGFloat(i) * totalWidth + offset + cardWidth / 2
@@ -204,8 +216,9 @@ struct Carousel3DEffect: ViewModifier {
 // MARK: - Preview
 #Preview {
     InfiniteCarousel(meets: [
-        Meet(title: "Picnic", description: "Parque", ideas: ["Levar champagne", "Manta", "Vinho"]),
-        Meet(title: "Cinema", description: "Filme", ideas: ["Levar pipoca", "Filme de comédia", "Sentar atrás"]),
-        Meet(title: "Praia", description: "Biquininho", ideas: ["Beach tennis", "Protetor solar", "Água de coco"])
-    ])
+        Meet(title: "Praia no sabado", time: "Manha", description: "Manhã na praia para curtir o sol, o mar e a companhia um do outro.", ideas: ["Praia", "Bronze", "Sol"]),
+        Meet(title: "Piquenique no domingo", time: "Tarde", description: "Um pequenique a tarde para conversar e dividir lanches", ideas: ["lanches", "natureza", "toalha"]),
+        Meet(title: "Cinema a dois", time: "Noite", description: "Um cinema pertinho de casa, com filmes em lançamento, uma comedia romatica", ideas: ["Pipoca", "Casaco", "Sla"])
+    ]
+    )
 }

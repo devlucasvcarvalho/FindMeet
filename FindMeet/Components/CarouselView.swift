@@ -32,6 +32,7 @@ struct CarouselCardView: View {
                     HStack(spacing: cardSpacing) {
                         ForEach(meets.indices, id: \.self) { index in
                             CardView(
+                                index: index,
                                 card: meets[index],
                                 shadowRadius: shadowRadius(for: index)
                             )
@@ -134,9 +135,9 @@ struct CarouselCardView: View {
 
 #Preview {
     CarouselCardView(meets: [
-        Meet(title: "Picnic", description: "Parque", ideas: ["Levar champagne", "Manta", "Vinho"]),
-        Meet(title: "Cinema", description: "Filme", ideas: ["Levar pipoca", "Filme de comédia", "Sentar atrás"]),
-        Meet(title: "Praia", description: "Biquininho", ideas: ["Beach tennis", "Protetor solar", "Água de coco"])
+        Meet(title: "Picnic", time: "Tarde", description: "Parque", ideas: ["Levar champagne", "Manta", "Vinho"]),
+        Meet(title: "Cinema", time: "Tarde", description: "Filme", ideas: ["Levar pipoca", "Filme de comédia", "Sentar atrás"]),
+        Meet(title: "Praia",time: "Tarde", description: "Biquininho", ideas: ["Beach tennis", "Protetor solar", "Água de coco"])
     ]) { selected in
         print("Confirmado: \(selected.title)")
     }

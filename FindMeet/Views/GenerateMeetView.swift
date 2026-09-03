@@ -25,10 +25,15 @@ struct GenerateMeetView: View {
                     } label: {
                         HStack {
                             Image ("Mascote")
-                        }   .scaledToFill()
+                        }   /*.scaledToFill()*/
                             .padding()
+                            .scaledToFit()
+                            .frame(width: 300, height: 400)
+                        
                         
                     }
+                    .accessibilityLabel("Criar encontro")
+                    .accessibilityHint("Clique no botao para criar encontro")
                     
                 }
             }
