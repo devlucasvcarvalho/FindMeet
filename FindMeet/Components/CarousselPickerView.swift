@@ -198,8 +198,8 @@ struct Carousel3DEffect: ViewModifier {
 // MARK: - Preview
 #Preview {
     InfiniteCarousel(meets: [
-        Meet(title: "Picnic", description: "Parque", ideas: ["Levar champagne", "Manta", "Vinho"]),
-        Meet(title: "Cinema", description: "Filme", ideas: ["Levar pipoca", "Filme de comédia", "Sentar atrás"]),
-        Meet(title: "Praia", description: "Biquininho", ideas: ["Beach tennis", "Protetor solar", "Água de coco"])
+        Meet(title: "Picnic", description: "Parque", tip:"Filme", ideas: ["Levar champagne", "Manta", "Vinho"]),
+        Meet(title: "Cinema", description: "Filme", tip:"Filme", ideas: ["Levar pipoca", "Filme de comédia", "Sentar atrás"]),
+        Meet(title: "Praia", description: "Biquininho", tip:"Filme", ideas: ["Beach tennis", "Protetor solar", "Água de coco"])
     ])
 }
