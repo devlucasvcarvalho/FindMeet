@@ -20,12 +20,15 @@ struct SelectTimeView: View {
         
         VStack(spacing: 30) {
             
+            Text("Qual o horário do encontro?")
+                            .font(.title2)
+                            .bold()
             // MARK: Carousel
             
-            InfiniteCarouselInputView(
-                selectedTime: $selectedTime
-            )
-            
+            InfiniteCarouselView(
+                            items: MeetTimeEnum.allCases,
+                            selected: $selectedTime
+                        )
             
             // MARK: Current Carousel Selection
             
@@ -37,7 +40,7 @@ struct SelectTimeView: View {
             
             Button {
                 
-                selectedTimeString = selectedTime.styles
+                selectedTimeString = selectedTime.time
                 
             } label: {
                 
@@ -77,5 +80,5 @@ struct SelectTimeView: View {
 // MARK: - Preview
 
 #Preview {
-    SelectStyleView()
+    SelectTimeView()
 }

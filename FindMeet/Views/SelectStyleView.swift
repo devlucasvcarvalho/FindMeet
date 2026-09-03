@@ -20,7 +20,10 @@ struct SelectStyleView: View {
         
         VStack(spacing: 30) {
             
-            // MARK: Carousel
+            Text("Qual o estilo do encontro?")
+                .padding(20)
+                .font(.title2)
+                .bold()            // MARK: Carousel
             
             InfiniteCarouselInputView(
                 selectedStyle: $selectedStyle
@@ -29,8 +32,8 @@ struct SelectStyleView: View {
             
             // MARK: Current Carousel Selection
             
-//            Text("Opção atual: \(selectedStyle.styles)")
-//                .font(.headline)
+            //            Text("Opção atual: \(selectedStyle.styles)")
+            //                .font(.headline)
             
             
             // MARK: Select Button

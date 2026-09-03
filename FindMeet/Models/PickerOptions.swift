@@ -13,6 +13,10 @@ enum MeetStyleEnum: String, CaseIterable, Identifiable {
     case cultural
     case homemade
     case festive
+    case funy
+    case creative
+    case adventurous
+    
     
     var styles: String {
         switch self {
@@ -23,45 +27,81 @@ enum MeetStyleEnum: String, CaseIterable, Identifiable {
         case .cultural:
             return "Cultural"
         case .homemade:
-            return "Caseiro"
+            return "Econômico"
         case .festive:
             return "festa"
+        case .funy:
+            return "divertido"
+        case .creative:
+            return "criativo"
+        case .adventurous:
+            return "aventura"
         }
     }
     var imageName: String {
          switch self {
          case .gastronomic:
-             return "nerd"
+             return "cozinheiro"
          case .sportive:
              return "exercicio"
          case .cultural:
-             return "bem"
+             return "cultural"
          case .homemade:
-             return "dormindo"
+             return "economico 1"
          case .festive:
-             return "feliz"
+             return "festeiro 1"
+         case .funy:
+             return "Divertido"
+         case .creative:
+             return "Criativo 2"
+         case .adventurous:
+             return "Aventureira"
          }
      }
     
     var id: String { self.rawValue.capitalized }
 }
 
+extension MeetStyleEnum: CarouselItem {
+    var title: String {
+        styles
+    }
+}
+
+
 enum MeetTimeEnum: String, CaseIterable, Identifiable {
-    case night
-    case evening
     case morning
+    case evening
+    case night
     
     var time: String {
         switch self {
-        case .night:
-            return "Noite"
         case .morning:
-            return "Manhã"
+            return "manhã"
         case .evening:
-            return "Tarde"
+            return "tarde"
+        case .night:
+            return "noite"
             
         }
     }
+    var imageName: String {
+         switch self {
+         case .morning:
+             return "manhã"
+         case .evening:
+             return "tarde"
+         case .night:
+             return "noite"
+
+         }
+     }
     var id: String { self.rawValue.capitalized }
 }
 
+extension MeetTimeEnum: CarouselItem {
+
+    var title: String {
+        time
+    }
+}
