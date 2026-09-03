@@ -14,8 +14,8 @@ struct ContentView: View {
         switch SystemLanguageModel.default.availability {
         case .available:
             //Puxar view inicial
-            Text("The language model is available.")
-                .padding()
+                TelaView()
+                .ignoresSafeArea()
         case .unavailable(let reason):
             let text = switch reason {
             case .appleIntelligenceNotEnabled:
@@ -30,4 +30,8 @@ struct ContentView: View {
             ContentUnavailableView(text, systemImage: "apple.intelligence.badge.xmark")
         }
     }
+}
+
+#Preview {
+    ContentView()
 }

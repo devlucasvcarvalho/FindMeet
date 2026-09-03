@@ -4,22 +4,21 @@
 //
 //  Created by Lucas Vieira de Carvalho on 27/08/26.
 //
-
-import FoundationModels
 import Foundation
-
-
+import FoundationModels
 
 @Generable
 struct Meet {
-    @Guide(description: "The title of the meet")
+    @Guide(description: "An exciting name for the first date idea.")
     let title: String
-    
-    @Guide(description: "The description of the meet")
+
+    @Guide(description: "A brief and engaging description of the first date.")
     let description: String
-    
-    @Guide(description: "The tip for the meet")
-    let tip: String
+
+    @Guide(description: "A list of 3 tips on what to do")
+    @Guide(.count(3))
+    let ideas: [String]
+
 
     @Guide(description: "A list of 3 tips on what to do")
     @Guide(.count(3))
@@ -33,3 +32,10 @@ struct Suggestion {
     @Guide(.count(3))
     let suggestions: [Meet]
 }
+@Generable
+struct Suggestion {
+    @Guide(description: "A list of 3 date ideas.")
+    @Guide(.count(3))
+    let suggestions: [Meet]
+}
+
