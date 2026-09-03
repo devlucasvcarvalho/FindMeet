@@ -23,11 +23,25 @@ enum MeetStyleEnum: String, CaseIterable, Identifiable {
         case .cultural:
             return "Cultural"
         case .homemade:
-            return "Idoso"
+            return "Caseiro"
         case .festive:
-            return "Rolezão"
+            return "festa"
         }
     }
+    var imageName: String {
+         switch self {
+         case .gastronomic:
+             return "nerd"
+         case .sportive:
+             return "exercicio"
+         case .cultural:
+             return "bem"
+         case .homemade:
+             return "dormindo"
+         case .festive:
+             return "feliz"
+         }
+     }
     
     var id: String { self.rawValue.capitalized }
 }
@@ -37,7 +51,7 @@ enum MeetTimeEnum: String, CaseIterable, Identifiable {
     case evening
     case morning
     
-    var species: String {
+    var time: String {
         switch self {
         case .night:
             return "Noite"
