@@ -8,39 +8,52 @@
 import SwiftUI
 
 struct GenerateMeetView: View {
+
     let backgroundColor: Color = Color(red: 250/255, green: 221/255, blue: 221/255)
-    @State private var caminho = NavigationPath()
+
+    @State private var flow = MeetFlowState()
+    @State private var path: [MeetFlowRoute] = []
+
     var body: some View {
-        NavigationStack(path: $caminho){
-            ZStack{
+        NavigationStack(path: $path) {
+            ZStack {
                 Color(backgroundColor)
                     .ignoresSafeArea(edges: .all)
-                VStack{
+
+                VStack {
                     Text("Qual a boa?")
                         .font(.largeTitle)
                         .bold()
                         .foregroundColor(.black)
+
                     Button {
-                        caminho.append("ir para InputView")
+                        path.append(.selectStyle)
                     } label: {
                         HStack {
-                            Image ("Mascote")
-                        }   .scaledToFill()
-                            .padding()
-                        
+                            Image("Mascote")
+                        }
+                        .scaledToFill()
+                        .padding()
                     }
-                    
                 }
             }
             .navigationBarTitleDisplayMode(.inline)
-            .navigationDestination(for: String.self) { valor in
-                if valor == "ir para InputView" {
-                    SelectStyleView()
+            .navigationDestination(for: MeetFlowRoute.self) { route in
+                switch route {
+                case .selectStyle:
+                    SelectStyleView(flow: flow, path: $path)
+                case .selectTime:
+                    SelectTimeView(flow: flow, path: $path)
+                case .loading:
+                    LoadingView(flow: flow, path: $path)
+                case .results:
+                    ResultsView(flow: flow)
                 }
             }
         }
     }
 }
+
 #Preview {
     GenerateMeetView()
 }

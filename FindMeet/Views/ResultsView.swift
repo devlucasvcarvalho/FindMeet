@@ -6,22 +6,17 @@
 //
 
 import SwiftUI
-import Foundation
-import FoundationModels
+
 struct ResultsView: View {
+
+    var flow: MeetFlowState
+
     var body: some View {
-        
-        VStack {
-            Text("Vocês podem...")
-                .font(.largeTitle)
-                .bold()
-                .foregroundColor(.black)
-          
+        if let suggestion = flow.suggestion {
+            // renderize a struct Suggestion aqui
+            Text("\(suggestion)")
+        } else {
+            Text("Nenhuma sugestão disponível.")
         }
     }
-}
-
-
-#Preview {
-    ResultsView()
 }

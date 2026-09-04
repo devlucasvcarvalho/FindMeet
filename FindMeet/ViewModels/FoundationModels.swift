@@ -28,21 +28,19 @@ final class FoundationModelsMeetGenerator: MeetGenerating {
     }
 
     func generateMeet(for userQuery: String) async throws -> Suggestion {
-        //ira receber promptText por meio do parametro userQuery
         let request = userQuery.trimmingCharacters(in: .whitespacesAndNewlines)
-        //limpa espaços extras detectados
-        
+
         let prompt = """
-        Analyze the request: "\(request)".
-        Generate 3 date options.
+        O usuário quer sugestões de encontro romântico com as seguintes preferências:
+        \(request)
+
+        Gere 3 opções de encontro que combinem com essas preferências.
         """
-        //monta o texto do prompt incluindo a entrada do usuario
 
         let response = try await session.respond(
             to: prompt,
-            generating: Suggestion.self // Gera a struct Meet
+            generating: Suggestion.self
         )
-        //manda o prompt para a sessao modelo
         return response.content
     }
 }

@@ -9,6 +9,9 @@ import SwiftUI
 
 struct SelectStyleView: View {
     
+    @Bindable var flow: MeetFlowState
+    @Binding var path: [MeetFlowRoute]
+    
     // Estilo que está atualmente selecionado no carrossel
     @State private var selectedStyle: MeetStyleEnum = .gastronomic
     
@@ -23,9 +26,11 @@ struct SelectStyleView: View {
             Text("Qual o estilo do encontro?")
                 .padding(20)
                 .font(.title2)
-                .bold()            // MARK: Carousel
+                .bold()
+            // MARK: Carousel
             
             InfiniteCarouselInputView(
+//                items: MeetStyleEnum.allCases,
                 selectedStyle: $selectedStyle
             )
             
@@ -41,6 +46,7 @@ struct SelectStyleView: View {
             Button {
                 
                 selectedStyleString = selectedStyle.styles
+                path.append(.selectTime)
                 
             } label: {
                 
@@ -80,5 +86,8 @@ struct SelectStyleView: View {
 // MARK: - Preview
 
 #Preview {
-    SelectStyleView()
+    @Previewable @State var flow = MeetFlowState()
+    @Previewable @State var path: [MeetFlowRoute] = []
+    
+    SelectStyleView(flow: flow, path: $path)
 }
