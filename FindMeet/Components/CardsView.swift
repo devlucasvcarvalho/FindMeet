@@ -6,6 +6,7 @@
 //
 //perguntar como deixo um espaco especifico para cada componente do card
 
+
 import SwiftUI
 
 struct CardView: View {

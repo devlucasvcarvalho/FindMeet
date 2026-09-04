@@ -40,7 +40,7 @@ struct GenerateMeetView: View {
             .navigationBarTitleDisplayMode(.inline)
             .navigationDestination(for: String.self) { valor in
                 if valor == "ir para InputView" {
-                    InputView()
+                    SelectStyleView()
                 }
             }
         }
