@@ -13,7 +13,7 @@ struct SavedCardsView: View {
     let subtitle: String
     let description: String
     let imageName: String
-    var onClonclude: (() -> Void)? = nil
+    var onConclude: (() -> Void)? = nil
     
     let ideasColor: Color = Color(red: 255/255, green: 228/255, blue: 228/255)
     let buttonColor: Color = Color(red: 255/255, green: 183/255, blue: 183/255)
@@ -46,7 +46,7 @@ struct SavedCardsView: View {
                 Spacer(minLength: 8)
                 
                 Button {
-                    onClonclude?()
+                    onConclude?()
                 } label: {
                     Text("Concluir")
                         .foregroundStyle(Color.black)
@@ -57,7 +57,7 @@ struct SavedCardsView: View {
                         .clipShape(Capsule())
                         .overlay(
                             Capsule()
-                                .stroke(Color.black, lineWidth: 1.5)
+                                .stroke(Color.colorstroke, lineWidth: 1)
                         )
                 }
                 .frame(width: 180)
@@ -72,6 +72,7 @@ struct SavedCardsView: View {
                 .offset(x: -8, y: -8)
         }
         .frame(width: 360, height: 210)
+        .shadow(color: Color.black.opacity(0.12), radius: 10, x: 0, y: 4)
     }
 }
 
