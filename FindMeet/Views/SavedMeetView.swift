@@ -5,6 +5,7 @@
 //  Created by Cintia Raquel on 01/09/26.
 //
 
+
 import SwiftUI
 
 struct EncounterCard: Identifiable {

@@ -30,4 +30,3 @@ struct Suggestion {
     @Guide(.count(3))
     let suggestions: [Meet]
 }
-
