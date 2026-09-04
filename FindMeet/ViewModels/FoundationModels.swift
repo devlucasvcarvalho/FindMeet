@@ -11,8 +11,8 @@ import FoundationModels
 
 
 protocol MeetGenerating {
-    func prewarm()
-    func generateMeet(for dishQuery: String) async throws -> Suggestion
+//    func prewarm()
+    func generateMeet(for query: String) async throws -> Suggestion
 }
 
 final class FoundationModelsMeetGenerator: MeetGenerating {
@@ -23,9 +23,9 @@ final class FoundationModelsMeetGenerator: MeetGenerating {
         self.session = LanguageModelSession(instructions: instructions)
     }
 
-    func prewarm() {
-        session.prewarm()
-    }
+//    func prewarm() {
+//        session.prewarm()
+//    }
 
     func generateMeet(for userQuery: String) async throws -> Suggestion {
         let request = userQuery.trimmingCharacters(in: .whitespacesAndNewlines)

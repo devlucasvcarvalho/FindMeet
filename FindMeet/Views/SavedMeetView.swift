@@ -19,8 +19,6 @@ struct SavedMeetView: View {
             }
         }
     }
-
-
 #Preview {
     SavedMeetView()
 }

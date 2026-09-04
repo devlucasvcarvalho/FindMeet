@@ -13,7 +13,7 @@ struct LoadingView: View {
     var flow: MeetFlowState
     @Binding var path: [MeetFlowRoute]
 
-    @State private var suggestion: Suggestion?
+//    @State private var suggestion: Suggestion?
     @State private var errorMessage: String?
 
     private let generator: MeetGenerating = FoundationModelsMeetGenerator()
