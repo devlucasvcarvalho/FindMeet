@@ -14,6 +14,9 @@ struct Meet {
 
     @Guide(description: "A brief and engaging description of the first date.")
     let description: String
+    
+    @Guide(description: "A state of the time of the day")
+    let time: String
 
     @Guide(description: "A list of 3 tips on what to do")
     @Guide(.count(3))

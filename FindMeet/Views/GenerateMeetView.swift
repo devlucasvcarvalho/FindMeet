@@ -17,8 +17,8 @@ struct GenerateMeetView: View {
     var body: some View {
         NavigationStack(path: $path) {
             ZStack {
-                Color(backgroundColor)
-                    .ignoresSafeArea(edges: .all)
+//                Color(backgroundColor)
+//                    .ignoresSafeArea(edges: .all)
 
                 VStack {
                     Text("Qual a boa?")

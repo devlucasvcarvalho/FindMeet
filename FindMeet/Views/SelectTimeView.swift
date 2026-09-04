@@ -9,6 +9,8 @@ import SwiftUI
 
 struct SelectTimeView: View {
     
+//    let backgroundColor: Color = Color(red: 250/255, green: 221/255, blue: 221/255)
+//    
     @Bindable var flow: MeetFlowState
     @Binding var path: [MeetFlowRoute]
     // Estilo que está atualmente selecionado no carrossel

@@ -37,6 +37,6 @@ struct CardView: View {
     }
 }
 
-#Preview {
-    CardView(card: Meet(title: "Picnic", description: "Parque", ideas: ["1", "2", "3"]))
-}
+//#Preview {
+//    CardView(card: Meet(title: "Picnic", description: "Parque", ideas: ["1", "2", "3"]))
+//}
