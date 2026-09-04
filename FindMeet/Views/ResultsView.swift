@@ -20,8 +20,6 @@ struct ResultsView: View {
     }
 }
 
-//test commit
-
 // MARK: - Preview
 
 //#Preview {
