@@ -12,8 +12,6 @@ struct SavedMeetView: View {
     var body: some View {
     
         ZStack{
-            Color(backgroundColor)
-                .ignoresSafeArea(edges: .all)
             
                 
             }
