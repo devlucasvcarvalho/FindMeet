@@ -395,11 +395,11 @@ struct Carousel3DEffect: ViewModifier {
 
 // MARK: - Preview
 
-#Preview {
-    
-    InfiniteCarouselInputView(
-        selectedStyle: .constant(
-            MeetStyleEnum.gastronomic
-        )
-    )
-}
+//#Preview {
+//    
+//    InfiniteCarouselInputView(
+//        selectedStyle: .constant(
+//            MeetStyleEnum.gastronomic
+//        )
+//    )
+//}

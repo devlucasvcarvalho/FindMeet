@@ -9,6 +9,10 @@ import SwiftUI
 
 struct SelectTimeView: View {
     
+//    let backgroundColor: Color = Color(red: 250/255, green: 221/255, blue: 221/255)
+//    
+    @Bindable var flow: MeetFlowState
+    @Binding var path: [MeetFlowRoute]
     // Estilo que está atualmente selecionado no carrossel
     @State private var selectedTime: MeetTimeEnum = .night
     
@@ -17,27 +21,35 @@ struct SelectTimeView: View {
     
     
     var body: some View {
-        
-        VStack(spacing: 30) {
+        VStack {
+            Text("Qual o horário do encontro?")
+                .font(.title2)
+                .bold()
             
+<<<<<<< HEAD
             // MARK: Carousel
             
             InfiniteCarouselInputView(
                 selectedStyle: $selectedTime
+=======
+            InfiniteCarouselView(
+                items: MeetTimeEnum.allCases,
+                selected: $flow.selectedTime
+>>>>>>> Pickers
             )
-            
             
             // MARK: Current Carousel Selection
             
-//            Text("Opção atual: \(selectedTime.styles)")
-//                .font(.headline)
+            //            Text("Opção atual: \(selectedTime.styles)")
+            //                .font(.headline)
             
             
             // MARK: Select Button
             
             Button {
                 
-                selectedTimeString = selectedTime.styles
+                selectedTimeString = selectedTime.time
+                path.append(.loading)
                 
             } label: {
                 
@@ -77,5 +89,8 @@ struct SelectTimeView: View {
 // MARK: - Preview
 
 #Preview {
-    SelectStyleView()
+    @Previewable @State var flow = MeetFlowState()
+    @Previewable @State var path: [MeetFlowRoute] = []
+    
+    SelectTimeView(flow: flow, path: $path)
 }

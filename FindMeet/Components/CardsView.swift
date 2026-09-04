@@ -107,9 +107,15 @@ struct CardView: View {
     }
 }
 
+<<<<<<< HEAD
 #Preview {
     CardView(
         index: 0,
         card: Meet(title: "Praia no sabado", time: "Tarde", description: "Manhã na praia para curtir o sol, o mar e a companhia um do outro.", ideas: ["Praia", "Bronze", "Sol"])
     )
 }
+=======
+//#Preview {
+//    CardView(card: Meet(title: "Picnic", description: "Parque", ideas: ["1", "2", "3"]))
+//}
+>>>>>>> Pickers
