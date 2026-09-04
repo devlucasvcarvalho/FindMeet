@@ -327,7 +327,7 @@ struct InfiniteCarouselInputView: View {
 
 // MARK: - 3D Effect Modifier
 
-struct Carousel3DEffect: ViewModifier {
+struct Carousel3DEffectCV: ViewModifier {
     
     let currentOffset: CGFloat
     let cardWidth: CGFloat

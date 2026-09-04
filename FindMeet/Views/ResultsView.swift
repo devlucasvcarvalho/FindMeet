@@ -14,7 +14,10 @@ struct ResultsView: View {
     var body: some View {
         if let suggestion = flow.suggestion {
             // renderize a struct Suggestion aqui
-            Text("\(suggestion)")
+            VStack{
+                InfiniteCarousel(meets: [Meet:
+                                        ])
+            }
         } else {
             Text("Nenhuma sugestão disponível.")
         }

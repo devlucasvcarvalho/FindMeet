@@ -42,7 +42,7 @@ struct SavedCardsView: View {
                     }
                 }
                 
-                Image("Mascote")
+                Image("cerejeart")
                     .resizable()
                     .scaledToFit()
                     .position(x: 100, y: 110)

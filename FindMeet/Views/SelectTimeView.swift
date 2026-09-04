@@ -9,16 +9,8 @@ import SwiftUI
 
 struct SelectTimeView: View {
     
-//    let backgroundColor: Color = Color(red: 250/255, green: 221/255, blue: 221/255)
-//    
     @Bindable var flow: MeetFlowState
     @Binding var path: [MeetFlowRoute]
-    // Estilo que está atualmente selecionado no carrossel
-    @State private var selectedTime: MeetTimeEnum = .night
-    
-    // String que será armazenada quando o usuário clicar em "Selecionar"
-    @State private var selectedTimeString: String = ""
-    
     
     var body: some View {
         VStack {
@@ -26,65 +18,35 @@ struct SelectTimeView: View {
                 .font(.title2)
                 .bold()
             
-<<<<<<< HEAD
             // MARK: Carousel
             
-            InfiniteCarouselInputView(
-                selectedStyle: $selectedTime
-=======
             InfiniteCarouselView(
                 items: MeetTimeEnum.allCases,
                 selected: $flow.selectedTime
->>>>>>> Pickers
             )
-            
-            // MARK: Current Carousel Selection
-            
-            //            Text("Opção atual: \(selectedTime.styles)")
-            //                .font(.headline)
-            
             
             // MARK: Select Button
             
             Button {
-                
-                selectedTimeString = selectedTime.time
                 path.append(.loading)
-                
             } label: {
-                
                 Text("Selecionar")
                     .font(.headline)
                     .foregroundStyle(.white)
-                    .frame(
-                        maxWidth: .infinity
-                    )
+                    .frame(maxWidth: .infinity)
                     .frame(height: 50)
-                    .background(
-                        Color.blue
-                    )
-                    .clipShape(
-                        RoundedRectangle(
-                            cornerRadius: 15
-                        )
-                    )
+                    .background(Color.blue)
+                    .clipShape(RoundedRectangle(cornerRadius: 15))
             }
             .padding(.horizontal, 30)
             
-            
             // MARK: Selected Value
             
-            if !selectedTimeString.isEmpty {
-                
-                Text(
-                    "Selecionado: \(selectedTimeString)"
-                )
+            Text("Selecionado: \(flow.selectedTimeString)")
                 .font(.subheadline)
-            }
         }
     }
 }
-
 
 // MARK: - Preview
 

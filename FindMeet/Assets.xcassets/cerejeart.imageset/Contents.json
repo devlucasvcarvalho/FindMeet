@@ -1,11 +1,7 @@
 {
   "images" : [
     {
-<<<<<<< HEAD:FindMeet/Assets.xcassets/Mascote.imageset/Contents.json
-      "filename" : "Group 13.png",
-=======
       "filename" : "cerejeart.svg",
->>>>>>> Pickers:FindMeet/Assets.xcassets/Mascotes/Mascote.imageset/Contents.json
       "idiom" : "universal",
       "scale" : "1x"
     },
