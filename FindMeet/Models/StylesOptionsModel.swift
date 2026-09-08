@@ -52,7 +52,7 @@ enum MeetStyleEnum: String, CaseIterable, Identifiable {
          case .funy:
              return "Divertido"
          case .creative:
-             return "Criativo 2"
+             return "Criativo 1"
          case .adventurous:
              return "Aventureira"
          }
