@@ -11,9 +11,9 @@ import SwiftUI
 
 @Observable
 final class MeetFlowState {
-     var selectedStyle: MeetStyleEnum = .festive
-     var selectedTime: MeetTimeEnum = .night
-     var suggestion: Suggestion?   // <- novo
+    var selectedStyle: MeetStyleEnum = .festive
+    var selectedTime: MeetTimeEnum = .night
+    var suggestion: Suggestion?   // <- novo
     
     var selectedStyleString: String { selectedStyle.styles }
     var selectedTimeString: String { selectedTime.time }
