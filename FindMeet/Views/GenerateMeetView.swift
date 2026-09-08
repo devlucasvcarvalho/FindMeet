@@ -9,6 +9,7 @@ import SwiftUI
 
 struct GenerateMeetView: View {
     
+    
     let backgroundColor: Color = Color(red: 250/255, green: 221/255, blue: 221/255)
     
     @State private var flow = MeetFlowState()
@@ -22,7 +23,8 @@ struct GenerateMeetView: View {
                     Text("Qual a boa?")
                         .font(.largeTitle)
                         .bold()
-                        .foregroundColor(.black)
+                        .foregroundColor(.primary)
+                        
                     
                     Button {
                         path.append(.selectStyle)
@@ -38,6 +40,7 @@ struct GenerateMeetView: View {
                                 value: isAnimating
                             )
                     }
+                    .zIndex(0) // fica atrás
                     .accessibilityLabel("Criar encontro")
                     .accessibilityHint("Clique no botao para criar encontro")
                 }

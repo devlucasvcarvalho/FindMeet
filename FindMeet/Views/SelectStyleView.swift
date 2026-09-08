@@ -69,17 +69,6 @@ struct SelectStyleView: View {
                         )
                 }
                 .padding(.horizontal, 30)
-                
-                
-                // MARK: Selected Value
-                
-                if !selectedStyleString.isEmpty {
-                    
-                    Text(
-                        "Selecionado: \(selectedStyleString)"
-                    )
-                    .font(.subheadline)
-                }
             }
         }
     }

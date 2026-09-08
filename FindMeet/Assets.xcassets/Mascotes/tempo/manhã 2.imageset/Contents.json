@@ -1,7 +1,11 @@
 {
   "images" : [
     {
+<<<<<<< HEAD:FindMeet/Assets.xcassets/Mascotes/tempo/manhã 2.imageset/Contents.json
       "filename" : "manhã 2.svg",
+=======
+      "filename" : "manhã.svg",
+>>>>>>> develop:FindMeet/Assets.xcassets/Mascotes/tempo/manhã.imageset/Contents.json
       "idiom" : "universal",
       "scale" : "1x"
     },

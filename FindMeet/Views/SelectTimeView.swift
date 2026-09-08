@@ -39,11 +39,6 @@ struct SelectTimeView: View {
                     .clipShape(RoundedRectangle(cornerRadius: 15))
             }
             .padding(.horizontal, 30)
-            
-            // MARK: Selected Value
-            
-            Text("Selecionado: \(flow.selectedTimeString)")
-                .font(.subheadline)
         }
     }
 }
