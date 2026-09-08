@@ -1,6 +1,7 @@
 {
   "images" : [
-    {      "filename" : "manhã 2.svg",
+    {
+      "filename" : "manhã.svg",
       "idiom" : "universal",
       "scale" : "1x"
     },
