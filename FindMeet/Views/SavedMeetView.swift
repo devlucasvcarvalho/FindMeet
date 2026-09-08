@@ -6,44 +6,26 @@
 //
 
 
-import SwiftUI
+//
+//  SavedMeetView.swift
+//  FindMeet
+//
+//  Created by Cintia Raquel on 01/09/26.
+//
 
-struct EncounterCard: Identifiable {
-    let id = UUID()
-    let title: String
-    let subtitle: String
-    let description: String
-    let imageName: String
-}
+import SwiftUI
+import SwiftData
 
 struct SavedMeetView: View {
     
+    @Environment(\.modelContext) private var modelContext
+    @Query private var savedData: [SavedData]
+
     @State private var selectedTab: Int = 1
     
     // Controle do Alert Customizado
     @State private var showAlert: Bool = false
-    @State private var selectedCardToConclude: EncounterCard? = nil
-    
-    @State private var cards: [EncounterCard] = [
-        EncounterCard(
-            title: "Cinema a dois",
-            subtitle: "2,4km • Á noite",
-            description: "Um cinema pertinho de casa, com filmes em lançamento",
-            imageName: "Mascote"
-        ),
-        EncounterCard(
-            title: "Praia de sábado",
-            subtitle: "2,4km • De manhã",
-            description: "Manhã na praia para curtir o sol, o mar e a companhia um do outro.",
-            imageName: "Mascote"
-        ),
-        EncounterCard(
-            title: "Cinema a dois",
-            subtitle: "2,4km • Á noite",
-            description: "Um cinema pertinho de casa, com filmes em lançamento",
-            imageName: "Mascote"
-        )
-    ]
+    @State private var selectedCardToConclude: SavedData? = nil
     
     var body: some View {
         NavigationStack {
@@ -59,13 +41,13 @@ struct SavedMeetView: View {
                             .padding(.horizontal, 24)
                         
                         VStack(spacing: 24) {
-                            ForEach(cards) { card in
+                            ForEach(savedData) { card in
                                 NavigationLink(destination: CardDetailView(card: card)) {
                                     SavedCardsView(
                                         title: card.title,
-                                        subtitle: card.subtitle,
-                                        description: card.description,
-                                        imageName: card.imageName,
+                                        subtitle: card.time,
+                                        description: card.descriptions,
+                                        imageName: "Mascote",
                                         onConclude: {
                                             selectedCardToConclude = card
                                             withAnimation(.spring(response: 0.3, dampingFraction: 0.8)) {
@@ -81,16 +63,18 @@ struct SavedMeetView: View {
                     }
                     .padding(.bottom, 110)
                 }
-                
-                customTabBar
-                    .padding(.bottom, 16)
             }
             .overlay {
                 if showAlert {
                     CustomAlertView(
                         onConclude: {
                             if let cardToConclude = selectedCardToConclude {
-                                cards.removeAll { $0.id == cardToConclude.id }
+                                modelContext.delete(cardToConclude)
+                                do {
+                                    try modelContext.save()
+                                } catch {
+                                    print("Erro ao deletar: \(error)")
+                                }
                             }
                             withAnimation {
                                 showAlert = false
@@ -105,47 +89,6 @@ struct SavedMeetView: View {
                 }
             }
         }
-    }
-    
-    private var customTabBar: some View {
-        HStack(spacing: 0) {
-            Button {
-                selectedTab = 0
-            } label: {
-                VStack(spacing: 4) {
-                    Image(systemName: "heart.fill")
-                        .font(.system(size: 20))
-                    Text("Gerar")
-                        .font(.system(size: 11, weight: .bold, design: .rounded))
-                }
-                .foregroundColor(selectedTab == 0 ? Color(red: 140/255, green: 20/255, blue: 20/255) : .black.opacity(0.6))
-                .frame(maxWidth: .infinity)
-                .padding(.vertical, 8)
-                .background(selectedTab == 0 ? Color.black.opacity(0.06) : Color.clear)
-                .clipShape(Capsule())
-            }
-            
-            Button {
-                selectedTab = 1
-            } label: {
-                VStack(spacing: 4) {
-                    Image(systemName: "filemenu.and.selection")
-                        .font(.system(size: 18))
-                    Text("Marcados")
-                        .font(.system(size: 11, weight: .bold, design: .rounded))
-                }
-                .foregroundColor(selectedTab == 1 ? Color(red: 140/255, green: 20/255, blue: 20/255) : .black.opacity(0.6))
-                .frame(maxWidth: .infinity)
-                .padding(.vertical, 8)
-                .background(selectedTab == 1 ? Color.black.opacity(0.06) : Color.clear)
-                .clipShape(Capsule())
-            }
-        }
-        .padding(6)
-        .frame(width: 250)
-        .background(.ultraThinMaterial)
-        .clipShape(Capsule())
-        .shadow(color: Color.black.opacity(0.12), radius: 12, x: 0, y: 6)
     }
 }
 
@@ -205,7 +148,7 @@ struct CustomAlertView: View {
 struct CardDetailView: View {
     @Environment(\.dismiss) var dismiss
     
-    let card: EncounterCard
+    let card: SavedData
     
     let tips: [String] = [
         "Escolham o filme juntos antes de sair.",
@@ -255,7 +198,7 @@ struct CardDetailView: View {
                     RoundedRectangle(cornerRadius: 16)
                         .fill(cardBackgroundColor)
                     
-                    Text(card.description)
+                    Text(card.descriptions)
                         .font(.system(size: 16, design: .rounded))
                         .foregroundColor(.black)
                         .lineSpacing(4)
@@ -263,7 +206,7 @@ struct CardDetailView: View {
                         .padding(.trailing, 20)
                         .frame(maxWidth: .infinity, alignment: .leading)
                     
-                    Image(card.imageName)
+                    Image("Mascote")
                         .resizable()
                         .scaledToFit()
                         .frame(width: 55, height: 55)
@@ -295,7 +238,7 @@ struct CardDetailView: View {
                     .padding(.bottom, 20)
                     .frame(maxWidth: .infinity, alignment: .leading)
                     
-                    Image(card.imageName)
+                    Image("Mascote")
                         .resizable()
                         .scaledToFit()
                         .frame(width: 55, height: 55)
@@ -313,4 +256,5 @@ struct CardDetailView: View {
 
 #Preview {
     SavedMeetView()
+        .modelContainer(for: SavedData.self, inMemory: true)
 }
