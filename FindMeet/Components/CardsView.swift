@@ -114,4 +114,6 @@ struct CardView: View {
 //            ideas: ["Praia", "Bronze", "Sol"]
 //        )
 //    )
+
+
 //}
