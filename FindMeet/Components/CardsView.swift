@@ -129,7 +129,6 @@ struct CardView: View {
 }
 
 // MARK: - Preview
-
 #Preview {
     CardView(
         index: 0,
