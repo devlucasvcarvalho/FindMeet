@@ -13,15 +13,73 @@ struct LoadingView: View {
     var flow: MeetFlowState
     @Binding var path: [MeetFlowRoute]
 
-//    @State private var suggestion: Suggestion?
     @State private var errorMessage: String?
+    @State private var isAnimating = false
+    @Environment(\.dismiss) var dismiss
 
     private let generator: MeetGenerating = FoundationModelsMeetGenerator()
+    private let buttonCircleColor = Color.black.opacity(0.05)
 
     var body: some View {
-        VStack(spacing: 16) {
-            ProgressView()
-            Text("Calculando o melhor encontro...")
+        VStack {
+            HStack {
+                Button {
+                    dismiss()
+                } label: {
+                    Image(systemName: "chevron.left")
+                        .font(.system(size: 18, weight: .bold))
+                        .foregroundColor(.black)
+                        .frame(width: 48, height: 48)
+                        .background(buttonCircleColor)
+                        .clipShape(Circle())
+                }
+                
+                Spacer()
+                
+                Image("gerando")
+                    .resizable()
+                    .scaledToFill()
+                    .frame(width: 44, height: 44)
+                    .clipShape(Circle())
+                    .overlay(
+                        Circle()
+                            .stroke(Color.black.opacity(0.1), lineWidth: 1)
+                    )
+            }
+            .padding(.top, 10)
+            .padding(.horizontal, 24)
+            
+            Spacer()
+            
+            VStack(spacing: 40) {
+                Text("Gerando ideias de\ndate")
+                    .font(.system(size: 32, weight: .bold, design: .rounded))
+                    .foregroundColor(.black)
+                    .multilineTextAlignment(.center)
+                    .lineSpacing(4)
+                
+                Image("gerando3")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 360, height: 300)
+                    .offset(x: 12)
+                    .scaleEffect(isAnimating ? 1.04 : 0.96)
+                    .animation(
+                        .easeInOut(duration: 1.2)
+                        .repeatForever(autoreverses: true),
+                        value: isAnimating
+                    )
+            }
+            .frame(maxWidth: .infinity)
+            .padding(.horizontal, 24)
+            
+            Spacer()
+            Spacer()
+        }
+        .background(Color.white.ignoresSafeArea())
+        .navigationBarBackButtonHidden(true)
+        .onAppear {
+            isAnimating = true
         }
         .task {
             await generateSuggestion()
@@ -35,7 +93,15 @@ struct LoadingView: View {
             path.append(.results)
         } catch {
             errorMessage = error.localizedDescription
-            // trate o erro como quiser (retry, alerta, etc.)
         }
     }
+}
+
+#Preview {
+    @Previewable @State var samplePath: [MeetFlowRoute] = []
+    
+    LoadingView(
+        flow: MeetFlowState(),
+        path: $samplePath
+    )
 }

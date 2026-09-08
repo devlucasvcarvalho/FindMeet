@@ -15,11 +15,11 @@ enum MeetTimeEnum: String, CaseIterable, Identifiable {
     var time: String {
         switch self {
         case .morning:
-            return "manhã"
+            return "Manhã"
         case .evening:
-            return "tarde"
+            return "Tarde"
         case .night:
-            return "noite"
+            return "Noite"
             
         }
     }

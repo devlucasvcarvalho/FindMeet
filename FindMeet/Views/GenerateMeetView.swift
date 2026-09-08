@@ -14,6 +14,7 @@ struct GenerateMeetView: View {
     
     @State private var flow = MeetFlowState()
     @State private var path: [MeetFlowRoute] = []
+    @State private var isAnimating = false // <--- Estado para a animação
     
     var body: some View {
         NavigationStack(path: $path) {
@@ -29,9 +30,15 @@ struct GenerateMeetView: View {
                         path.append(.selectStyle)
                     } label: {
                         Image("cerejeart")
-                            .padding()
+                            .resizable()
                             .scaledToFit()
-                            .frame(width: 300, height: 400)
+                            .frame(width: 300, height: 380)
+                            .scaleEffect(isAnimating ? 1.04 : 0.96) // botao animado
+                            .animation(
+                                .easeInOut(duration: 1.2)
+                                .repeatForever(autoreverses: true),
+                                value: isAnimating
+                            )
                     }
                     .zIndex(0) // fica atrás
                     .accessibilityLabel("Criar encontro")
@@ -52,6 +59,9 @@ struct GenerateMeetView: View {
                 case .results:
                     ResultsView(flow: flow)
                 }
+            }
+            .onAppear {
+                isAnimating = true 
             }
         }
     }
