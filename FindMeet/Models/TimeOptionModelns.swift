@@ -26,9 +26,9 @@ enum MeetTimeEnum: String, CaseIterable, Identifiable {
     var imageName: String {
          switch self {
          case .morning:
-             return "manhã 2"
+             return "manhã"
          case .evening:
-             return "tarde 2"
+             return "tarde"
          case .night:
              return "noite"
 
