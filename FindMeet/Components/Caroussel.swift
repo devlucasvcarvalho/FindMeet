@@ -19,7 +19,7 @@ struct InfiniteCarouselView<T: CarouselItem>: View {
     // MARK: - Configuration
 
     private let spacing: CGFloat = 0
-    private let cardWidth: CGFloat = 189
+    private let cardWidth: CGFloat = 178
     private let cardHeight: CGFloat = 350
 
     let items: [T]
