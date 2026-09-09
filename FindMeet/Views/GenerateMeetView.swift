@@ -14,7 +14,7 @@ struct GenerateMeetView: View {
     
     @State private var flow = MeetFlowState()
     @State private var path: [MeetFlowRoute] = []
-    @State private var isAnimating = false // <--- Estado para a animação
+    @State private var isAnimating = false // 
     
     var body: some View {
         NavigationStack(path: $path) {
@@ -27,7 +27,7 @@ struct GenerateMeetView: View {
                         
                     
                     Button {
-                        path.append(.selectStyle)
+                        path.append(.notice)
                     } label: {
                         Image("cerejeart")
                             .resizable()
@@ -50,22 +50,75 @@ struct GenerateMeetView: View {
             .navigationBarTitleDisplayMode(.inline)
             .navigationDestination(for: MeetFlowRoute.self) { route in
                 switch route {
-                case .selectStyle:
-                    SelectStyleView(flow: flow, path: $path)
-                case .selectTime:
-                    SelectTimeView(flow: flow, path: $path)
-                case .loading:
-                    LoadingView(flow: flow, path: $path)
-                case .results:
-                    ResultsView(flow: flow)
-                }
+                    // MARK: - Fluxo Pessoa 1
+                case .notice:
+                        NoticeView(
+                            path: $path,
+                            nextRoute: .selectStyleUser1 // <--- Ao clicar no botão, vai para a primeira pergunta
+                        )
+                    
+                    case .selectStyleUser1:
+                        SelectOptionView(
+                            path: $path,
+                            step: "1/2",
+                            question: "Qual atividade tem \n em mente?",
+                            items: MeetStyleEnum.allCases,
+                            selected: $flow.user1SelectedStyle,
+                            nextRoute: .selectTimeUser1
+                        )
+                        
+                    case .selectTimeUser1:
+                        SelectOptionView(
+                            path: $path,
+                            step: "2/2",
+                            question: "Qual o melhor \nhorário?",
+                            items: MeetTimeEnum.allCases,
+                            selected: $flow.user1SelectedTime,
+                            nextRoute: .passPhone
+                        )
+
+                    // MARK: - Transição
+                    case .passPhone:
+                    PassPhoneView(
+                        path: $path,
+                        nextRoute: .selectStyleUser2
+                    )
+
+                    // MARK: - Fluxo Pessoa 2
+                    case .selectStyleUser2:
+                        SelectOptionView(
+                            path: $path,
+                            step: "1/2",
+                            question: "Sua vez! Qual atividade tem \n em mente?",
+                            items: MeetStyleEnum.allCases,
+                            selected: $flow.user2SelectedStyle,
+                            nextRoute: .selectTimeUser2
+                        )
+                        
+                    case .selectTimeUser2:
+                        SelectOptionView(
+                            path: $path,
+                            step: "2/2",
+                            question: "Qual o melhor \nhorário?",
+                            items: MeetTimeEnum.allCases,
+                            selected: $flow.user2SelectedTime,
+                            nextRoute: .loading
+                        )
+
+                    // MARK: - Processamento e Resultados
+                    case .loading:
+                        LoadingView(flow: flow, path: $path)
+                        
+                    case .results:
+                        ResultsView(flow: flow)
+                    }
+                    }
             }
-            .onAppear {
-                isAnimating = true 
-            }
+//            .onAppear {
+//                isAnimating = true 
+//            }
         }
     }
-}
 
 #Preview {
     GenerateMeetView()

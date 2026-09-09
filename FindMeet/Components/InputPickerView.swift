@@ -92,6 +92,18 @@ struct InfiniteCarouselInputView: View {
                             Text(style.styles)
                                 .font(.headline)
                                 .foregroundStyle(.primary)
+                            
+                           
+                                HStack {
+                                    ForEach(0..<styles.count, id: \.self) { i in
+                                        Circle()
+                                            .fill(i == currentIndex
+                                                  ? Color(red: 0.55, green: 0.02, blue: 0.05)
+                                                  : Color.gray.opacity(0.4))
+                                            .frame(width: 8, height: 8)
+                                    }
+                                }
+                            
                         }
                         .frame(
                             width: cardWidth,

@@ -79,24 +79,26 @@ struct InfiniteCarouselView<T: CarouselItem>: View {
                                     width: cardWidth,
                                     height: cardHeight
                                 )
-                                .clipShape(
-                                    RoundedRectangle(cornerRadius: 20)
-                                )
-                                .overlay {
-                                    RoundedRectangle(cornerRadius: 20)
-                                        .stroke(
-                                            Color.white.opacity(0.2),
-                                            lineWidth: 1
-                                        )
-                                }
-
+//                                .clipShape(
+//                                    RoundedRectangle(cornerRadius: 20)
+//                                )
+//                                .overlay {
+//                                    RoundedRectangle(cornerRadius: 20)
+//                                        .stroke(
+//                                            Color.white.opacity(0.2),
+//                                            lineWidth: 1
+//                                        )
+//                                }
+                            Spacer()
+                            
                             Text(item.title)
                                 .font(.headline)
-                                .foregroundStyle(.primary)
+                                .foregroundStyle(.secondary)
                         }
                         .frame(
-                            width: cardWidth,
-                            height: cardHeight + 40
+                            maxWidth: .infinity, maxHeight: 450
+//                            width: cardWidth,
+//                            height: cardHeight + 40
                         )
                         .id(index)
                         .modifier(
@@ -156,9 +158,20 @@ struct InfiniteCarouselView<T: CarouselItem>: View {
                         snapToNearestItem(geometry: geometry)
                     }
                 }
+                
             }
             .frame(height: cardHeight + 80)
             .clipped()
+            
+            HStack {
+                                ForEach(0..<items.count, id: \.self) { i in
+                                    Circle()
+                                        .fill(i == currentIndex
+                                              ? Color(red: 0.55, green: 0.02, blue: 0.05)
+                                              : Color.gray.opacity(0.4))
+                                        .frame(width: 8, height: 8)
+                                }
+                            }
 
             Spacer()
         }

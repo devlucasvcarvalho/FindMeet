@@ -11,14 +11,26 @@ import SwiftUI
 
 @Observable
 final class MeetFlowState {
-    var selectedStyle: MeetStyleEnum = .festive
-    var selectedTime: MeetTimeEnum = .night
+    //primeiro a selecionar:
+    var user1SelectedStyle: MeetStyleEnum = .festive
+    var user1SelectedTime: MeetTimeEnum = .night
+    
+    //segundo a selecionar:
+    var user2SelectedStyle: MeetStyleEnum = .festive
+    var user2SelectedTime: MeetTimeEnum = .night
+    
     var suggestion: Suggestion?   // <- novo
     
-    var selectedStyleString: String { selectedStyle.styles }
-    var selectedTimeString: String { selectedTime.time }
+    //var selectedStyleString: String { selectedStyle.styles }
+    //var selectedTimeString: String { selectedTime.time }
     
     var promptQuery: String {
-        "Estilo do encontro: \(selectedStyleString). Período do encontro: \(selectedTimeString)."
+        """
+        Pessoa 1 quer: Estilo do encontro: \(user1SelectedStyle). Período do encontro: \(user1SelectedTime).
+        Pessoa 2 quer: Estilo do encontro: \(user2SelectedStyle). Período do encontro: \(user2SelectedTime).
+        Gere opções de encontro que agradem as duas pessoas, combinando essas preferências.
+    """
     }
 }
+
+//        Estilo do encontro: \(selectedStyleString). Período do encontro: \(selectedTimeString).
