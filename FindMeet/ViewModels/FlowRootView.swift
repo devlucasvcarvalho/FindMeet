@@ -9,8 +9,16 @@
 //import SwiftUI
 //
 enum MeetFlowRoute: Hashable {
-    case selectStyle
-    case selectTime
+    
+    //primeiro usuario
+    case selectStyleUser1
+    case selectTimeUser1
+    //segundo usuario
+    case selectStyleUser2
+    case selectTimeUser2
+    
+    case passPhone //para avisar para avisar ao proximo usuario
+    
     case loading
     case results
 }

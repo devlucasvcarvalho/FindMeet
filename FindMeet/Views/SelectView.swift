@@ -68,30 +68,46 @@ struct SelectOptionView<T: CarouselItem>: View {
 
 // MARK: - Previews
 
-#Preview("Estilo") {
+//#Preview("Estilo") {
+//    @Previewable @State var flow = MeetFlowState()
+//    @Previewable @State var path: [MeetFlowRoute] = []
+//    
+//    SelectOptionView(
+//        path: $path,
+//        step: "1/2",
+//        question: "Qual atividade tem \n em mente?",
+//        items: MeetStyleEnum.allCases,
+//        selected: $flow.selectedStyle,
+//        nextRoute: .selectTime
+//    )
+//}
+
+// MARK: - Previews
+
+#Preview("Estilo - Pessoa 1") {
     @Previewable @State var flow = MeetFlowState()
     @Previewable @State var path: [MeetFlowRoute] = []
     
     SelectOptionView(
         path: $path,
-        step: "1/2",
+        step: "Pessoa 1 - 1/2",
         question: "Qual atividade tem \n em mente?",
         items: MeetStyleEnum.allCases,
-        selected: $flow.selectedStyle,
-        nextRoute: .selectTime
+        selected: $flow.user1SelectedStyle,      // Atualizado para a variável da Pessoa 1
+        nextRoute: .selectTimeUser1     // Atualizado para a nova rota
     )
 }
 
-#Preview("Horário") {
+#Preview("Horário - Pessoa 1") {
     @Previewable @State var flow = MeetFlowState()
     @Previewable @State var path: [MeetFlowRoute] = []
     
     SelectOptionView(
         path: $path,
-        step: "2/2",
-        question: "Qual o melhor \nhorario?",
+        step: "Pessoa 1 - 2/2",
+        question: "Qual o melhor \nhorário?",
         items: MeetTimeEnum.allCases,
-        selected: $flow.selectedTime,
-        nextRoute: .loading
+        selected: $flow.user1SelectedTime ,       // Atualizado para a variável da Pessoa 1
+        nextRoute: .passPhone            // Atualizado para a rota de passar o celular
     )
 }

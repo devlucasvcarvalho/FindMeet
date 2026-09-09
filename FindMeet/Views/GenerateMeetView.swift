@@ -27,7 +27,7 @@ struct GenerateMeetView: View {
                         
                     
                     Button {
-                        path.append(.selectStyle)
+                        path.append(.selectStyleUser1)
                     } label: {
                         Image("cerejeart")
                             .resizable()
@@ -50,28 +50,62 @@ struct GenerateMeetView: View {
             .navigationBarTitleDisplayMode(.inline)
             .navigationDestination(for: MeetFlowRoute.self) { route in
                 switch route {
-                    case .selectStyle:
+                    // MARK: - Fluxo Pessoa 1
+                    case .selectStyleUser1:
                         SelectOptionView(
                             path: $path,
-                            step: "1/2",
+                            step: "Pessoa 1 - 1/2",
                             question: "Qual atividade tem \n em mente?",
                             items: MeetStyleEnum.allCases,
-                            selected: $flow.selectedStyle,
-                            nextRoute: .selectTime
+                            selected: $flow.user1SelectedStyle, // <-- Variável da Pessoa 1
+                            nextRoute: .selectTimeUser1         // <-- Próxima tela da Pessoa 1
                         )
-                    case .selectTime:
+                        
+                    case .selectTimeUser1:
                         SelectOptionView(
                             path: $path,
-                            step: "2/2",
-                            question: "Qual o melhor \nhorario?",
+                            step: "Pessoa 1 - 2/2",
+                            question: "Qual o melhor \nhorário?",
                             items: MeetTimeEnum.allCases,
-                            selected: $flow.selectedTime,
-                            nextRoute: .loading
+                            selected: $flow.user1SelectedTime, // <-- Variável da Pessoa 1
+                            nextRoute: .passPhone              // <-- Manda para a tela de transição
                         )
+
+                    // MARK: - Transição
+                    case .passPhone:
+                    PassPhoneView(
+                        path: $path,
+                        nextRoute: .selectStyleUser2
+                    )
+
+                    // MARK: - Fluxo Pessoa 2
+                    case .selectStyleUser2:
+                        SelectOptionView(
+                            path: $path,
+                            step: "Pessoa 2 - 1/2",
+                            question: "Sua vez! Qual atividade tem \n em mente?",
+                            items: MeetStyleEnum.allCases,
+                            selected: $flow.user2SelectedStyle, // <-- Variável da Pessoa 2
+                            nextRoute: .selectTimeUser2         // <-- Próxima tela da Pessoa 2
+                        )
+                        
+                    case .selectTimeUser2:
+                        SelectOptionView(
+                            path: $path,
+                            step: "Pessoa 2 - 2/2",
+                            question: "Qual o melhor \nhorário?",
+                            items: MeetTimeEnum.allCases,
+                            selected: $flow.user2SelectedTime, // <-- Variável da Pessoa 2
+                            nextRoute: .loading                // <-- Acabou! Vai gerar o encontro
+                        )
+
+                    // MARK: - Processamento e Resultados
                     case .loading:
                         LoadingView(flow: flow, path: $path)
+                        
                     case .results:
                         ResultsView(flow: flow)
+                    }
                     }
             }
 //            .onAppear {
@@ -79,7 +113,6 @@ struct GenerateMeetView: View {
 //            }
         }
     }
-}
 
 #Preview {
     GenerateMeetView()
