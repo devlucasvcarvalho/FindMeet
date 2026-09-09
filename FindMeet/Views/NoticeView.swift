@@ -65,6 +65,7 @@ struct NoticeView: View {
                         .cornerRadius(15)
                         .padding(.horizontal, 30)
                 }
+                .accessibilityHint("Clique para começar a escolher suas preferências!")
                 .padding(.bottom, 40)
             }
             .navigationBarBackButtonHidden(true)
