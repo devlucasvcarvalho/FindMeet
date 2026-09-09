@@ -32,8 +32,9 @@ struct SelectStyleView: View {
                     .bold()
                 // MARK: Carousel
                 
-                InfiniteCarouselInputView(
-                    selectedStyle: $selectedStyle
+                InfiniteCarouselView(
+                    items: MeetStyleEnum.allCases,
+                    selected: $flow.selectedStyle
                 )
                 
                 
