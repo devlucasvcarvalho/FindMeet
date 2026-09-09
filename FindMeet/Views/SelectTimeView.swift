@@ -38,6 +38,7 @@ struct SelectTimeView: View {
 //                    .font(.system(size: 44))
 //                    .foregroundStyle(.white, Color.blue)
             }
+<<<<<<< HEAD
             .accessibilityLabel("Avançar")
             .accessibilityHint("Confirma \(flow.selectedTimeString) e vai para a próxima pergunta")
             .padding(.top, 20)
@@ -87,6 +88,9 @@ struct SelectTimeView: View {
                 
             }
             .padding(20)
+=======
+            .padding(.horizontal, 30)
+>>>>>>> TabBar
         }
         
         .toolbar(.hidden, for: .tabBar)

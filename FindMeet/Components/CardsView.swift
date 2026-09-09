@@ -7,9 +7,12 @@
 //perguntar como deixo um espaco especifico para cada componente do card
 
 import SwiftUI
+import SwiftData
 
 struct CardView: View {
-    
+    @Environment(\.modelContext) private var modelContext
+    @Query private var savedData: [SavedData]
+
     let index: Int
     let card: Meet
     var shadowRadius: CGFloat = 4.0
@@ -79,7 +82,10 @@ struct CardView: View {
             // MARK: Select Button
             
             Button {
-                
+                //PASSO 2.1: Setup do swiftdata (seguir tutorial padrao de SD)
+                //PASSO 2.2: Mapeamento do tipo
+                let persistedMeet = getPersistedModel(from: card)
+                savePersistedMeet(persistedMeet)
             } label: {
                 Text("Escolher date")
                     .foregroundStyle(.white)
@@ -101,19 +107,34 @@ struct CardView: View {
         .padding(.horizontal)
         .frame(maxWidth: 250, maxHeight: 350)
     }
+    
+    func getPersistedModel(from meet: Meet) -> SavedData {
+        SavedData(
+            title: meet.title,
+            time: meet.time,
+            descriptions: meet.description,
+            ideas: meet.ideas
+        )
+    }
+    
+    func savePersistedMeet(_ savedData: SavedData) {
+        modelContext.insert(savedData)
+        
+        do {
+            try modelContext.save()
+        } catch {
+            print("Erro ao salvar: \(error)")
+        }
+    }
 }
 
 // MARK: - Preview
-
-//#Preview {
-//    CardView(
-//        index: 0,
-//        card: Meet(
-//            title: "Praia no sábado",
-//            description: "Manhã na praia para curtir o sol, o mar e a companhia um do outro.", time: "Noite", time: <#String#>
-//            ideas: ["Praia", "Bronze", "Sol"]
-//        )
-//    )
-
-
-//}
+#Preview {
+    CardView(
+        index: 0,
+        card: Meet(
+            title: "Praia no sábado", time: "Noite", description: "Manhã na praia para curtir o sol, o mar e a companhia um do outro.",
+            ideas: ["Praia", "Bronze", "Sol"]
+        )
+    )
+}

@@ -16,5 +16,6 @@ struct FindMeetApp: App {
         WindowGroup {
             ContentView()
         }
+        .modelContainer(for: SavedData.self)
     }
 }
