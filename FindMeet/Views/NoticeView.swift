@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct NoticeView: View {
-    @Binding var path: [MeetFlowRoute]
+    @Binding var path: NavigationPath
         let nextRoute: MeetFlowRoute
         
         @Environment(\.dismiss) var dismiss
@@ -22,7 +22,7 @@ struct NoticeView: View {
                 
                 HStack {
                     Button {
-                        path.removeAll() // Volta para a tela inicial
+                        path = NavigationPath() // Volta para a tela inicial
                     } label: {
                         Image(systemName: "chevron.left")
                             .font(.system(size: 18, weight: .bold))
@@ -74,7 +74,7 @@ struct NoticeView: View {
     // MARK: - Previews
 
     #Preview("Aviso Pessoa 1") {
-        @Previewable @State var path: [MeetFlowRoute] = []
+        @Previewable @State var path = NavigationPath()
         
         NavigationStack {
             NoticeView(
