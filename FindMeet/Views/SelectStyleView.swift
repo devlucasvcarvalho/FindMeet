@@ -47,8 +47,8 @@ struct SelectStyleView: View {
                 
                 
                 
-                HStack{
-                    Spacer()
+              //  HStack{
+                    //Spacer()
                     
                     Button {
                         
@@ -68,7 +68,7 @@ struct SelectStyleView: View {
                                     radius: 10,
                                     x: 0, y: 5)
                     }
-                }
+                //}
                 .padding(.horizontal,30)
             }
         

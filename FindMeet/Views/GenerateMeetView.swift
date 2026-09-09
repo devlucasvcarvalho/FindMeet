@@ -50,19 +50,33 @@ struct GenerateMeetView: View {
             .navigationBarTitleDisplayMode(.inline)
             .navigationDestination(for: MeetFlowRoute.self) { route in
                 switch route {
-                case .selectStyle:
-                    SelectStyleView(flow: flow, path: $path)
-                case .selectTime:
-                    SelectTimeView(flow: flow, path: $path)
-                case .loading:
-                    LoadingView(flow: flow, path: $path)
-                case .results:
-                    ResultsView(flow: flow)
-                }
+                    case .selectStyle:
+                        SelectOptionView(
+                            path: $path,
+                            step: "1/2",
+                            question: "Qual atividade tem \n em mente?",
+                            items: MeetStyleEnum.allCases,
+                            selected: $flow.selectedStyle,
+                            nextRoute: .selectTime
+                        )
+                    case .selectTime:
+                        SelectOptionView(
+                            path: $path,
+                            step: "2/2",
+                            question: "Qual o melhor \nhorario?",
+                            items: MeetTimeEnum.allCases,
+                            selected: $flow.selectedTime,
+                            nextRoute: .loading
+                        )
+                    case .loading:
+                        LoadingView(flow: flow, path: $path)
+                    case .results:
+                        ResultsView(flow: flow)
+                    }
             }
-            .onAppear {
-                isAnimating = true 
-            }
+//            .onAppear {
+//                isAnimating = true 
+//            }
         }
     }
 }
