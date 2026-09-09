@@ -27,7 +27,7 @@ struct GenerateMeetView: View {
                         
                     
                     Button {
-                        path.append(.selectStyleUser1)
+                        path.append(.notice)
                     } label: {
                         Image("cerejeart")
                             .resizable()
@@ -51,6 +51,12 @@ struct GenerateMeetView: View {
             .navigationDestination(for: MeetFlowRoute.self) { route in
                 switch route {
                     // MARK: - Fluxo Pessoa 1
+                case .notice:
+                        NoticeView(
+                            path: $path,
+                            nextRoute: .selectStyleUser1 // <--- Ao clicar no botão, vai para a primeira pergunta
+                        )
+                    
                     case .selectStyleUser1:
                         SelectOptionView(
                             path: $path,

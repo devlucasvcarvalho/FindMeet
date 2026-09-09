@@ -17,6 +17,7 @@ enum MeetFlowRoute: Hashable {
     case selectStyleUser2
     case selectTimeUser2
     
+    case notice
     case passPhone //para avisar para avisar ao proximo usuario
     
     case loading
