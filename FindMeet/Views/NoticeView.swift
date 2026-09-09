@@ -19,7 +19,7 @@ struct NoticeView: View {
         var body: some View {
             VStack(spacing: 30) {
                 
-                // MARK: - Botão de Voltar (Topo)
+                
                 HStack {
                     Button {
                         path.removeAll() // Volta para a tela inicial
@@ -27,7 +27,7 @@ struct NoticeView: View {
                         Image(systemName: "chevron.left")
                             .font(.system(size: 18, weight: .bold))
                             .foregroundColor(.black)
-                            .frame(width: 48, height: 48)
+                            .frame(maxWidth: 48, maxHeight: 48)
                             .background(buttonCircleColor)
                             .clipShape(Circle())
                     }
@@ -36,24 +36,22 @@ struct NoticeView: View {
                 .padding(.top, 10)
                 .padding(.horizontal, 24)
                 
-                Spacer()
+                //Spacer()
                 
                 // Ícone do SF Symbols corrigido (ou substitua por uma imagem do Assets ex: Image("SuaImagem"))
-                Image(systemName: "person.circle.fill")
-                    .font(.system(size: 80))
-                    .foregroundColor(buttonColor)
+                Image("PassPhone")
                 
-                Text("Sua vez, Pessoa 1!")
+                Text("Hora de Escolher!")
                     .font(.largeTitle)
                     .bold()
                 
-                Text("Escolha suas preferências para o date sem deixar a outra pessoa ver.\n\nDepois, passaremos o celular para ela.")
-                    .font(.title3)
+                Text("Decidam quem será o primeiro a selecionar as preferencias para o encontro. Mas atenção, para ficar mais divertido, não deixe a outra pessoa saber o que você escolheu! Depois, passaremos o celular para ela.")
+                    .font(.headline)
                     .foregroundColor(.secondary)
                     .multilineTextAlignment(.center)
-                    .padding(.horizontal, 40)
+                    .padding(.horizontal, 30)
                 
-                Spacer()
+                //Spacer()
                 
                 Button {
                     path.append(nextRoute)
