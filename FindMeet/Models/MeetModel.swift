@@ -12,13 +12,13 @@ struct Meet {
     @Guide(description: "An exciting name for the first date idea.")
     let title: String
 
-    @Guide(description: "State the time of day.")
+    @Guide(description: "State the time of day (morning, evening, night, but in portuguese BR and lower case).")
     let time: String
     
     @Guide(description: "A brief and engaging description of the first date.")
     let description: String
 
-    @Guide(description: "A list of three keywords as tips on what to do.")
+    @Guide(description: "A list of three keywords as tips on what to do. Resume in just a word each one of the tips.")
     @Guide(.count(3))
     let ideas: [String]
 

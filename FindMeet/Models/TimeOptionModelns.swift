@@ -8,13 +8,13 @@
 import Foundation
 
 enum MeetTimeEnum: String, CaseIterable, Identifiable {
-    case morning
+    case cedinho
     case evening
     case night
     
     var time: String {
         switch self {
-        case .morning:
+        case .cedinho:
             return "Manhã"
         case .evening:
             return "Tarde"
@@ -25,7 +25,7 @@ enum MeetTimeEnum: String, CaseIterable, Identifiable {
     }
     var imageName: String {
          switch self {
-         case .morning:
+         case .cedinho:
              return "manhã"
          case .evening:
              return "tarde"
