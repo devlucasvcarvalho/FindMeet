@@ -19,7 +19,7 @@ struct InfiniteCarouselView<T: CarouselItem>: View {
     // MARK: - Configuration
 
     private let spacing: CGFloat = 0
-    private let cardWidth: CGFloat = 189
+    private let cardWidth: CGFloat = 178
     private let cardHeight: CGFloat = 350
 
     let items: [T]
@@ -229,12 +229,12 @@ struct InfiniteCarouselView<T: CarouselItem>: View {
 
 // MARK: - Previews
 
-//#Preview {
-//    @Previewable @State var style: MeetStyleEnum = .gastronomic
-//    InfiniteCarouselView(items: MeetStyleEnum.allCases, selected: $style)
-//}
-//
-//#Preview {
-//    @Previewable @State var time: MeetTimeEnum = .evening
-//    InfiniteCarouselView(items: MeetTimeEnum.allCases, selected: $time)
-//}
+#Preview {
+    @Previewable @State var style: MeetStyleEnum = .gastronomic
+    InfiniteCarouselView(items: MeetStyleEnum.allCases, selected: $style)
+}
+
+#Preview {
+    @Previewable @State var time: MeetTimeEnum = .evening
+    InfiniteCarouselView(items: MeetTimeEnum.allCases, selected: $time)
+}
