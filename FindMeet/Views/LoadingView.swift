@@ -36,15 +36,6 @@ struct LoadingView: View {
                 
                 Spacer()
                 
-                Image("gerando")
-                    .resizable()
-                    .scaledToFill()
-                    .frame(width: 44, height: 44)
-                    .clipShape(Circle())
-                    .overlay(
-                        Circle()
-                            .stroke(Color.black.opacity(0.1), lineWidth: 1)
-                    )
             }
             .padding(.top, 10)
             .padding(.horizontal, 24)
