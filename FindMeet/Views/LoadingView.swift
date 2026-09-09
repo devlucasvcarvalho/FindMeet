@@ -23,6 +23,7 @@ struct LoadingView: View {
             ProgressView()
             Text("Calculando o melhor encontro...")
         }
+        .toolbar(.hidden, for: .tabBar)
         .task {
             await generateSuggestion()
         }

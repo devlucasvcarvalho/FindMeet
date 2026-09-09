@@ -105,6 +105,7 @@ struct SavedMeetView: View {
                 }
             }
         }
+        .toolbar(.hidden, for: .tabBar)
     }
     
     private var customTabBar: some View {

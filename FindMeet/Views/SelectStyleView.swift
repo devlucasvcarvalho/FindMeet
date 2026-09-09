@@ -82,6 +82,7 @@ struct SelectStyleView: View {
                 }
             }
         }
+        .toolbar(.hidden, for: .tabBar)
     }
 }
 

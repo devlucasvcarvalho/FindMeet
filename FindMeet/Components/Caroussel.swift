@@ -4,7 +4,6 @@
 //
 //  Created by Lucas Vieira de Carvalho on 03/09/26.
 //
-
 import SwiftUI
 import Combine
 
@@ -12,6 +11,7 @@ import Combine
 protocol CarouselItem: Equatable {
     var imageName: String { get }
     var title: String { get }
+    
 }
 
 struct InfiniteCarouselView<T: CarouselItem>: View {
@@ -52,7 +52,7 @@ struct InfiniteCarouselView<T: CarouselItem>: View {
     ).autoconnect()
 
     // MARK: - Body
-
+   
     var body: some View {
 
         VStack(spacing: 20) {
@@ -69,6 +69,7 @@ struct InfiniteCarouselView<T: CarouselItem>: View {
                     ForEach(items.indices, id: \.self) { index in
 
                         let item = items[index]
+                        let isSelected = item == selected
 
                         VStack(spacing: 12) {
 
@@ -82,17 +83,30 @@ struct InfiniteCarouselView<T: CarouselItem>: View {
                                 .clipShape(
                                     RoundedRectangle(cornerRadius: 20)
                                 )
-                                .overlay {
-                                    RoundedRectangle(cornerRadius: 20)
-                                        .stroke(
-                                            Color.white.opacity(0.2),
-                                            lineWidth: 1
-                                        )
-                                }
+//                                .overlay {
+//                                    // Destaque visual: borda grossa e colorida no card
+//                                    // que está selecionado agora, fina e neutra nos demais.
+//                                    RoundedRectangle(cornerRadius: 20)
+//                                        .stroke(
+//                                            isSelected ? Color.accentColor : Color.white.opacity(0.2),
+//                                            lineWidth: isSelected ? 4 : 1
+//                                        )
+//                                }
+//                                .overlay(alignment: .topTrailing) {
+//                                    if isSelected {
+////                                        Image(systemName: "checkmark.circle.fill")
+////                                            .font(.system(size: 22))
+////                                            .foregroundStyle(.white, Color.accentColor)
+////                                            .padding(10)
+////                                            .transition(.scale.combined(with: .opacity))
+//                                    }
+//                                }
+//                                .scaleEffect(isSelected ? 1.03 : 1.0)
+//                                .animation(.spring(response: 0.3, dampingFraction: 0.7), value: isSelected)
 
                             Text(item.title)
                                 .font(.headline)
-                                .foregroundStyle(.primary)
+                                //.foregroundStyle(isSelected ? Color.accentColor : .primary)
                         }
                         .frame(
                             width: cardWidth,
@@ -112,6 +126,13 @@ struct InfiniteCarouselView<T: CarouselItem>: View {
                         .onTapGesture {
                             selectItem(index: index, geometry: geometry)
                         }
+                        // Acessibilidade: agrupa imagem + título como um único elemento
+                        // (senão o VoiceOver leria os dois separadamente), e informa
+                        // que o toque já seleciona, sem exigir gesto especial.
+                        .accessibilityElement(children: .ignore)
+                        .accessibilityAddTraits(isSelected ? [.isButton, .isSelected] : [.isButton])
+                        .accessibilityLabel(item.title)
+                        .accessibilityHint(isSelected ? "Selecionado" : "Toque para selecionar")
                     }
                 }
                 .offset(x: isSnapping ? snapOffset : offset)
@@ -137,7 +158,7 @@ struct InfiniteCarouselView<T: CarouselItem>: View {
                         .onChanged { value in
                             isSnapping = false
 
-                            let dragChange = value.translation.width - lastDragOffset
+                            _ = value.translation.width - lastDragOffset
                             lastDragOffset = value.translation.width
                             isManuallyDragging = true
 
@@ -156,6 +177,12 @@ struct InfiniteCarouselView<T: CarouselItem>: View {
                         snapToNearestItem(geometry: geometry)
                     }
                 }
+                            .onChange(of: selected) { newValue in
+                                // Verifica se a mudança veio de fora (e não do próprio carrossel)
+                                if let newIndex = items.firstIndex(of: newValue), newIndex != currentIndex {
+                                    selectItem(index: newIndex, geometry: geometry)
+                                }
+                            }
             }
             .frame(height: cardHeight + 80)
             .clipped()
@@ -229,12 +256,12 @@ struct InfiniteCarouselView<T: CarouselItem>: View {
 
 // MARK: - Previews
 
-//#Preview {
-//    @Previewable @State var style: MeetStyleEnum = .gastronomic
-//    InfiniteCarouselView(items: MeetStyleEnum.allCases, selected: $style)
-//}
-//
-//#Preview {
-//    @Previewable @State var time: MeetTimeEnum = .evening
-//    InfiniteCarouselView(items: MeetTimeEnum.allCases, selected: $time)
-//}
+#Preview {
+    @Previewable @State var style: MeetStyleEnum = .gastronomic
+    InfiniteCarouselView(items: MeetStyleEnum.allCases, selected: $style)
+}
+
+#Preview {
+    @Previewable @State var time: MeetTimeEnum = .evening
+    InfiniteCarouselView(items: MeetTimeEnum.allCases, selected: $time)
+}
