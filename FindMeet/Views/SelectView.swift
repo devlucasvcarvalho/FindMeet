@@ -9,8 +9,7 @@ import SwiftUI
 
 struct SelectOptionView<T: CarouselItem>: View {
     
-    @Binding var path: [MeetFlowRoute]
-    
+    @Binding var path: NavigationPath
     
     let step: String
     let question: String
@@ -93,7 +92,7 @@ struct SelectOptionView<T: CarouselItem>: View {
 
 #Preview("Estilo - Pessoa 1") {
     @Previewable @State var flow = MeetFlowState()
-    @Previewable @State var path: [MeetFlowRoute] = []
+    @Previewable @State var path = NavigationPath()
     
     SelectOptionView(
         path: $path,
@@ -107,7 +106,7 @@ struct SelectOptionView<T: CarouselItem>: View {
 
 #Preview("Horário - Pessoa 1") {
     @Previewable @State var flow = MeetFlowState()
-    @Previewable @State var path: [MeetFlowRoute] = []
+    @Previewable @State var path = NavigationPath() 
     
     SelectOptionView(
         path: $path,

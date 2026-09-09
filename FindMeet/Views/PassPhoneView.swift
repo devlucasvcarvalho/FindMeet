@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct PassPhoneView: View {
-    @Binding var path: [MeetFlowRoute]
+    @Binding var path: NavigationPath
     let nextRoute: MeetFlowRoute
     
     @Environment(\.dismiss) var dismiss
@@ -20,7 +20,7 @@ struct PassPhoneView: View {
         VStack(spacing: 30) {
             HStack {
             Button {
-                path.removeAll()
+                path = NavigationPath()
             } label: {
                 Image(systemName: "chevron.left")
                     .font(.system(size: 18, weight: .bold))
@@ -71,8 +71,8 @@ struct PassPhoneView: View {
 }
 // MARK: - Previews
 
-#Preview("Passar Celular") {
-    @Previewable @State var path: [MeetFlowRoute] = []
+#Preview {
+    @Previewable @State var path = NavigationPath()
     
     PassPhoneView(
         path: $path,
