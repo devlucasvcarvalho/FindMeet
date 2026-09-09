@@ -40,25 +40,32 @@ struct SelectOptionView<T: CarouselItem>: View {
                     selected: $selected
                 )
                 
-                HStack {
-                    Spacer()
+               // HStack {
+                    //Spacer()
                     
                     Button {
                         path.append(nextRoute)
                     } label: {
-                        Image(systemName: "arrow.right")
-                            .font(.system(.title3, design: .rounded))
-                            .fontWeight(.bold)
+                        HStack(spacing: 8) {
+                                Text("Selecionar")
+                                    .font(.title3)
+                                    .fontWeight(.bold)
+                                    .minimumScaleFactor(0.8) // Permite que o texto diminua um pouco se a tela for muito pequena
+                                
+                                Image(systemName: "arrow.right")
+                                    .font(.system(.title3, design: .rounded))
+                                    .fontWeight(.bold)
+                            }
+                            .frame(maxWidth: 250) // <--- Deixa responsivo para qualquer largura de tela
+                            .padding(.vertical, 16)
                             .foregroundStyle(Color.white)
-                            .padding(16)
                             .background(Color(buttonColor))
-                            .clipShape(Circle())
-                            .shadow(color: Color.white.opacity(0.2),
-                                    radius: 10,
-                                    x: 0, y: 5)
-                    }
+                            .clipShape(Capsule())
+                            .shadow(color: Color.white.opacity(0.2), radius: 10, x: 0, y: 5)
+                        }
+                    
                     .accessibilityLabel("Avançar")
-                }
+                //}
                 .padding(.horizontal, 30)
             }
         }
@@ -90,11 +97,11 @@ struct SelectOptionView<T: CarouselItem>: View {
     
     SelectOptionView(
         path: $path,
-        step: "Pessoa 1 - 1/2",
+        step: "1/2",
         question: "Qual atividade tem \n em mente?",
         items: MeetStyleEnum.allCases,
-        selected: $flow.user1SelectedStyle,      // Atualizado para a variável da Pessoa 1
-        nextRoute: .selectTimeUser1     // Atualizado para a nova rota
+        selected: $flow.user1SelectedStyle,
+        nextRoute: .selectTimeUser1
     )
 }
 
@@ -104,10 +111,10 @@ struct SelectOptionView<T: CarouselItem>: View {
     
     SelectOptionView(
         path: $path,
-        step: "Pessoa 1 - 2/2",
+        step: "2/2",
         question: "Qual o melhor \nhorário?",
         items: MeetTimeEnum.allCases,
-        selected: $flow.user1SelectedTime ,       // Atualizado para a variável da Pessoa 1
-        nextRoute: .passPhone            // Atualizado para a rota de passar o celular
+        selected: $flow.user1SelectedTime,
+        nextRoute: .passPhone
     )
 }

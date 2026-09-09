@@ -11,13 +11,32 @@ struct PassPhoneView: View {
     @Binding var path: [MeetFlowRoute]
     let nextRoute: MeetFlowRoute
     
+    @Environment(\.dismiss) var dismiss
+    private let buttonCircleColor = Color.black.opacity(0.05)
+    
     private let buttonColor: Color = Color(red: 144/255, green: 3/255, blue: 3/255)
     
     var body: some View {
         VStack(spacing: 30) {
+            HStack {
+            Button {
+                path.removeAll()
+            } label: {
+                Image(systemName: "chevron.left")
+                    .font(.system(size: 18, weight: .bold))
+                    .foregroundColor(.black)
+                    .frame(width: 48, height: 48)
+                    .background(buttonCircleColor)
+                    .clipShape(Circle())
+                }
+            Spacer() // Empurra o botão para a esquerda
+        }
+                    .padding(.top, 10)
+                    .padding(.horizontal, 24)
+                        
             Spacer()
             
-            Image(systemName: "iphone.and.arrow.forward")
+            Image("PassPhone")
                 .font(.system(size: 80))
                 .foregroundColor(buttonColor)
             

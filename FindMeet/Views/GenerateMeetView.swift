@@ -14,7 +14,7 @@ struct GenerateMeetView: View {
     
     @State private var flow = MeetFlowState()
     @State private var path: [MeetFlowRoute] = []
-    @State private var isAnimating = false // <--- Estado para a animação
+    @State private var isAnimating = false // 
     
     var body: some View {
         NavigationStack(path: $path) {
@@ -54,21 +54,21 @@ struct GenerateMeetView: View {
                     case .selectStyleUser1:
                         SelectOptionView(
                             path: $path,
-                            step: "Pessoa 1 - 1/2",
+                            step: "1/2",
                             question: "Qual atividade tem \n em mente?",
                             items: MeetStyleEnum.allCases,
-                            selected: $flow.user1SelectedStyle, // <-- Variável da Pessoa 1
-                            nextRoute: .selectTimeUser1         // <-- Próxima tela da Pessoa 1
+                            selected: $flow.user1SelectedStyle,
+                            nextRoute: .selectTimeUser1
                         )
                         
                     case .selectTimeUser1:
                         SelectOptionView(
                             path: $path,
-                            step: "Pessoa 1 - 2/2",
+                            step: "2/2",
                             question: "Qual o melhor \nhorário?",
                             items: MeetTimeEnum.allCases,
-                            selected: $flow.user1SelectedTime, // <-- Variável da Pessoa 1
-                            nextRoute: .passPhone              // <-- Manda para a tela de transição
+                            selected: $flow.user1SelectedTime,
+                            nextRoute: .passPhone
                         )
 
                     // MARK: - Transição
@@ -82,21 +82,21 @@ struct GenerateMeetView: View {
                     case .selectStyleUser2:
                         SelectOptionView(
                             path: $path,
-                            step: "Pessoa 2 - 1/2",
+                            step: "1/2",
                             question: "Sua vez! Qual atividade tem \n em mente?",
                             items: MeetStyleEnum.allCases,
-                            selected: $flow.user2SelectedStyle, // <-- Variável da Pessoa 2
-                            nextRoute: .selectTimeUser2         // <-- Próxima tela da Pessoa 2
+                            selected: $flow.user2SelectedStyle,
+                            nextRoute: .selectTimeUser2
                         )
                         
                     case .selectTimeUser2:
                         SelectOptionView(
                             path: $path,
-                            step: "Pessoa 2 - 2/2",
+                            step: "2/2",
                             question: "Qual o melhor \nhorário?",
                             items: MeetTimeEnum.allCases,
-                            selected: $flow.user2SelectedTime, // <-- Variável da Pessoa 2
-                            nextRoute: .loading                // <-- Acabou! Vai gerar o encontro
+                            selected: $flow.user2SelectedTime,
+                            nextRoute: .loading
                         )
 
                     // MARK: - Processamento e Resultados
