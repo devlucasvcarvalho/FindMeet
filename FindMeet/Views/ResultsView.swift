@@ -12,11 +12,14 @@ struct ResultsView: View {
     var flow: MeetFlowState
 
     var body: some View {
-        if let suggestion = flow.suggestion {
-            InfiniteCarousel(meets: suggestion.suggestions)
-        } else {
-            Text("Nenhuma sugestão disponível.")
+        Group {
+            if let suggestion = flow.suggestion {
+                InfiniteCarousel(meets: suggestion.suggestions)
+            } else {
+                Text("Nenhuma sugestão disponível.")
+            }
         }
+        .toolbar(.visible, for: .tabBar)
     }
 }
 
