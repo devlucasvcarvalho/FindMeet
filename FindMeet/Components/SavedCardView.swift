@@ -65,11 +65,10 @@ struct SavedCardsView: View {
             .padding(20)
             .frame(maxWidth: .infinity, alignment: .leading)
             
-//            Image("Mascote")
-//                .resizable()
-//                .scaledToFit()
-//                .frame(width: 130, height: 130)
-//                .offset(x: -8, y: -8)
+            Image("Mascote")
+                .resizable()
+                .scaledToFit()
+                .frame(width: 160, height: 130)
         }
         .frame(width: 360, height: 210)
         .shadow(color: Color.black.opacity(0.12), radius: 10, x: 0, y: 4)
@@ -79,7 +78,7 @@ struct SavedCardsView: View {
 #Preview {
     SavedCardsView(
         title: "Cinema em Casa",
-        subtitle: "2,4km • Á noite",
+        subtitle: "noite",
         description: "Um cinema pertinho de casa, com filmes em lançamento",
         imageName: "Mascote"
     )

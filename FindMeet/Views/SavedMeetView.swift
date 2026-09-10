@@ -34,7 +34,7 @@ struct SavedMeetView: View {
                 ScrollView(.vertical, showsIndicators: false) {
                     VStack(alignment: .leading, spacing: 26) {
                         
-                        Text("Olá, Maria")
+                        Text("Ideias salvas")
                             .font(.system(size: 32, weight: .bold, design: .rounded))
                             .foregroundColor(.black)
                             .padding(.top, 40)
