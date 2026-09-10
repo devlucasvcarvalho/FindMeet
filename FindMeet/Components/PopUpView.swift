@@ -42,13 +42,13 @@ struct PopUpview: View {
             VStack(spacing: 16) {
                 
                 Text(title)
-                    .font(.title3)
+                    .font(.custom("Fredoka-Medium", size: 20))
                     .bold()
                     .multilineTextAlignment(.center)
                 
                 if let message {
                     Text(message)
-                        .font(.subheadline)
+                        .font(.custom("Fredoka-Medium", size: 18))
                         .foregroundStyle(.secondary)
                         .multilineTextAlignment(.center)
                 }
@@ -81,7 +81,7 @@ struct PopUpview: View {
             button.action()
         } label: {
             Text(button.label)
-                .font(.headline)
+                .font(.custom("Fredoka-Medium", size: 18))
                 .frame(maxWidth: .infinity)
                 .padding(.vertical, 12)
 //                .foregroundStyle(.white)
