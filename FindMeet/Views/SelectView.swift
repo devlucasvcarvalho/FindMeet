@@ -76,7 +76,7 @@ struct SelectOptionView<T: CarouselItem>: View {
                 .padding(.horizontal, 30)
             }
         }
-        .toolbar(.hidden, for: .tabBar)
+//        .toolbar(.hidden, for: .tabBar)
         .navigationBarBackButtonHidden(backConfirmationTitle != nil)
         .toolbar {
                     if backConfirmationTitle != nil {
@@ -91,6 +91,7 @@ struct SelectOptionView<T: CarouselItem>: View {
                         }
                     }
                 }
+        .toolbar(.hidden, for: .tabBar)
         .appPopup(isPresented: $showBackConfirmation) {
                   PopUpview(
                       icon: "exclamationmark.triangle.fill",

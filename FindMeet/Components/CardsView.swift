@@ -35,6 +35,9 @@ struct CardView: View {
                     .font(.title.weight(.bold))
                 
                 Image("cerejinhas")
+                    .resizable()
+                    .scaledToFit()
+                    
                     .accessibilityHidden(true)
             }
             

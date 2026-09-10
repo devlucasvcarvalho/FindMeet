@@ -12,7 +12,7 @@ struct GenerateMeetView: View {
     let backgroundColor: Color = Color(red: 250/255, green: 221/255, blue: 221/255)
     
     @State private var flow = MeetFlowState()
-    @State private var path = NavigationPath()
+    @State private var path: [MeetFlowRoute] = []
     
     @State private var isExpanded = false
     

@@ -67,7 +67,9 @@ struct NoticeView: View {
                 }
                 .padding(.bottom, 40)
             }
+           
             .navigationBarBackButtonHidden(true)
+            .toolbar(.hidden, for: .tabBar)
         }
     }
 

@@ -66,6 +66,7 @@ struct PassPhoneView: View {
             }
             .padding(.bottom, 40)
         }
+        .toolbar(.hidden, for: .tabBar)
         .navigationBarBackButtonHidden(true) // Evita que a pessoa 2 volte e mude a da pessoa 1 facilmente
     }
 }
