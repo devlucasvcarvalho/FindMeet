@@ -62,9 +62,9 @@ struct PopUpview: View {
             .background {
                 if #available(iOS 26.0, *) {
                     Color.clear
-                        .glassEffect(.regular, in: .rect(cornerRadius: 20))
+                        .glassEffect(.regular, in: .rect(cornerRadius: 35))
                 } else {
-                    RoundedRectangle(cornerRadius: 20)
+                    RoundedRectangle(cornerRadius: 30)
                         .fill(.regularMaterial)
                 }
             }
@@ -117,30 +117,30 @@ extension View {
 
 
 
-//#Preview("Confirmação (2 botões)") {
-//    PopUpview(
-//        icon: "exclamationmark.triangle.fill",
-//        title: "Voltar para o início?",
-//        message: "Você vai sair dessa etapa e voltar para a tela inicial.",
-//        secondaryButton: .init(label: "Cancelar", style: .secondary, action: {}),
-//        primaryButton: .init(label: "Sair", style: .primary, action: {})
-//    )
-//}
-//
-//#Preview("Aviso simples (1 botão)") {
-//    PopUpview(
-//        icon: "exclamationmark.circle.fill",
-//        title: "Preencha todos os campos",
-//        message: "Selecione uma opção antes de continuar.",
-//        secondaryButton: .init(label: "Cancelar", style: .secondary, action: {}),
-//        primaryButton: .init(label: "Sair", style: .primary, action: {})
-//    )
-//}
-//
-//#Preview("Sem ícone, sem mensagem") {
-//    PopUpview(
-//        title: "Encontro salvo!",
-//        secondaryButton: .init(label: "Cancelar", style: .secondary, action: {}),
-//        primaryButton: .init(label: "Sair", style: .primary, action: {})
-//    )
-//}
+#Preview("Confirmação (2 botões)") {
+    PopUpview(
+        icon: "exclamationmark.triangle.fill",
+        title: "Voltar para o início?",
+        message: "Você vai sair dessa etapa e voltar para a tela inicial.",
+        secondaryButton: .init(label: "Cancelar", style: .secondary, action: {}),
+        primaryButton: .init(label: "Sair", style: .primary, action: {})
+    )
+}
+
+#Preview("Aviso simples (1 botão)") {
+    PopUpview(
+        icon: "exclamationmark.circle.fill",
+        title: "Preencha todos os campos",
+        message: "Selecione uma opção antes de continuar.",
+        secondaryButton: .init(label: "Cancelar", style: .secondary, action: {}),
+        primaryButton: .init(label: "Sair", style: .primary, action: {})
+    )
+}
+
+#Preview("Sem ícone, sem mensagem") {
+    PopUpview(
+        title: "Encontro salvo!",
+        secondaryButton: .init(label: "Cancelar", style: .secondary, action: {}),
+        primaryButton: .init(label: "Sair", style: .primary, action: {})
+    )
+}

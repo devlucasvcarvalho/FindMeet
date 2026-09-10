@@ -56,9 +56,11 @@ struct PassPhoneView: View {
                 path.append(nextRoute)
             } label: {
                 Text("Estou pronto!")
-                    .font(.custom("Fredoka-Medium", size: 22))
-                    .frame(maxWidth: .infinity)
+                    .font(.custom("Fredoka-Medium", size: 20))
                     .padding()
+                    .foregroundStyle(.white)
+                    .padding(.vertical, 5)
+                    .padding(.horizontal, 20)
                     .background(buttonColor)
                     .clipShape(Capsule())
             }
