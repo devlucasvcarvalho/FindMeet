@@ -33,12 +33,12 @@ struct SelectOptionView<T: CarouselItem>: View {
                 Spacer()
                 
                 Text(step)
-                    .font(.title2)
+                    .font(.custom("Fredoka-Medium", size: 20))
                     .foregroundStyle(.secondary)
                 
                 Text(question)
                     .padding(20)
-                    .font(.title)
+                    .font(.custom("Fredoka-Medium", size: 30))
                     .bold()
                     .multilineTextAlignment(.center)
                 
@@ -55,12 +55,12 @@ struct SelectOptionView<T: CarouselItem>: View {
                     } label: {
                         HStack(spacing: 8) {
                                 Text("Selecionar")
-                                    .font(.title3)
+                                .font(.custom("Fredoka-Medium", size: 22))
                                     .fontWeight(.bold)
                                     .minimumScaleFactor(0.8) // Permite que o texto diminua um pouco se a tela for muito pequena
                                 
                                 Image(systemName: "arrow.right")
-                                    .font(.system(.title3, design: .rounded))
+                                .font(.custom("Fredoka-Medium", size: 22))
                                     .fontWeight(.bold)
                             }
                             .frame(maxWidth: 250) // <--- Deixa responsivo para qualquer largura de tela
@@ -85,7 +85,7 @@ struct SelectOptionView<T: CarouselItem>: View {
                                 showBackConfirmation = true
                             } label: {
                                 Image(systemName: "chevron.left")
-                                    .font(.system(size: 16, weight: .bold))
+                                    .font(.custom("Fredoka-Medium", size: 20))
                                     .foregroundStyle(Color.black)
                             }
                         }
