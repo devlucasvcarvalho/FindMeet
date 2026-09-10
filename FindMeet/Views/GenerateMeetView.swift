@@ -60,7 +60,7 @@ struct GenerateMeetView: View {
                         .accessibilityHint("Clique no botão para criar encontro")
                     
                     if showTapHint {
-                        Text("Clique aqui")
+                        Text("Clique na cereja")
                             .font(.subheadline.bold())
                             .foregroundColor(.secondary)
                             .transition(.opacity)

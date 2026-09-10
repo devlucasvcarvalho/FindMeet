@@ -12,7 +12,7 @@ struct Meet {
     @Guide(description: "An exciting name for the first date idea.")
     let title: String
 
-    @Guide(description: "State the time of day (morning, evening, night, but in portuguese BR and lower case).")
+    @Guide(description: "State the time of day (morning, evening, night, but in portuguese BR (pt-BR) and lower case).")
     let time: String
     
     @Guide(description: "A brief and engaging description of the first date.")
