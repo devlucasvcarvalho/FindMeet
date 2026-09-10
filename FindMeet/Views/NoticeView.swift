@@ -45,10 +45,10 @@ struct NoticeView: View {
                     .font(.largeTitle)
                     .bold()
                 
-                Text("Decidam quem será o primeiro a selecionar as preferencias para o encontro. Mas atenção, para ficar mais divertido, não deixe a outra pessoa saber o que você escolheu! Depois, passaremos o celular para ela.")
+                Text("Decidam quem será o primeiro a selecionar as preferencias para o encontro. Mas atenção, para ficar mais divertido, não deixe a outra pessoa saber o que você escolheu! Depois, passe o celular para ela.")
                     .font(.headline)
                     .foregroundColor(.secondary)
-                    .multilineTextAlignment(.center)
+                    .multilineTextAlignment(.leading)
                     .padding(.horizontal, 30)
                 
                 //Spacer()

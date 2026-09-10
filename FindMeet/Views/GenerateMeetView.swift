@@ -50,7 +50,7 @@ struct GenerateMeetView: View {
             .navigationBarTitleDisplayMode(.inline)
             .navigationDestination(for: MeetFlowRoute.self) { route in
                 switch route {
-                    // MARK: - Fluxo Pessoa 1
+                    
                 case .notice:
                         NoticeView(
                             path: $path,
