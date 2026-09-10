@@ -23,7 +23,7 @@ struct PassPhoneView: View {
                 path.removeAll()
             } label: {
                 Image(systemName: "chevron.left")
-                    .font(.system(size: 18, weight: .bold))
+                    .font(.custom("Fredoka-SemiBold", size: 18))
                     .foregroundColor(.black)
                     .frame(width: 48, height: 48)
                     .background(buttonCircleColor)
@@ -41,11 +41,11 @@ struct PassPhoneView: View {
                 .foregroundColor(buttonColor)
             
             Text("Sua vez acabou!")
-                .font(.largeTitle)
+                .font(.custom("Fredoka-Medium", size: 35))
                 .bold()
             
             Text("Passe o celular para a outra pessoa para que ela também possa escolher suas sugestões.")
-                .font(.title3)
+                .font(.custom("Fredoka-Medium", size: 18))
                 .foregroundColor(.secondary)
                 .multilineTextAlignment(.center)
                 .padding(.horizontal, 40)
@@ -56,7 +56,7 @@ struct PassPhoneView: View {
                 path.append(nextRoute)
             } label: {
                 Text("Estou pronto!")
-                    .font(.title3.bold())
+                    .font(.custom("Fredoka-Medium", size: 22))
                     .frame(maxWidth: .infinity)
                     .padding()
                     .background(buttonColor)

@@ -31,6 +31,7 @@ struct LoadingView: View {
                 } label: {
                     Image(systemName: "chevron.left")
                         .font(.system(size: 18, weight: .bold))
+                        .font(.custom("Fredoka-Medium", size: 20))
                         .foregroundColor(.black)
                         .frame(width: 48, height: 48)
                         .background(buttonCircleColor)
@@ -46,8 +47,8 @@ struct LoadingView: View {
             
             VStack(spacing: 40) {
                 Text("Gerando ideias de\ndate")
-                    .font(.system(size: 32, weight: .bold, design: .rounded))
-                    .foregroundColor(.primary)
+                    .font(.custom("Fredoka-SemiBold", size: 35))
+                    .foregroundColor(.black)
                     .multilineTextAlignment(.center)
                     .lineSpacing(4)
                 

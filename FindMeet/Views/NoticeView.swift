@@ -25,7 +25,7 @@ struct NoticeView: View {
                         path.removeAll() // Volta para a tela inicial
                     } label: {
                         Image(systemName: "chevron.left")
-                            .font(.system(size: 18, weight: .bold))
+                            .font(.custom("Fredoka-Medium", size: 20))
                             .foregroundColor(.black)
                             .frame(maxWidth: 48, maxHeight: 48)
                             .background(buttonCircleColor)
@@ -42,11 +42,11 @@ struct NoticeView: View {
                 Image("PassPhone")
                 
                 Text("Hora de Escolher!")
-                    .font(.largeTitle)
+                    .font(.custom("Fredoka-Medium", size: 35))
                     .bold()
                 
                 Text("Decidam quem será o primeiro a selecionar as preferencias para o encontro. Mas atenção, para ficar mais divertido, não deixe a outra pessoa saber o que você escolheu! Depois, passe o celular para ela.")
-                    .font(.headline)
+                    .font(.custom("Fredoka-Medium", size: 19))
                     .foregroundColor(.secondary)
                     .multilineTextAlignment(.leading)
                     .padding(.horizontal, 30)
@@ -57,7 +57,7 @@ struct NoticeView: View {
                     path.append(nextRoute)
                 } label: {
                     Text("Vamos lá!")
-                        .font(.title3.bold())
+                        .font(.custom("Fredoka-Medium", size: 20))
                         .frame(maxWidth: .infinity)
                         .padding()
                         .background(buttonColor)

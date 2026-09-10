@@ -26,17 +26,17 @@ struct SavedCardsView: View {
             
             VStack(alignment: .leading, spacing: 10) {
                 Text(title)
-                    .font(.system(size: 28, weight: .bold, design: .rounded))
+                    .font(.custom("Fredoka-SemiBold", size: 30))
                     .foregroundColor(.black)
                     .lineLimit(1)
                 
                 Text(subtitle)
-                    .font(.system(size: 18, weight: .semibold, design: .rounded))
+                    .font(.custom("Fredoka-Medium", size: 18))
                     .foregroundColor(.black)
                     .lineLimit(1)
                 
                 Text(description)
-                    .font(.system(size: 15, design: .rounded))
+                    .font(.custom("Fredoka-Regular", size: 15))
                     .foregroundColor(.black.opacity(0.8))
                     .lineLimit(2)
                     .multilineTextAlignment(.leading)
@@ -50,7 +50,7 @@ struct SavedCardsView: View {
                 } label: {
                     Text("Concluir")
                         .foregroundStyle(Color.black)
-                        .font(.system(size: 16, weight: .bold, design: .rounded))
+                        .font(.custom("Fredoka-Medium", size: 16))
                         .frame(maxWidth: .infinity)
                         .padding(.vertical, 12)
                         .background(buttonColor)
@@ -79,7 +79,7 @@ struct SavedCardsView: View {
 #Preview {
     SavedCardsView(
         title: "Cinema em Casa",
-        subtitle: "noite",
+        subtitle: "Noite",
         description: "Um cinema pertinho de casa, com filmes em lançamento",
         imageName: "Mascote"
     )
