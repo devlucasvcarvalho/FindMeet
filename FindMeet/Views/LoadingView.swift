@@ -51,7 +51,7 @@ struct LoadingView: View {
                     .multilineTextAlignment(.center)
                     .lineSpacing(4)
                 
-                Image("gerando3")
+                Image("gerando")
                     .resizable()
                     .scaledToFit()
                     .frame(width: 360, height: 300)
