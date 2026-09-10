@@ -13,32 +13,69 @@ struct PassPhoneView: View {
     
     @Environment(\.dismiss) var dismiss
     private let buttonCircleColor = Color.black.opacity(0.05)
-    
     private let buttonColor: Color = Color(red: 144/255, green: 3/255, blue: 3/255)
     
+    // Estado para controlar a troca de lado
+    @State private var isSwapped = false
+    
     var body: some View {
-        VStack(spacing: 30) {
+        VStack(spacing: 20) {
             HStack {
-            Button {
-                path.removeAll()
-            } label: {
-                Image(systemName: "chevron.left")
-                    .font(.custom("Fredoka-SemiBold", size: 18))
-                    .foregroundColor(.black)
-                    .frame(width: 48, height: 48)
-                    .background(buttonCircleColor)
-                    .clipShape(Circle())
+                Button {
+                    path.removeAll()
+                } label: {
+                    Image(systemName: "chevron.left")
+                        .font(.custom("Fredoka-SemiBold", size: 18))
+                        .foregroundColor(.black)
+                        .frame(width: 48, height: 48)
+                        .background(buttonCircleColor)
+                        .clipShape(Circle())
                 }
-            Spacer() // Empurra o botão para a esquerda
-        }
-                    .padding(.top, 10)
-                    .padding(.horizontal, 24)
-                        
+                Spacer()
+            }
+            .padding(.top, 10)
+            .padding(.horizontal, 24)
+            
             Spacer()
             
-            Image("PassPhone")
-                .font(.system(size: 80))
-                .foregroundColor(buttonColor)
+            // Container para a animação
+            ZStack {
+                // Cereja de Óculos
+                Image("eh")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 190, height: 230)
+                    .scaleEffect(isSwapped ? 0.9 : 1.1) // Zoom sutil para dar efeito de profundidade
+                    .offset(
+                        x: isSwapped ? 60 : -60,
+                        y: isSwapped ? -15 : 20 // Deslocamento em Y diferenciado para criar arco
+                    )
+                    .zIndex(isSwapped ? 0 : 1)
+                
+                // Cereja Dormindo
+                Image("humm")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 180, height: 220)
+                    .scaleEffect(isSwapped ? 1.1 : 0.9)
+                    .offset(
+                        x: isSwapped ? -60 : 60,
+                        y: isSwapped ? 20 : -15
+                    )
+                    .zIndex(isSwapped ? 1 : 0)
+            }
+            .frame(width: 360, height: 300)
+            .onAppear {
+                // Animação mais rápida (0.8s) e contínua
+                withAnimation(
+                    .easeInOut(duration: 1.5)
+                    .repeatForever(autoreverses: true)
+                ) {
+                    isSwapped.toggle()
+                }
+            }
+            
+            Spacer()
             
             Text("Sua vez acabou!")
                 .font(.custom("Fredoka-Medium", size: 35))
@@ -67,9 +104,10 @@ struct PassPhoneView: View {
             .padding(.bottom, 40)
         }
         .toolbar(.hidden, for: .tabBar)
-        .navigationBarBackButtonHidden(true) // Evita que a pessoa 2 volte e mude a da pessoa 1 facilmente
+        .navigationBarBackButtonHidden(true)
     }
 }
+
 // MARK: - Previews
 
 #Preview("Passar Celular") {

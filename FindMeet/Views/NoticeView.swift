@@ -39,7 +39,7 @@ struct NoticeView: View {
                 //Spacer()
                 
                 // Ícone do SF Symbols corrigido (ou substitua por uma imagem do Assets ex: Image("SuaImagem"))
-                Image("PassPhone")
+                Image("escolher")
                 
                 Text("Hora de Escolher!")
                     .font(.custom("Fredoka-Medium", size: 35))
