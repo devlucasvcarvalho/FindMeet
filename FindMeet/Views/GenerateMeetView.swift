@@ -83,21 +83,31 @@ struct GenerateMeetView: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar(shouldShowTabBar ? .visible : .hidden, for: .tabBar)
             .task {
+                if AppSessionState.hasShownLaunchIntro {
+                    // Já mostrou antes nesta sessão: pula direto pro estado final
+                    isExpanded = true
+                    isPulsing = true
+                    showTapHint = true
+                    return
+                }
+                
                 isExpanded = false
                 isPulsing = false
                 showTapHint = false
                 
-                isPulsing = true  // já anima sozinho via .animation(value: isPulsing)
+                isPulsing = true
                 
                 try? await Task.sleep(nanoseconds: 1_500_000_000)
                 guard !Task.isCancelled else { return }
-                isExpanded = true  // já anima sozinho via .animation(value: isExpanded)
+                isExpanded = true
                 
                 try? await Task.sleep(nanoseconds: 500_000_000)
                 guard !Task.isCancelled else { return }
                 withAnimation(.easeIn) {
                     showTapHint = true
                 }
+                
+                AppSessionState.hasShownLaunchIntro = true
             }            .navigationDestination(for: MeetFlowRoute.self) { route in
                 switch route {
                     // MARK: - Fluxo Pessoa 1
