@@ -60,17 +60,15 @@ struct PassPhoneView: View {
                     .frame(maxWidth: .infinity)
                     .padding()
                     .background(buttonColor)
-                    .foregroundColor(.white)
-                    .cornerRadius(15)
-                    .padding(.horizontal, 30)
+                    .clipShape(Capsule())
             }
-            .padding(.bottom, 40)
+            .padding(.bottom)
         }
         .toolbar(.hidden, for: .tabBar)
         .navigationBarBackButtonHidden(true) // Evita que a pessoa 2 volte e mude a da pessoa 1 facilmente
     }
 }
-// MARK: - Previews
+
 
 #Preview("Passar Celular") {
     @Previewable @State var path: [MeetFlowRoute] = []

@@ -112,10 +112,6 @@ struct SelectOptionView<T: CarouselItem>: View {
     }
 }
 
-
-
-// MARK: - Previews
-
 //#Preview("Estilo") {
 //    @Previewable @State var flow = MeetFlowState()
 //    @Previewable @State var path: [MeetFlowRoute] = []
@@ -129,8 +125,6 @@ struct SelectOptionView<T: CarouselItem>: View {
 //        nextRoute: .selectTime
 //    )
 //}
-
-// MARK: - Previews
 
 #Preview("Estilo - Pessoa 1") {
     @Previewable @State var flow = MeetFlowState()
