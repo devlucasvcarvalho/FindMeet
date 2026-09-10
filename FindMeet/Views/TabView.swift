@@ -25,7 +25,7 @@ struct TelaView: View {
             }
             .tint(Color(iconColor))
         }
-        //.background(Color(backgroundColor))
+    
         
     }
 

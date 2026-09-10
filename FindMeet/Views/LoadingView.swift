@@ -23,25 +23,25 @@ struct LoadingView: View {
 
     var body: some View {
         VStack {
-            HStack {
-                Button {
-                    withAnimation(.spring(response: 0.3, dampingFraction: 0.8)) {
-                        showBackAlert = true
-                    }
-                } label: {
-                    Image(systemName: "chevron.left")
-                        .font(.system(size: 18, weight: .bold))
-                        .font(.custom("Fredoka-Medium", size: 20))
-                        .foregroundColor(.black)
-                        .frame(width: 48, height: 48)
-                        .background(buttonCircleColor)
-                        .clipShape(Circle())
-                }
-                
-                Spacer()
-            }
-            .padding(.top, 10)
-            .padding(.horizontal, 24)
+//            HStack {
+//                Button {
+//                    withAnimation(.spring(response: 0.3, dampingFraction: 0.8)) {
+//                        showBackAlert = true
+//                    }
+//                } label: {
+//                    Image(systemName: "chevron.left")
+//                        .font(.system(size: 18, weight: .bold))
+//                        .font(.custom("Fredoka-Medium", size: 20))
+//                        .foregroundColor(.black)
+//                        .frame(width: 48, height: 48)
+//                        .background(buttonCircleColor)
+//                        .clipShape(Circle())
+//                }
+//                
+//                Spacer()
+//            }
+//            .padding(.top, 10)
+//            .padding(.horizontal, 24)
             
             Spacer()
             
@@ -70,7 +70,7 @@ struct LoadingView: View {
             Spacer()
             Spacer()
         }
-//        .background(Color.white.ignoresSafeArea())
+
         .navigationBarBackButtonHidden(true)
         .onAppear {
             isAnimating = true
