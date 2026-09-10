@@ -9,13 +9,21 @@ import SwiftUI
 
 struct SelectOptionView<T: CarouselItem>: View {
     
-    @Binding var path: NavigationPath
+    @Binding var path: [MeetFlowRoute]
+    
     
     let step: String
     let question: String
     let items: [T]
     @Binding var selected: T
-    let nextRoute: MeetFlowRoute  
+    let nextRoute: MeetFlowRoute
+    
+    var backConfirmationTitle: String? = nil
+    var backConfirmationMessage: String? = nil
+    var onConfirmBack: (() -> Void)? = nil
+       
+       // NOVO: controla se o alert está visível
+    @State private var showBackConfirmation = false
     
     private let buttonColor: Color = Color(red: 144/255, green: 3/255, blue: 3/255)
     
@@ -69,8 +77,41 @@ struct SelectOptionView<T: CarouselItem>: View {
             }
         }
         .toolbar(.hidden, for: .tabBar)
+        .navigationBarBackButtonHidden(backConfirmationTitle != nil)
+        .toolbar {
+                    if backConfirmationTitle != nil {
+                        ToolbarItem(placement: .navigationBarLeading) {
+                            Button {
+                                showBackConfirmation = true
+                            } label: {
+                                Image(systemName: "chevron.left")
+                                    .font(.system(size: 16, weight: .bold))
+                                    .foregroundStyle(Color.black)
+                            }
+                        }
+                    }
+                }
+        .appPopup(isPresented: $showBackConfirmation) {
+                  PopUpview(
+                      icon: "exclamationmark.triangle.fill",
+                      title: backConfirmationTitle ?? "",
+                      message: backConfirmationMessage,
+                      secondaryButton: .init(label: "Cancelar", style: .secondary, action: {
+                          showBackConfirmation = false
+                      }),
+                      primaryButton: .init(label: "Sair", style: .primary, action: {
+                          showBackConfirmation = false
+                          onConfirmBack?()
+                      }),
+                      onTapBackground: {
+                          showBackConfirmation = false
+                      }
+                  )
+              }
     }
 }
+
+
 
 // MARK: - Previews
 
@@ -92,7 +133,7 @@ struct SelectOptionView<T: CarouselItem>: View {
 
 #Preview("Estilo - Pessoa 1") {
     @Previewable @State var flow = MeetFlowState()
-    @Previewable @State var path = NavigationPath()
+    @Previewable @State var path: [MeetFlowRoute] = []
     
     SelectOptionView(
         path: $path,
@@ -106,7 +147,7 @@ struct SelectOptionView<T: CarouselItem>: View {
 
 #Preview("Horário - Pessoa 1") {
     @Previewable @State var flow = MeetFlowState()
-    @Previewable @State var path = NavigationPath() 
+    @Previewable @State var path: [MeetFlowRoute] = []
     
     SelectOptionView(
         path: $path,

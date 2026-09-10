@@ -11,7 +11,8 @@ import SwiftUI
 struct LoadingView: View {
 
     var flow: MeetFlowState
-    @Binding var path: NavigationPath
+    @Binding var path: [MeetFlowRoute]
+
     @State private var errorMessage: String?
     @State private var isAnimating = false
     @Environment(\.dismiss) var dismiss
@@ -23,7 +24,7 @@ struct LoadingView: View {
         VStack {
             HStack {
                 Button {
-                    path = NavigationPath()
+                    dismiss()
                 } label: {
                     Image(systemName: "chevron.left")
                         .font(.system(size: 18, weight: .bold))
@@ -35,6 +36,15 @@ struct LoadingView: View {
                 
                 Spacer()
                 
+                Image("gerando")
+                    .resizable()
+                    .scaledToFill()
+                    .frame(width: 44, height: 44)
+                    .clipShape(Circle())
+                    .overlay(
+                        Circle()
+                            .stroke(Color.black.opacity(0.1), lineWidth: 1)
+                    )
             }
             .padding(.top, 10)
             .padding(.horizontal, 24)
@@ -80,7 +90,7 @@ struct LoadingView: View {
         do {
             let result = try await generator.generateMeet(for: flow.promptQuery)
             flow.suggestion = result
-            path.append(MeetFlowRoute.results)
+            path.append(.results)
         } catch {
             errorMessage = error.localizedDescription
         }
@@ -88,10 +98,10 @@ struct LoadingView: View {
 }
 
 #Preview {
-    @Previewable @State var path = NavigationPath()
+    @Previewable @State var samplePath: [MeetFlowRoute] = []
     
     LoadingView(
         flow: MeetFlowState(),
-        path: $path
+        path: $samplePath
     )
 }

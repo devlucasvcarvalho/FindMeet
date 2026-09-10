@@ -65,19 +65,17 @@ struct CardView: View {
             // MARK: Ideas
             
             ScrollView(.horizontal, showsIndicators: false) {
-                LazyHGrid(rows: [GridItem(.flexible())], spacing: 8) {
-                        ForEach(card.ideas, id: \.self) { idea in
-                            Text(idea)
-                                .font(.system(.subheadline, weight: .semibold))
-                                .padding(.horizontal, 15)
-                                .padding(.vertical, 6)
-                                .background(ideasColor)
-                                .clipShape(Capsule())
-                        }
+                HStack {
+                    ForEach(card.ideas, id: \.self) { idea in
+                        Text(idea)
+                            .font(.system(.subheadline, weight: .semibold))
+                            .padding(.horizontal, 15)
+                            .padding(.vertical, 6)
+                            .background(ideasColor)
+                            .clipShape(Capsule())
                     }
+                }
             }
-            .frame(height: 36)
-            
             .accessibilityLabel("Ideias inclusas: \(card.ideas.joined(separator: ", "))")
             .accessibilityElement(children: .ignore)
             
@@ -100,15 +98,14 @@ struct CardView: View {
             .accessibilityLabel("Escolher date")
             .accessibilityHint("Confirma a seleção da opção \(card.title)")
         }
-        .padding(.vertical, 20)
-        .padding(.horizontal, 32)
+        .padding(15)
         .background(
             RoundedRectangle(cornerRadius: 32)
                 .fill(backgroundColor)
                 .shadow(color: Color.black.opacity(0.15), radius: 10, x: 10, y: 10)
         )
         .padding(.horizontal)
-        .frame(maxWidth: 320, maxHeight: 350)
+        .frame(maxWidth: 250, maxHeight: 350)
     }
     
     func getPersistedModel(from meet: Meet) -> SavedData {
@@ -132,6 +129,7 @@ struct CardView: View {
 }
 
 // MARK: - Preview
+
 #Preview {
     CardView(
         index: 0,
