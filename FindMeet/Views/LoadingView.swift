@@ -11,10 +11,12 @@ import SwiftUI
 struct LoadingView: View {
 
     var flow: MeetFlowState
-    @Binding var path: NavigationPath
+    @Binding var path: [MeetFlowRoute]
+
     @State private var errorMessage: String?
     @State private var isAnimating = false
     @Environment(\.dismiss) var dismiss
+    @State private var showBackAlert = false
 
     private let generator: MeetGenerating = FoundationModelsMeetGenerator()
     private let buttonCircleColor = Color.black.opacity(0.05)
@@ -23,7 +25,9 @@ struct LoadingView: View {
         VStack {
             HStack {
                 Button {
-                    path = NavigationPath()
+                    withAnimation(.spring(response: 0.3, dampingFraction: 0.8)) {
+                        showBackAlert = true
+                    }
                 } label: {
                     Image(systemName: "chevron.left")
                         .font(.system(size: 18, weight: .bold))
@@ -35,6 +39,15 @@ struct LoadingView: View {
                 
                 Spacer()
                 
+                Image("gerando")
+                    .resizable()
+                    .scaledToFill()
+                    .frame(width: 44, height: 44)
+                    .clipShape(Circle())
+                    .overlay(
+                        Circle()
+                            .stroke(Color.black.opacity(0.1), lineWidth: 1)
+                    )
             }
             .padding(.top, 10)
             .padding(.horizontal, 24)
@@ -74,13 +87,32 @@ struct LoadingView: View {
         .task {
             await generateSuggestion()
         }
+        .appPopup(isPresented: $showBackAlert) {
+                    PopUpview(
+                        icon: "exclamationmark.triangle.fill",
+                        title: "Voltar para a seleção?",
+                        message: "Tem certeza que deseja voltar para a tela de seleção de horário?",
+                        secondaryButton: .init(label: "Cancelar", style: .secondary, action: {
+                            withAnimation { showBackAlert = false }
+                        }),
+                        primaryButton: .init(label: "Voltar", style: .primary, action: {
+                            withAnimation { showBackAlert = false }
+                            // Remove a tela de loading do path, retornando para .selectTimeUser2
+                            path.removeLast()
+                        }),
+                        onTapBackground: {
+                            withAnimation { showBackAlert = false }
+                        }
+                    )
+                }
     }
+        
 
     private func generateSuggestion() async {
         do {
             let result = try await generator.generateMeet(for: flow.promptQuery)
             flow.suggestion = result
-            path.append(MeetFlowRoute.results)
+            path.append(.results)
         } catch {
             errorMessage = error.localizedDescription
         }
@@ -88,10 +120,10 @@ struct LoadingView: View {
 }
 
 #Preview {
-    @Previewable @State var path = NavigationPath()
+    @Previewable @State var samplePath: [MeetFlowRoute] = []
     
     LoadingView(
         flow: MeetFlowState(),
-        path: $path
+        path: $samplePath
     )
 }

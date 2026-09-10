@@ -13,7 +13,7 @@ struct GenerateMeetView: View {
     let backgroundColor: Color = Color(red: 250/255, green: 221/255, blue: 221/255)
     
     @State private var flow = MeetFlowState()
-    @State private var path = NavigationPath()
+    @State private var path: [MeetFlowRoute] = []
     @State private var isAnimating = false // 
     
     var body: some View {
@@ -27,7 +27,7 @@ struct GenerateMeetView: View {
                         
                     
                     Button {
-                        path.append(MeetFlowRoute.notice)
+                        path.append(.notice)
                     } label: {
                         Image("cerejeart")
                             .resizable()
@@ -50,7 +50,7 @@ struct GenerateMeetView: View {
             .navigationBarTitleDisplayMode(.inline)
             .navigationDestination(for: MeetFlowRoute.self) { route in
                 switch route {
-                    // MARK: - Fluxo Pessoa 1
+                    
                 case .notice:
                         NoticeView(
                             path: $path,
@@ -60,11 +60,15 @@ struct GenerateMeetView: View {
                     case .selectStyleUser1:
                         SelectOptionView(
                             path: $path,
-                            step: "1/2",
-                            question: "Qual atividade tem \n em mente?",
-                            items: MeetStyleEnum.allCases,
-                            selected: $flow.user1SelectedStyle,
-                            nextRoute: .selectTimeUser1
+                                   step: "1/2",
+                                   question: "Qual atividade tem \n em mente?",
+                                   items: MeetStyleEnum.allCases,
+                                   selected: $flow.user1SelectedStyle,
+                                   nextRoute: .selectTimeUser1,
+                                   // NOVO: as 3 linhas abaixo
+                                   backConfirmationTitle: "Voltar para o início?",
+                                   backConfirmationMessage: "Você vai perder os dados já preenchidos e voltar para a tela inicial.",
+                                   onConfirmBack: { path.removeAll() }
                         )
                         
                     case .selectTimeUser1:
@@ -88,11 +92,15 @@ struct GenerateMeetView: View {
                     case .selectStyleUser2:
                         SelectOptionView(
                             path: $path,
-                            step: "1/2",
-                            question: "Sua vez! Qual atividade tem \n em mente?",
-                            items: MeetStyleEnum.allCases,
-                            selected: $flow.user2SelectedStyle,
-                            nextRoute: .selectTimeUser2
+                                    step: "1/2",
+                                    question: "Sua vez! Qual atividade tem \n em mente?",
+                                    items: MeetStyleEnum.allCases,
+                                    selected: $flow.user2SelectedStyle,
+                                    nextRoute: .selectTimeUser2,
+                                    // NOVO: as 3 linhas abaixo
+                                    backConfirmationTitle: "Tem certeza que deseja voltar??",
+                                    backConfirmationMessage: "Isso irá fazer com que você volte para as perguntas do(a) seu parceiro",
+                                    onConfirmBack: { path.removeLast(2) }
                         )
                         
                     case .selectTimeUser2:

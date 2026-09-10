@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct NoticeView: View {
-    @Binding var path: NavigationPath
+    @Binding var path: [MeetFlowRoute]
         let nextRoute: MeetFlowRoute
         
         @Environment(\.dismiss) var dismiss
@@ -22,7 +22,7 @@ struct NoticeView: View {
                 
                 HStack {
                     Button {
-                        path = NavigationPath() // Volta para a tela inicial
+                        path.removeAll() // Volta para a tela inicial
                     } label: {
                         Image(systemName: "chevron.left")
                             .font(.system(size: 18, weight: .bold))
@@ -45,10 +45,10 @@ struct NoticeView: View {
                     .font(.largeTitle)
                     .bold()
                 
-                Text("Decidam quem será o primeiro a selecionar as preferencias para o encontro. Mas atenção, para ficar mais divertido, não deixe a outra pessoa saber o que você escolheu! Depois, passaremos o celular para ela.")
+                Text("Decidam quem será o primeiro a selecionar as preferencias para o encontro. Mas atenção, para ficar mais divertido, não deixe a outra pessoa saber o que você escolheu! Depois, passe o celular para ela.")
                     .font(.headline)
                     .foregroundColor(.secondary)
-                    .multilineTextAlignment(.center)
+                    .multilineTextAlignment(.leading)
                     .padding(.horizontal, 30)
                 
                 //Spacer()
@@ -65,7 +65,6 @@ struct NoticeView: View {
                         .cornerRadius(15)
                         .padding(.horizontal, 30)
                 }
-                .accessibilityHint("Clique para começar a escolher suas preferências!")
                 .padding(.bottom, 40)
             }
             .navigationBarBackButtonHidden(true)
@@ -75,7 +74,7 @@ struct NoticeView: View {
     // MARK: - Previews
 
     #Preview("Aviso Pessoa 1") {
-        @Previewable @State var path = NavigationPath()
+        @Previewable @State var path: [MeetFlowRoute] = []
         
         NavigationStack {
             NoticeView(

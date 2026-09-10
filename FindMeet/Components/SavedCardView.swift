@@ -69,6 +69,7 @@ struct SavedCardsView: View {
                 .resizable()
                 .scaledToFit()
                 .frame(width: 160, height: 130)
+
         }
         .frame(width: 360, height: 210)
         .shadow(color: Color.black.opacity(0.12), radius: 10, x: 0, y: 4)
