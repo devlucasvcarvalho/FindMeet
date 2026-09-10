@@ -84,10 +84,16 @@ struct PopUpview: View {
                 .font(.headline)
                 .frame(maxWidth: .infinity)
                 .padding(.vertical, 12)
+//                .foregroundStyle(.white)
+//                .font(.subheadline.weight(.bold))
+//                .frame(maxWidth: 200)
+//                .frame(maxHeight: 50)
+//                .background(buttonColor)
+//                .clipShape(Capsule())
         }
         .foregroundStyle(button.style == .primary ? .white : .primary)
         .background(button.style == .primary ? primaryColor : Color.gray.opacity(0.15))
-        .clipShape(RoundedRectangle(cornerRadius: 12))
+        .clipShape(Capsule())
     }
 }
 

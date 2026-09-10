@@ -56,21 +56,22 @@ struct PassPhoneView: View {
                 path.append(nextRoute)
             } label: {
                 Text("Estou pronto!")
-                    .font(.title3.bold())
-                    .frame(maxWidth: .infinity)
-                    .padding()
+                    .foregroundStyle(.white)
+                    .font(.title3.weight(.bold))
+                    .padding(.vertical, 20)
+                    .padding(.horizontal, 25)
+                   // .frame(maxWidth: 200)
+                    //.frame(maxHeight: 70)
                     .background(buttonColor)
-                    .foregroundColor(.white)
-                    .cornerRadius(15)
-                    .padding(.horizontal, 30)
+                    .clipShape(Capsule())
             }
-            .padding(.bottom, 40)
+            .padding(.bottom)
         }
         .toolbar(.hidden, for: .tabBar)
         .navigationBarBackButtonHidden(true) // Evita que a pessoa 2 volte e mude a da pessoa 1 facilmente
     }
 }
-// MARK: - Previews
+
 
 #Preview("Passar Celular") {
     @Previewable @State var path: [MeetFlowRoute] = []
