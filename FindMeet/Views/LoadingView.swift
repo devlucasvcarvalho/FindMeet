@@ -47,7 +47,7 @@ struct LoadingView: View {
             VStack(spacing: 40) {
                 Text("Gerando ideias de\ndate")
                     .font(.system(size: 32, weight: .bold, design: .rounded))
-                    .foregroundColor(.black)
+                    .foregroundColor(.primary)
                     .multilineTextAlignment(.center)
                     .lineSpacing(4)
                 
@@ -69,7 +69,7 @@ struct LoadingView: View {
             Spacer()
             Spacer()
         }
-        .background(Color.white.ignoresSafeArea())
+//        .background(Color.white.ignoresSafeArea())
         .navigationBarBackButtonHidden(true)
         .onAppear {
             isAnimating = true

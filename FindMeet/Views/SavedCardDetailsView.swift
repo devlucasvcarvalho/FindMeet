@@ -105,4 +105,3 @@ struct CardDetailView: View {
         .navigationBarBackButtonHidden(true)
     }
 }
-
