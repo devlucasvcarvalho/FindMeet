@@ -103,6 +103,8 @@ struct PassPhoneView: View {
             }
             .padding(.bottom, 40)
         }
+        .appBackground()
+        .ignoresSafeArea(edges: .all)
         .toolbar(.hidden, for: .tabBar)
         .navigationBarBackButtonHidden(true)
     }

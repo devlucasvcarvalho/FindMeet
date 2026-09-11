@@ -62,6 +62,7 @@ struct NoticeView: View {
             .padding(.bottom, 40)
         }
         .appBackground()
+        .ignoresSafeArea(edges: .all)
         .opacity(isVisible ? 1 : 0)
         .offset(y: isVisible ? 0 : 50)
         .onAppear {

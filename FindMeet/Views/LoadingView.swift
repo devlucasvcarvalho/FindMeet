@@ -70,6 +70,7 @@ struct LoadingView: View {
             Spacer()
         }
         .appBackground()
+        .ignoresSafeArea(edges: .all)
         .navigationBarBackButtonHidden(true)
         .onAppear {
             isAnimating = true

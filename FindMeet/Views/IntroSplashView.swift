@@ -42,6 +42,7 @@ struct IntroSplashView: View {
         }
         .padding()
         .appBackground()
+        .ignoresSafeArea(edges: .all)
         .toolbar(.hidden, for: .tabBar)
         .task {
             isPulsing = true

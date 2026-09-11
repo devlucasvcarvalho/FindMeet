@@ -64,6 +64,7 @@ struct SavedMeetView: View {
                 }
             }
             .appBackground()
+            .ignoresSafeArea(edges: .all)
             .appPopup(isPresented: $showAlert) {
                 PopUpview(
                     title: "Tem certeza que deseja concluir esse Date?",

@@ -28,7 +28,7 @@ final class MeetFlowState {
         """
         Pessoa 1 quer: Estilo do encontro: \(user1SelectedStyle). Período do encontro: \(user1SelectedTime).
         Pessoa 2 quer: Estilo do encontro: \(user2SelectedStyle). Período do encontro: \(user2SelectedTime).
-        Gere opções de encontro que agradem as duas pessoas, combinando essas preferências.
+        Gere opções de encontro que agradem as duas pessoas, combinando essas preferências. Todas as respostas em pt BR.
     """
     }
 }
