@@ -80,6 +80,7 @@ struct GenerateMeetView: View {
                 }
                 .padding()
             }
+            .appBackground()
             .navigationBarTitleDisplayMode(.inline)
             .toolbar(shouldShowTabBar ? .visible : .hidden, for: .tabBar)
             .task {

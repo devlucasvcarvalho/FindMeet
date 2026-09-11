@@ -11,7 +11,7 @@ struct AppBackgroundView: View {
     @Environment(\.colorScheme) private var colorScheme
     
     var body: some View {
-        Image(colorScheme == .dark ? "BGrosadark" : "BGrosalight")
+        Image(colorScheme == .dark ? "BGpinkdark" : "BGpinklight")
             .resizable()
             .scaledToFill()
             .ignoresSafeArea()
