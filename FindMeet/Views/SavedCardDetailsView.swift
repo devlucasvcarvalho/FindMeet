@@ -101,7 +101,7 @@ struct CardDetailView: View {
             .padding(.horizontal, 24)
             .padding(.bottom, 30)
         }
-        .background(Color.white.ignoresSafeArea())
+        .appBackground()
         .navigationBarBackButtonHidden(true)
     }
 }

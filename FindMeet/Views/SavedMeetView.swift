@@ -23,7 +23,6 @@ struct SavedMeetView: View {
 
     @State private var selectedTab: Int = 1
     
-    // Controle do Alert Customizado
     @State private var showAlert: Bool = false
     @State private var selectedCardToConclude: SavedData? = nil
     
@@ -64,33 +63,34 @@ struct SavedMeetView: View {
                     .padding(.bottom, 110)
                 }
             }
+            .appBackground()
             .appPopup(isPresented: $showAlert) {
-                            PopUpview(
-                                title: "Tem certeza que deseja concluir esse Date?",
-                                message: "Após finalizado, o date não será mais visível.",
-                                secondaryButton: .init(label: "Cancelar", style: .secondary, action: {
-                                    withAnimation { showAlert = false }
-                                }),
-                                primaryButton: .init(label: "Concluir", style: .primary, action: {
-                                    // Ação de deletar e salvar
-                                    if let cardToConclude = selectedCardToConclude {
-                                        modelContext.delete(cardToConclude)
-                                        do {
-                                            try modelContext.save()
-                                        } catch {
-                                            print("Erro ao deletar: \(error)")
-                                        }
-                                    }
-                                    withAnimation { showAlert = false }
-                                }),
-                                onTapBackground: {
-                                    withAnimation { showAlert = false }
-                                }
-                            )
+                PopUpview(
+                    title: "Tem certeza que deseja concluir esse Date?",
+                    message: "Após finalizado, o date não será mais visível.",
+                    secondaryButton: .init(label: "Cancelar", style: .secondary, action: {
+                        withAnimation { showAlert = false }
+                    }),
+                    primaryButton: .init(label: "Concluir", style: .primary, action: {
+                        if let cardToConclude = selectedCardToConclude {
+                            modelContext.delete(cardToConclude)
+                            do {
+                                try modelContext.save()
+                            } catch {
+                                print("Erro ao deletar: \(error)")
+                            }
                         }
+                        withAnimation { showAlert = false }
+                    }),
+                    onTapBackground: {
+                        withAnimation { showAlert = false }
+                    }
+                )
+            }
         }
     }
 }
+
 //MARK: Pop up
 struct CustomAlertView: View {
     let onConclude: () -> Void
@@ -144,7 +144,6 @@ struct CustomAlertView: View {
         }
     }
 }
-
 
 #Preview {
     SavedMeetView()

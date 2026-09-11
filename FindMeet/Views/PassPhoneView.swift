@@ -26,7 +26,7 @@ struct PassPhoneView: View {
                 } label: {
                     Image(systemName: "chevron.left")
                         .font(.custom("Fredoka-SemiBold", size: 18))
-                        .foregroundColor(.black)
+                        .foregroundColor(.primary)
                         .frame(width: 48, height: 48)
                         .background(buttonCircleColor)
                         .clipShape(Circle())
@@ -93,13 +93,13 @@ struct PassPhoneView: View {
                 path.append(nextRoute)
             } label: {
                 Text("Estou pronto!")
-                    .font(.custom("Fredoka-Medium", size: 22))
-                    .frame(maxWidth: .infinity)
+                    .font(.custom("Fredoka-Medium", size: 20))
                     .padding()
+                    .foregroundStyle(.white)
+                    .padding(.vertical, 5)
+                    .padding(.horizontal, 20)
                     .background(buttonColor)
-                    .foregroundColor(.white)
-                    .cornerRadius(15)
-                    .padding(.horizontal, 30)
+                    .clipShape(Capsule())
             }
             .padding(.bottom, 40)
         }

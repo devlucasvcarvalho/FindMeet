@@ -18,7 +18,6 @@ struct LoadingView: View {
     @Environment(\.dismiss) var dismiss
     @State private var showBackAlert = false
 
-
     private let generator: MeetGenerating = FoundationModelsMeetGenerator()
     private let primaryRed = Color(red: 0.58, green: 0.08, blue: 0.10)
 
@@ -70,7 +69,7 @@ struct LoadingView: View {
             Spacer()
             Spacer()
         }
-
+        .appBackground()
         .navigationBarBackButtonHidden(true)
         .onAppear {
             isAnimating = true
@@ -79,23 +78,22 @@ struct LoadingView: View {
             await generateSuggestion()
         }
         .appPopup(isPresented: $showBackAlert) {
-                    PopUpview(
-                        icon: "exclamationmark.triangle.fill",
-                        title: "Voltar para a seleção?",
-                        message: "Tem certeza que deseja voltar para a tela de seleção de horário?",
-                        secondaryButton: .init(label: "Cancelar", style: .secondary, action: {
-                            withAnimation { showBackAlert = false }
-                        }),
-                        primaryButton: .init(label: "Voltar", style: .primary, action: {
-                            withAnimation { showBackAlert = false }
-                            // Remove a tela de loading do path, retornando para .selectTimeUser2
-                            path.removeLast()
-                        }),
-                        onTapBackground: {
-                            withAnimation { showBackAlert = false }
-                        }
-                    )
+            PopUpview(
+                icon: "exclamationmark.triangle.fill",
+                title: "Voltar para a seleção?",
+                message: "Tem certeza que deseja voltar para a tela de seleção de horário?",
+                secondaryButton: .init(label: "Cancelar", style: .secondary, action: {
+                    withAnimation { showBackAlert = false }
+                }),
+                primaryButton: .init(label: "Voltar", style: .primary, action: {
+                    withAnimation { showBackAlert = false }
+                    path.removeLast()
+                }),
+                onTapBackground: {
+                    withAnimation { showBackAlert = false }
                 }
+            )
+        }
     }
 
     private func generateSuggestion() async {
