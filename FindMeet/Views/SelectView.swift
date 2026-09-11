@@ -70,7 +70,6 @@ struct SelectOptionView<T: CarouselItem>: View {
             }
         }
         .appBackground()
-        .ignoresSafeArea(edges: .all)
         .navigationBarBackButtonHidden(backConfirmationTitle != nil)
         .toolbar {
             if backConfirmationTitle != nil {
