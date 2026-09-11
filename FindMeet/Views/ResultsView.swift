@@ -41,7 +41,7 @@ struct ResultsView: View {
                     withAnimation { showConfirmPopup = false }
                     path.removeAll()
                 }),
-                tertiaryButton: .init(label: "Continuar aqui", style: .secondary, action: {
+                tertiaryButton: .init(label: "Salvar mais ideias", style: .secondary, action: {
                     withAnimation { showConfirmPopup = false }
                 }),
                 onTapBackground: {

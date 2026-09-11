@@ -68,7 +68,6 @@ struct LoadingView: View {
             Spacer()
             Spacer()
         }
-        .background(Color.white.ignoresSafeArea())
         .navigationBarBackButtonHidden(true)
         .onAppear {
             isAnimating = true
