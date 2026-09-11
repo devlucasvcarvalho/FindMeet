@@ -13,8 +13,8 @@ struct PopUpview: View {
     
     struct PopupButton {
         enum Style {
-            case primary       // vermelho sólido — ação principal/destrutiva
-            case secondary     // cinza claro — cancelar/dispensar
+            case primary
+            case secondary
         }
         
         let label: String
@@ -25,10 +25,10 @@ struct PopUpview: View {
     var icon: String? = nil
     let title: String
     var message: String? = nil
-    let secondaryButton: PopupButton   // NOVO: campo fixo
+    let secondaryButton: PopupButton
     let primaryButton: PopupButton
+    var tertiaryButton: PopupButton? = nil   // NOVO: opcional, não quebra usos existentes
     
-    // Se definido, tocar fora do card chama essa ação (geralmente igual ao botão "cancelar")
     var onTapBackground: (() -> Void)? = nil
     
     private let primaryColor = Color(red: 144/255, green: 3/255, blue: 3/255)
@@ -53,9 +53,12 @@ struct PopUpview: View {
                         .multilineTextAlignment(.center)
                 }
                 
-                HStack(spacing: 12) {
-                    popupButton(secondaryButton)
+                VStack(spacing: 25) {
                     popupButton(primaryButton)
+                    popupButton(secondaryButton)
+                    if let tertiaryButton {
+                        popupButton(tertiaryButton)
+                    }
                 }
             }
             .padding(24)
@@ -73,7 +76,6 @@ struct PopUpview: View {
         }
         .accessibilityAddTraits(.isModal)
     }
-        
     
     @ViewBuilder
     private func popupButton(_ button: PopupButton) -> some View {
@@ -84,19 +86,12 @@ struct PopUpview: View {
                 .font(.custom("Fredoka-Medium", size: 18))
                 .frame(maxWidth: .infinity)
                 .padding(.vertical, 12)
-//                .foregroundStyle(.white)
-//                .font(.subheadline.weight(.bold))
-//                .frame(maxWidth: 200)
-//                .frame(maxHeight: 50)
-//                .background(buttonColor)
-//                .clipShape(Capsule())
         }
         .foregroundStyle(button.style == .primary ? .white : .primary)
         .background(button.style == .primary ? primaryColor : Color.gray.opacity(0.15))
         .clipShape(Capsule())
     }
 }
-
 // MARK: - Modifier de conveniência
 // Uso: .appPopup(isPresented: $showPopup) { AppPopup(...) }
 
@@ -132,6 +127,14 @@ extension View {
         icon: "exclamationmark.circle.fill",
         title: "Preencha todos os campos",
         message: "Selecione uma opção antes de continuar.",
+        secondaryButton: .init(label: "Cancelar", style: .secondary, action: {}),
+        primaryButton: .init(label: "Sair", style: .primary, action: {})
+    )
+}
+
+#Preview("Sem ícone, sem mensagem") {
+    PopUpview(
+        title: "Encontro salvo!",
         secondaryButton: .init(label: "Cancelar", style: .secondary, action: {}),
         primaryButton: .init(label: "Sair", style: .primary, action: {})
     )

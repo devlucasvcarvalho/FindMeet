@@ -19,7 +19,7 @@ struct LoadingView: View {
     @State private var showBackAlert = false
 
     private let generator: MeetGenerating = FoundationModelsMeetGenerator()
-    private let buttonCircleColor = Color.black.opacity(0.05)
+    private let buttonCircleColor = Color.primary.opacity(0.05)
 
     var body: some View {
         VStack {
@@ -32,7 +32,7 @@ struct LoadingView: View {
                     Image(systemName: "chevron.left")
                         .font(.system(size: 18, weight: .bold))
                         .font(.custom("Fredoka-Medium", size: 20))
-                        .foregroundColor(.black)
+                        .foregroundColor(.primary)
                         .frame(width: 48, height: 48)
                         .background(buttonCircleColor)
                         .clipShape(Circle())
@@ -48,7 +48,7 @@ struct LoadingView: View {
             VStack(spacing: 40) {
                 Text("Gerando ideias de\ndate")
                     .font(.custom("Fredoka-SemiBold", size: 35))
-                    .foregroundColor(.black)
+                    .foregroundColor(.primary)
                     .multilineTextAlignment(.center)
                     .lineSpacing(4)
                 

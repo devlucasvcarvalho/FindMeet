@@ -9,26 +9,27 @@ import SwiftUI
 
 struct TelaView: View {
     
+    @State private var selectedTab: Int = 0
     let iconColor: Color = Color(red: 137/255, green: 13/255, blue: 13/255)
+    
     var body: some View {
-            TabView {
-                GenerateMeetView()
-                    .tabItem {
-                        Image(systemName: "heart.fill")
-                        
-                    }
-                SavedMeetView()
-                    .tabItem {
-                        Image(systemName: "filemenu.and.selection")
-                        Text("")
-                    }
-            }
-            .tint(Color(iconColor))
+        TabView(selection: $selectedTab) {
+            GenerateMeetView(selectedTab: $selectedTab)
+                .tabItem {
+                    Image(systemName: "heart.fill")
+                }
+                .tag(0)
+            
+            SavedMeetView()
+                .tabItem {
+                    Image(systemName: "filemenu.and.selection")
+                    Text("")
+                }
+                .tag(1)
         }
-        //.background(Color(backgroundColor))
-        
+        .tint(iconColor)
     }
-
+}
 #Preview {
     TelaView()
 }

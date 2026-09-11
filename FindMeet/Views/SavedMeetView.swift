@@ -36,7 +36,7 @@ struct SavedMeetView: View {
                         
                         Text("Ideias salvas")
                             .font(.system(size: 32, weight: .bold, design: .rounded))
-                            .foregroundColor(.black)
+                            .foregroundColor(.primary)
                             .padding(.top, 40)
                             .padding(.horizontal, 24)
                         
@@ -88,30 +88,6 @@ struct SavedMeetView: View {
                                 }
                             )
                         }
-//            .overlay {
-//                if showAlert {
-//                    CustomAlertView(
-//                        onConclude: {
-//                            if let cardToConclude = selectedCardToConclude {
-//                                modelContext.delete(cardToConclude)
-//                                do {
-//                                    try modelContext.save()
-//                                } catch {
-//                                    print("Erro ao deletar: \(error)")
-//                                }
-//                            }
-//                            withAnimation {
-//                                showAlert = false
-//                            }
-//                        },
-//                        onCancel: {
-//                            withAnimation {
-//                                showAlert = false
-//                            }
-//                        }
-//                    )
-//                }
-//            }
         }
     }
 }

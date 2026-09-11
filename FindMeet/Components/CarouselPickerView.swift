@@ -21,11 +21,9 @@ import Combine
 struct InfiniteCarousel: View {
     private let cardCount = 5
     private let spacing: CGFloat = 0
-    private let cardWidth: CGFloat = 250
-    private let cardHeight: CGFloat = 350
+    private let cardWidth: CGFloat = 300    // ANTES: 250
+    private let cardHeight: CGFloat = 420   
    
-    
-
     @State private var offset: CGFloat = 0
     @State private var currentIndex: Int = 0
     @State private var isAutoScrollingEnabled = false
@@ -42,6 +40,8 @@ struct InfiniteCarousel: View {
     @State private var snapOffset: CGFloat = 0
     
     let meets: [Meet]
+    var onSelectDate: () -> Void
+    
     @State private var scrollPosition: Int?
     private var selection: Int {
         scrollPosition ?? 0
@@ -59,7 +59,8 @@ struct InfiniteCarousel: View {
                         
                         CardView(
                             index: index,
-                            card: meets[index]
+                            card: meets[index],
+                            onSelectDate: onSelectDate
                         )
                         .id(index)
                             .frame(width: cardWidth, height: cardHeight)
@@ -73,7 +74,6 @@ struct InfiniteCarousel: View {
                             ))
                     }
                 }
-//                .scaleEffect(x: cards.isPressed ? 0.96 : 1, y: cards.isPressed ? 0.96 : 1) // ADD THIS TO ANIMATE THE TOUCH!!!!
                 .offset(x: isSnapping ? snapOffset : offset)
                 .onReceive(timer) { _ in
                     if isAutoScrollingEnabled && !isManuallyDragging && !isSnapping {
@@ -117,12 +117,9 @@ struct InfiniteCarousel: View {
                         snapToNearestCard(geometry: geometry)
                     }
                 }
-                
-                
             }
             .frame(height: cardHeight + 40)
             .clipped()
-            
             
             HStack {
                 ForEach(0..<meets.count, id: \.self) { i in
@@ -136,7 +133,6 @@ struct InfiniteCarousel: View {
             Spacer()
         }
     }
-    
     
     private func snapToNearestCard(geometry: GeometryProxy) {
         let totalWidth = cardWidth + spacing
@@ -212,13 +208,13 @@ struct Carousel3DEffect: ViewModifier {
 
 
 
-
 // MARK: - Preview
 #Preview {
-    InfiniteCarousel(meets: [
-        Meet(title: "Praia no sabado", time: "Manha", description: "Manhã na praia para curtir o sol, o mar e a companhia um do outro.", ideas: ["Praia", "Bronze", "Sol"]),
-        Meet(title: "Piquenique no domingo", time: "Tarde", description: "Um pequenique a tarde para conversar e dividir lanches", ideas: ["lanches", "natureza", "toalha"]),
-        Meet(title: "Cinema a dois", time: "Manhã", description: "Um cinema pertinho de casa, com filmes em lançamento, uma comedia romatica", ideas: ["Pipoca", "Casaco", "Sla"])
-    ]
+    InfiniteCarousel(
+        meets: [
+            Meet(title: "Praia no sabado", time: "Manha", description: "Manhã na praia para curtir o sol, o mar e a companhia um do outro.", ideas: ["Praia", "Bronze", "Sol"]),
+            Meet(title: "Piquenique no domingo", time: "Tarde", description: "Um pequenique a tarde para conversar e dividir lanches", ideas: ["lanches", "natureza", "toalha"]),
+            Meet(title: "Cinema a dois", time: "Manhã", description: "Um cinema pertinho de casa, com filmes em lançamento, uma comedia romatica", ideas: ["Pipoca", "Casaco", "Sla"])
+        ], onSelectDate: { print("Date selecionado") },
     )
 }

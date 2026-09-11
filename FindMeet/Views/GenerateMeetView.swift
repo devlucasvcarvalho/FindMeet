@@ -10,7 +10,7 @@ import SwiftUI
 struct GenerateMeetView: View {
     
     let backgroundColor: Color = Color(red: 250/255, green: 221/255, blue: 221/255)
-    
+    @Binding var selectedTab: Int
     @State private var flow = MeetFlowState()
     @State private var path: [MeetFlowRoute] = []
     
@@ -21,7 +21,7 @@ struct GenerateMeetView: View {
     private var shouldShowTabBar: Bool {
         path.isEmpty || path.last == .results
     }
-    
+
     var body: some View {
         NavigationStack(path: $path) {
             ZStack {
@@ -170,7 +170,7 @@ struct GenerateMeetView: View {
                     LoadingView(flow: flow, path: $path)
                     
                 case .results:
-                    ResultsView(flow: flow)
+                    ResultsView(flow: flow, path: $path, selectedTab: $selectedTab)
                 }
             }
         }
@@ -178,5 +178,5 @@ struct GenerateMeetView: View {
 }
 
 #Preview {
-    GenerateMeetView()
+    GenerateMeetView(selectedTab: .constant(0))
 }
