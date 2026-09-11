@@ -16,6 +16,8 @@ struct LoadingView: View {
     @State private var errorMessage: String?
     @State private var isAnimating = false
     @Environment(\.dismiss) var dismiss
+    @State private var showBackAlert = false
+
 
     private let generator: MeetGenerating = FoundationModelsMeetGenerator()
     private let primaryRed = Color(red: 0.58, green: 0.08, blue: 0.10)

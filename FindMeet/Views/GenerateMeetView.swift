@@ -185,4 +185,3 @@ struct GenerateMeetView: View {
 #Preview {
     GenerateMeetView(selectedTab: .constant(0))
 }
-    GenerateMeetView(selectedTab: .constant(0))
