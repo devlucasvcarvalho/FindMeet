@@ -1,0 +1,36 @@
+{
+  "fill" : {
+    "solid" : "display-p3:0.43154,0.14125,0.16450,1.00000"
+  },
+  "groups" : [
+    {
+      "layers" : [
+        {
+          "image-name" : "Group 19.svg",
+          "name" : "Group 19",
+          "position" : {
+            "scale" : 1,
+            "translation-in-points" : [
+              34.61812356280575,
+              -96.399193669135
+            ]
+          }
+        }
+      ],
+      "shadow" : {
+        "kind" : "neutral",
+        "opacity" : 0.5
+      },
+      "translucency" : {
+        "enabled" : true,
+        "value" : 0.5
+      }
+    }
+  ],
+  "supported-platforms" : {
+    "circles" : [
+      "watchOS"
+    ],
+    "squares" : "shared"
+  }
+}
