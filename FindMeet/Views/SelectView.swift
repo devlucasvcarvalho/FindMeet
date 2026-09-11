@@ -68,6 +68,7 @@ struct SelectOptionView<T: CarouselItem>: View {
                 .accessibilityLabel("Avançar")
                 .padding(.horizontal, 30)
             }
+            .padding(.vertical, 40)
         }
         .appBackground()
         .navigationBarBackButtonHidden(backConfirmationTitle != nil)

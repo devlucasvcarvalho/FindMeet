@@ -62,7 +62,7 @@ struct GenerateMeetView: View {
                     SelectOptionView(
                         path: $path,
                         step: "1/2",
-                        question: "Sua vez! Qual atividade tem \n em mente?",
+                        question: "Qual atividade tem \n em mente?",
                         items: MeetStyleEnum.allCases,
                         selected: $flow.user2SelectedStyle,
                         nextRoute: .selectTimeUser2,
