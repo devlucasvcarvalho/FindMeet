@@ -110,60 +110,65 @@ struct GenerateMeetView: View {
                 AppSessionState.hasShownLaunchIntro = true
             }            .navigationDestination(for: MeetFlowRoute.self) { route in
                 switch route {
-                    // MARK: - Fluxo Pessoa 1
+                    
                 case .notice:
-                    NoticeView(
-                        path: $path,
-                        nextRoute: .selectStyleUser1
-                    )
+                        NoticeView(
+                            path: $path,
+                            nextRoute: .selectStyleUser1 // <--- Ao clicar no botão, vai para a primeira pergunta
+                        )
                     
-                case .selectStyleUser1:
-                    SelectOptionView(
-                        path: $path,
-                        step: "1/2",
-                        question: "Qual atividade tem \n em mente?",
-                        items: MeetStyleEnum.allCases,
-                        selected: $flow.user1SelectedStyle,
-                        nextRoute: .selectTimeUser1
-                    )
-                    
-                case .selectTimeUser1:
-                    SelectOptionView(
-                        path: $path,
-                        step: "2/2",
-                        question: "Qual o melhor \nhorário?",
-                        items: MeetTimeEnum.allCases,
-                        selected: $flow.user1SelectedTime,
-                        nextRoute: .passPhone
-                    )
-                    
-                    // MARK: - Transição
-                case .passPhone:
+                    case .selectStyleUser1:
+                        SelectOptionView(
+                            path: $path,
+                                   step: "1/2",
+                                   question: "Qual atividade tem \n em mente?",
+                                   items: MeetStyleEnum.allCases,
+                                   selected: $flow.user1SelectedStyle,
+                                   nextRoute: .selectTimeUser1,
+                                   // NOVO: as 3 linhas abaixo
+                                   backConfirmationTitle: "Voltar para o início?",
+                                   backConfirmationMessage: "Você vai perder os dados já preenchidos e voltar para a tela inicial.",
+                                   onConfirmBack: { path.removeAll() }
+                        )
+                        
+                    case .selectTimeUser1:
+                        SelectOptionView(
+                            path: $path,
+                            step: "2/2",
+                            question: "Qual o melhor \nhorário?",
+                            items: MeetTimeEnum.allCases,
+                            selected: $flow.user1SelectedTime,
+                            nextRoute: .passPhone
+                        )
+
+                    case .passPhone:
                     PassPhoneView(
                         path: $path,
                         nextRoute: .selectStyleUser2
                     )
-                    
-                    // MARK: - Fluxo Pessoa 2
-                case .selectStyleUser2:
-                    SelectOptionView(
-                        path: $path,
-                        step: "1/2",
-                        question: "Sua vez! Qual atividade tem \n em mente?",
-                        items: MeetStyleEnum.allCases,
-                        selected: $flow.user2SelectedStyle,
-                        nextRoute: .selectTimeUser2
-                    )
-                    
-                case .selectTimeUser2:
-                    SelectOptionView(
-                        path: $path,
-                        step: "2/2",
-                        question: "Qual o melhor \nhorário?",
-                        items: MeetTimeEnum.allCases,
-                        selected: $flow.user2SelectedTime,
-                        nextRoute: .loading
-                    )
+
+                    case .selectStyleUser2:
+                        SelectOptionView(
+                            path: $path,
+                                    step: "1/2",
+                                    question: "Sua vez! Qual atividade tem \n em mente?",
+                                    items: MeetStyleEnum.allCases,
+                                    selected: $flow.user2SelectedStyle,
+                                    nextRoute: .selectTimeUser2,
+                                    backConfirmationTitle: "Tem certeza que deseja voltar??",
+                                    backConfirmationMessage: "Isso irá fazer com que você volte para as perguntas do(a) seu parceiro",
+                                    onConfirmBack: { path.removeLast(2) }
+                        )
+                        
+                    case .selectTimeUser2:
+                        SelectOptionView(
+                            path: $path,
+                            step: "2/2",
+                            question: "Qual o melhor \nhorário?",
+                            items: MeetTimeEnum.allCases,
+                            selected: $flow.user2SelectedTime,
+                            nextRoute: .loading
+                        )
                     
                     // MARK: - Processamento e Resultados
                 case .loading:
@@ -180,3 +185,4 @@ struct GenerateMeetView: View {
 #Preview {
     GenerateMeetView(selectedTab: .constant(0))
 }
+    GenerateMeetView(selectedTab: .constant(0))
