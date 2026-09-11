@@ -17,55 +17,63 @@ struct NoticeView: View {
     private let buttonCircleColor = Color.black.opacity(0.05)
     
     var body: some View {
-        VStack(spacing: 30) {
+        ZStack {
+            // Camada de fundo: fixa, cobre a tela inteira, sem animação
+            Color.clear
+                .appBackground()
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .ignoresSafeArea(edges: .all)
             
-            HStack {
-                Button {
-                    path.removeAll()
-                } label: {
-                    Image(systemName: "chevron.left")
-                        .font(.custom("Fredoka-Medium", size: 20))
-                        .foregroundColor(.black)
-                        .frame(maxWidth: 48, maxHeight: 48)
-                        .background(buttonCircleColor)
-                        .clipShape(Circle())
+            // Camada de conteúdo: essa é a que anima (fade + slide)
+            VStack(spacing: 30) {
+                
+                HStack {
+                    Button {
+                        path.removeAll()
+                    } label: {
+                        Image(systemName: "chevron.left")
+                            .font(.custom("Fredoka-Medium", size: 20))
+                            .foregroundColor(.black)
+                            .frame(maxWidth: 48, maxHeight: 48)
+                            .background(buttonCircleColor)
+                            .clipShape(Circle())
+                    }
+                    Spacer()
                 }
-                Spacer()
+                .padding(.top, 10)
+                .padding(.horizontal, 24)
+                
+                Image("escolher")
+                
+                Text("Hora de Escolher!")
+                    .font(.custom("Fredoka-Medium", size: 35))
+                    .bold()
+                
+                Text("Decidam quem será o primeiro a selecionar as preferencias para o encontro. Mas atenção, para ficar mais divertido, não deixe a outra pessoa saber o que você escolheu! Depois, passe o celular para ela.")
+                    .font(.custom("Fredoka-Medium", size: 19))
+                    .foregroundColor(.secondary)
+                    .multilineTextAlignment(.leading)
+                    .padding(.horizontal, 30)
+                
+                Button {
+                    path.append(nextRoute)
+                } label: {
+                    Text("Vamos lá!")
+                        .font(.custom("Fredoka-Medium", size: 20))
+                        .padding()
+                        .foregroundStyle(.white)
+                        .padding(.vertical, 5)
+                        .padding(.horizontal, 20)
+                        .background(buttonColor)
+                        .clipShape(Capsule())
+                }
+                .padding(.bottom, 40)
             }
-            .padding(.top, 10)
-            .padding(.horizontal, 24)
-            
-            Image("escolher")
-            
-            Text("Hora de Escolher!")
-                .font(.custom("Fredoka-Medium", size: 35))
-                .bold()
-            
-            Text("Decidam quem será o primeiro a selecionar as preferencias para o encontro. Mas atenção, para ficar mais divertido, não deixe a outra pessoa saber o que você escolheu! Depois, passe o celular para ela.")
-                .font(.custom("Fredoka-Medium", size: 19))
-                .foregroundColor(.secondary)
-                .multilineTextAlignment(.leading)
-                .padding(.horizontal, 30)
-            
-            Button {
-                path.append(nextRoute)
-            } label: {
-                Text("Vamos lá!")
-                    .font(.custom("Fredoka-Medium", size: 20))
-                    .padding()
-                    .foregroundStyle(.white)
-                    .padding(.vertical, 5)
-                    .padding(.horizontal, 20)
-                    .background(buttonColor)
-                    .clipShape(Capsule())
-            }
-            .padding(.bottom, 40)
+            .opacity(isVisible ? 1 : 0)
+            .offset(y: isVisible ? 0 : 50)
         }
-        .appBackground()
-        .opacity(isVisible ? 1 : 0)
-        .offset(y: isVisible ? 0 : 50)
         .onAppear {
-            withAnimation(.easeOut(duration: 0.8))  {
+            withAnimation(.easeOut(duration: 0.8)) {
                 isVisible = true
             }
         }
@@ -74,7 +82,6 @@ struct NoticeView: View {
     }
 }
 
-// MARK: - Previews
 
 #Preview("Aviso Pessoa 1") {
     @Previewable @State var path: [MeetFlowRoute] = []
