@@ -36,8 +36,10 @@ struct NoticeView: View {
                 .padding(.top, 10)
                 .padding(.horizontal, 24)
                 
-              
-                Image("PassPhone")
+                //Spacer()
+                
+                // Ícone do SF Symbols corrigido (ou substitua por uma imagem do Assets ex: Image("SuaImagem"))
+                Image("escolher")
                 
                 Text("Hora de Escolher!")
                     .font(.custom("Fredoka-Medium", size: 35))
@@ -49,25 +51,21 @@ struct NoticeView: View {
                     .multilineTextAlignment(.leading)
                     .padding(.horizontal, 30)
                 
-                Spacer()
+                //Spacer()
                 
                 Button {
                     path.append(nextRoute)
                 } label: {
                     Text("Vamos lá!")
                         .font(.custom("Fredoka-Medium", size: 20))
-                        //.frame(maxWidth: .infinity)
+                        .frame(maxWidth: .infinity)
                         .padding()
-                        .foregroundStyle(.white)
-//                        .font(.title3.weight(.bold))
-                        .padding(.vertical, 5)
-                        .padding(.horizontal, 20)
-//                        .frame(maxWidth: 200)
-//                        .frame(maxHeight: 50)
                         .background(buttonColor)
-                        .clipShape(Capsule())
+                        .foregroundColor(.white)
+                        .cornerRadius(15)
+                        .padding(.horizontal, 30)
                 }
-                .padding(.bottom)
+                .padding(.bottom, 40)
             }
            
             .navigationBarBackButtonHidden(true)
@@ -75,7 +73,8 @@ struct NoticeView: View {
         }
     }
 
- 
+    // MARK: - Previews
+
     #Preview("Aviso Pessoa 1") {
         @Previewable @State var path: [MeetFlowRoute] = []
         
