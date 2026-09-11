@@ -12,7 +12,7 @@ struct NoticeView: View {
         let nextRoute: MeetFlowRoute
         
         @Environment(\.dismiss) var dismiss
-        
+        @State private var isVisible = false
         private let buttonColor: Color = Color(red: 144/255, green: 3/255, blue: 3/255)
         private let buttonCircleColor = Color.black.opacity(0.05)
         
@@ -69,11 +69,17 @@ struct NoticeView: View {
                 }
                 .padding(.bottom)
             }
-           
-            .navigationBarBackButtonHidden(true)
-            .toolbar(.hidden, for: .tabBar)
-        }
-    }
+            .opacity(isVisible ? 1 : 0)                              // Começa invisível
+                    .offset(y: isVisible ? 0 : 50)                           // Começa 50 pixels abaixo
+                    .onAppear {
+                        withAnimation(.easeOut(duration: 0.8))  {
+                            isVisible = true                                 // Anima suavemente para a posição original
+                        }
+                    }
+                    .navigationBarBackButtonHidden(true)
+                    .toolbar(.hidden, for: .tabBar)
+                }
+            }
 
  
     #Preview("Aviso Pessoa 1") {
