@@ -22,7 +22,7 @@ struct GenerateMeetView: View {
                 } else {
                     IntroSplashView {
                         showHome = true
-                        showTapHint = true // já mostra o hint direto, sem esperar de novo
+                        showTapHint = true
                     }
                 }
             }
@@ -30,11 +30,7 @@ struct GenerateMeetView: View {
                 switch route {
 
                 case .notice:
-                    NoticeView(
-                        path: $path,
-                        nextRoute: .selectStyleUser1
-                    )
-                    .toolbar(.hidden, for: .tabBar)
+                    NoticeView(path: $path, nextRoute: .selectStyleUser1)
 
                 case .selectStyleUser1:
                     SelectOptionView(
@@ -48,7 +44,6 @@ struct GenerateMeetView: View {
                         backConfirmationMessage: "Você vai perder os dados já preenchidos e voltar para a tela inicial.",
                         onConfirmBack: { path.removeAll() }
                     )
-                    .toolbar(.hidden, for: .tabBar)
 
                 case .selectTimeUser1:
                     SelectOptionView(
@@ -59,14 +54,9 @@ struct GenerateMeetView: View {
                         selected: $flow.user1SelectedTime,
                         nextRoute: .passPhone
                     )
-                    .toolbar(.hidden, for: .tabBar)
 
                 case .passPhone:
-                    PassPhoneView(
-                        path: $path,
-                        nextRoute: .selectStyleUser2
-                    )
-                    .toolbar(.hidden, for: .tabBar)
+                    PassPhoneView(path: $path, nextRoute: .selectStyleUser2)
 
                 case .selectStyleUser2:
                     SelectOptionView(
@@ -80,7 +70,6 @@ struct GenerateMeetView: View {
                         backConfirmationMessage: "Isso irá fazer com que você volte para as perguntas do(a) seu parceiro",
                         onConfirmBack: { path.removeLast(2) }
                     )
-                    .toolbar(.hidden, for: .tabBar)
 
                 case .selectTimeUser2:
                     SelectOptionView(
@@ -91,17 +80,16 @@ struct GenerateMeetView: View {
                         selected: $flow.user2SelectedTime,
                         nextRoute: .loading
                     )
-                    .toolbar(.hidden, for: .tabBar)
 
                 case .loading:
                     LoadingView(flow: flow, path: $path)
-                        .toolbar(.hidden, for: .tabBar)
 
                 case .results:
                     ResultsView(flow: flow, path: $path, selectedTab: $selectedTab)
-                        .toolbar(.visible, for: .tabBar)
                 }
             }
+            // única fonte de verdade pra visibilidade da tabbar
+            .toolbar(path.isEmpty ? .visible : .hidden, for: .tabBar)
         }
     }
 
@@ -141,9 +129,7 @@ struct GenerateMeetView: View {
         .padding()
         .appBackground()
         .navigationBarTitleDisplayMode(.inline)
-        .toolbar(.visible, for: .tabBar)
         .task {
-            // só espera se ainda não veio da splash com o hint já ativo
             guard !showTapHint else { return }
             try? await Task.sleep(nanoseconds: 300_000_000)
             withAnimation(.easeIn) {
