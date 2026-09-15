@@ -29,6 +29,18 @@ struct ResultsView: View {
         }
         .appBackground()
         .toolbar(.hidden, for: .tabBar)
+        .navigationBarBackButtonHidden(true)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                Button {
+                    path.removeAll()
+                } label: {
+                    Image(systemName: "chevron.left")
+                        .font(.system(size: 16, weight: .bold))
+                        .foregroundStyle(Color.black)
+                }
+            }
+        }
         .appPopup(isPresented: $showConfirmPopup) {
             PopUpview(
                 title: "Date escolhido!",
