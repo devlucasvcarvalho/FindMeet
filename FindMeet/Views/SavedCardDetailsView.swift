@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct CardDetailView: View {
     @Environment(\.dismiss) var dismiss
@@ -24,28 +25,8 @@ struct CardDetailView: View {
     
     var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
-            VStack(alignment: .leading, spacing: 20) {
-                
-                HStack {
-                    Button {
-                        dismiss()
-                    } label: {
-                        Image(systemName: "chevron.left")
-                            .font(.system(size: 18, weight: .bold))
-                            .foregroundColor(.black)
-                            .frame(width: 48, height: 48)
-                            .background(buttonCircleColor)
-                            .clipShape(Circle())
-                    }
-                    
-                    Spacer()
-                }
-                .padding(.top, 10)
-                
-                Text(card.title)
-                    .font(.system(size: 34, weight: .bold, design: .rounded))
-                    .foregroundColor(.black)
-                
+            //MARK: Descrição
+            VStack(alignment: .leading) {
                 ZStack(alignment: .bottomTrailing) {
                     RoundedRectangle(cornerRadius: 16)
                         .fill(cardBackgroundColor)
@@ -67,18 +48,21 @@ struct CardDetailView: View {
                 
                 Text("Dicas")
                     .font(.system(size: 32, weight: .bold, design: .rounded))
-                    .foregroundColor(.black)
+                    .foregroundColor(.primary)
                     .padding(.top, 10)
                 
+                //MARK: Dicas
                 ZStack(alignment: .bottomTrailing) {
                     RoundedRectangle(cornerRadius: 16)
                         .fill(cardBackgroundColor)
                     
                     VStack(alignment: .leading, spacing: 10) {
                         ForEach(tips, id: \.self) { tip in
-                            HStack(alignment: .top, spacing: 8) {
+                            HStack(alignment: .top) {
                                 Text("•")
                                     .font(.system(size: 16, weight: .bold))
+                                    .foregroundColor(.black)
+                                
                                 Text(tip)
                                     .font(.system(size: 15, design: .rounded))
                                     .foregroundColor(.black)
@@ -99,10 +83,23 @@ struct CardDetailView: View {
                 
             }
             .padding(.horizontal, 24)
-            .padding(.bottom, 30)
         }
+        .navigationTitle(card.title)
         .appBackground()
-        .ignoresSafeArea(edges: .all)
-        .navigationBarBackButtonHidden(true)
+//        .toolbarBackground(.hidden, for: .navigationBar)
     }
+}
+
+#Preview {
+    let card = SavedData(
+        title: "Cinema a dois",
+        time: "Noite",
+        descriptions: "Um cinema pertinho de casa, com filmes em lançamento, uma comédia romântica.",
+        ideas: ["Pipoca", "Casaco", "Escolher juntos"]
+    )
+    
+    NavigationStack {
+        CardDetailView(card: card)
+    }
+    .modelContainer(for: SavedData.self, inMemory: true)
 }

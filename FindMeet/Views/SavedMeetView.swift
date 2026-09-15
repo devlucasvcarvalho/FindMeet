@@ -22,26 +22,23 @@ struct SavedMeetView: View {
     @Query private var savedData: [SavedData]
 
     @State private var selectedTab: Int = 1
+    @State private var path: [SavedData] = []
     
     @State private var showAlert: Bool = false
     @State private var selectedCardToConclude: SavedData? = nil
     
     var body: some View {
-        NavigationStack {
-            ZStack(alignment: .bottom) {
+        NavigationStack(path: $path) {
+            ZStack {
+                AppBackgroundView()
                 
                 ScrollView(.vertical, showsIndicators: false) {
                     VStack(alignment: .leading, spacing: 26) {
-                        
-                        Text("Ideias salvas")
-                            .font(.system(size: 32, weight: .bold, design: .rounded))
-                            .foregroundColor(.primary)
-                            .padding(.top, 40)
-                            .padding(.horizontal, 24)
-                        
                         VStack(spacing: 24) {
                             ForEach(savedData) { card in
-                                NavigationLink(destination: CardDetailView(card: card)) {
+                                Button {
+                                    path.append(card)
+                                } label: {
                                     SavedCardsView(
                                         title: card.title,
                                         subtitle: card.time,
@@ -63,8 +60,10 @@ struct SavedMeetView: View {
                     .padding(.bottom, 110)
                 }
             }
-            .appBackground()
-            .ignoresSafeArea(edges: .all)
+            .toolbarBackground(.hidden, for: .navigationBar)
+            .navigationDestination(for: SavedData.self) { card in
+                CardDetailView(card: card)
+            }
             .appPopup(isPresented: $showAlert) {
                 PopUpview(
                     title: "Tem certeza que deseja concluir esse Date?",
@@ -88,6 +87,8 @@ struct SavedMeetView: View {
                     }
                 )
             }
+            .navigationTitle(Text("Ideias Salvas"))
+            .toolbarBackground(.hidden, for: .navigationBar)
         }
     }
 }

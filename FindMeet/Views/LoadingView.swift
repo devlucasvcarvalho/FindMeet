@@ -23,15 +23,6 @@ struct LoadingView: View {
 
     var body: some View {
         VStack {
-            HStack {
-                Spacer()
-            }
-            .padding(.top, 16)
-            .padding(.trailing, 24)
-
-            Spacer()
-            Spacer()
-
             VStack(spacing: 24) {
                 ZStack(alignment: .topLeading) {
                     Image("feliz")
@@ -64,6 +55,8 @@ struct LoadingView: View {
                     .lineSpacing(4)
             }
             .frame(maxWidth: .infinity)
+            .padding(.horizontal, 24)
+            .padding(.top, 150)
             .padding(.horizontal, 24)
 
             Spacer()
