@@ -69,7 +69,7 @@ struct CardView: View {
                     .multilineTextAlignment(.leading)
                     .foregroundStyle(.secondary)
             }
-            .frame(width: 200, height: 65)
+            .frame(width: 300, height: 65)
             
             // MARK: Ideas
             
@@ -78,7 +78,7 @@ struct CardView: View {
                     ForEach(card.ideas, id: \.self) { idea in
                         Text(idea)
                             .foregroundStyle(.black)
-                            .font(.system(.subheadline, weight: .semibold))
+                            .font(.system(.headline, weight: .semibold))
                             .padding(.horizontal, 15)
                             .padding(.vertical, 6)
                             .background(ideasColor)

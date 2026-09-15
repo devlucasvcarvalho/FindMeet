@@ -53,3 +53,36 @@ struct ResultsView: View {
         }
     }
 }
+
+#Preview {
+    @Previewable @State var path: [MeetFlowRoute] = []
+    @Previewable @State var selectedTab: Int = 0
+    
+    let flow = MeetFlowState()
+    flow.suggestion = Suggestion(suggestions: [
+        Meet(
+            title: "Praia no sábado",
+            time: "Manhã",
+            description: "Manhã na praia para curtir o sol, o mar e a companhia um do outro.",
+            ideas: ["Praia", "Bronze", "Sol"]
+        ),
+        Meet(
+            title: "Piquenique no domingo",
+            time: "Tarde",
+            description: "Um piquenique à tarde para conversar e dividir lanches",
+            ideas: ["Lanches", "Natureza", "Toalha"]
+        ),
+        Meet(
+            title: "Cinema a dois",
+            time: "Noite",
+            description: "Um cinema pertinho de casa, com filmes em lançamento, uma comédia romântica",
+            ideas: ["Pipoca", "Casaco", "Escolher juntos"]
+        )
+    ])
+    
+    return ResultsView(
+        flow: flow,
+        path: $path,
+        selectedTab: $selectedTab
+    )
+}
