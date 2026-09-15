@@ -19,10 +19,10 @@ import Combine
 
 // MARK: - Main View
 struct InfiniteCarousel: View {
-    private let cardCount = 5
+    private let cardCount = 3
     private let spacing: CGFloat = 0
-    private let cardWidth: CGFloat = 300    // ANTES: 250
-    private let cardHeight: CGFloat = 420   
+    private let cardWidth: CGFloat = 320    // ANTES: 250
+    private let cardHeight: CGFloat = 500
    
     @State private var offset: CGFloat = 0
     @State private var currentIndex: Int = 0
@@ -48,6 +48,7 @@ struct InfiniteCarousel: View {
     }
     
     var body: some View {
+        
         VStack(spacing: 20) {
             Spacer()
             GeometryReader { geometry in
@@ -120,7 +121,7 @@ struct InfiniteCarousel: View {
             }
             .frame(height: cardHeight + 40)
             .clipped()
-            
+            Spacer()
             HStack {
                 ForEach(0..<meets.count, id: \.self) { i in
                     Circle()
@@ -130,7 +131,6 @@ struct InfiniteCarousel: View {
                         .frame(width: 8, height: 8)
                 }
             }
-            Spacer()
         }
     }
     
@@ -202,10 +202,6 @@ struct Carousel3DEffect: ViewModifier {
         .frame(width: cardWidth, height: cardHeight)
     }
 }
-
-
-
-
 
 
 // MARK: - Preview

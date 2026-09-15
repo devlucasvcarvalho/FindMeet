@@ -28,7 +28,6 @@ struct ResultsView: View {
             }
         }
         .appBackground()
-        .ignoresSafeArea(edges: .all)
         .toolbar(.hidden, for: .tabBar)
         .appPopup(isPresented: $showConfirmPopup) {
             PopUpview(

@@ -12,7 +12,7 @@ import SwiftData
 struct CardView: View {
     @Environment(\.modelContext) private var modelContext
     @Query private var savedData: [SavedData]
-
+    
     let index: Int
     let card: Meet
     var shadowRadius: CGFloat = 4.0
@@ -28,94 +28,112 @@ struct CardView: View {
     }
     
     var content: some View {
-        VStack(spacing: 16) {
+        VStack(spacing: 10) {
             
             // MARK: Header
             
-            HStack {
+            HStack (alignment: .bottom){
                 Text("Opção \(index + 1)")
                     .foregroundStyle(.black)
                     .font(.title.weight(.bold))
                 
-                
                 Image("cerejinhas")
                     .resizable()
                     .scaledToFit()
+                    .frame(width: 50, height: 50)
                     .accessibilityHidden(true)
             }
+//            .overlay(
+//                Rectangle()
+//                    .stroke(lineWidth: 3)
+//            )
             
             // MARK: Title & Time
             
             VStack {
                 Text(card.title)
                     .foregroundStyle(.black)
-                    .font(.title2.weight(.bold))
-                
-                Spacer()
+                    .font(.title.weight(.bold))
+                    .frame(width: .infinity)
                 
                 Text("Durante a \(card.time)")
                     .foregroundStyle(.black)
-                    .font(.subheadline)
+                    .font(.subheadline.weight(.bold))
                     .foregroundStyle(.primary)
             }
+//            .overlay(
+//                Rectangle()
+//                    .stroke(lineWidth: 3)
+//            )
             .accessibilityElement(children: .combine)
             
             // MARK: Description
             
-            ScrollView {
+            ScrollView() {
                 Text(card.description)
                     .foregroundStyle(.black)
-                    .font(.subheadline)
-                    .multilineTextAlignment(.leading)
-                    .foregroundStyle(.secondary)
+                    .font(.title3.weight(.regular))
+                    .frame(maxWidth: .infinity)        // NOVO: faz o texto ocupar toda a largura e centralizar de verdade
             }
-            .frame(width: 300, height: 65)
+//            .overlay(
+//                Rectangle()
+//                    .stroke(lineWidth: 3)
+//            )
+            .frame(width: .infinity, height: .infinity)
             
             // MARK: Ideas
-            
-            ScrollView(.horizontal, showsIndicators: false) {
-                HStack {
-                    ForEach(card.ideas, id: \.self) { idea in
-                        Text(idea)
-                            .foregroundStyle(.black)
-                            .font(.system(.headline, weight: .semibold))
-                            .padding(.horizontal, 15)
-                            .padding(.vertical, 6)
-                            .background(ideasColor)
-                            .clipShape(Capsule())
+
+            GeometryReader { proxy in
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack {
+                        ForEach(card.ideas, id: \.self) { idea in
+                            Text(idea)
+                                .foregroundStyle(.black)
+                                .font(.system(.headline, weight: .semibold))
+                                .padding(.horizontal, 15)
+                                .padding(.vertical, 6)
+                                .background(ideasColor)
+                                .clipShape(Capsule())
+                        }
                     }
+                    .frame(minWidth: proxy.size.width, alignment: .center)
                 }
             }
+            .frame(height: 40)
+//            .overlay(
+//                Rectangle()
+//                    .stroke(lineWidth: 3)
+//            )
             .accessibilityLabel("Ideias inclusas: \(card.ideas.joined(separator: ", "))")
             .accessibilityElement(children: .ignore)
             
             // MARK: Select Button
-            
             Button {
-                            let persistedMeet = getPersistedModel(from: card)
-                            savePersistedMeet(persistedMeet)
-                            onSelectDate()   // só avisa pra cima; quem mostra o popup é a ResultsView
-                        } label: {
-                            Text("Escolher date")
-                                .foregroundStyle(.white)
-                                .font(.subheadline.weight(.bold))
-                                .frame(maxWidth: .infinity)
-                                .frame(minHeight: 44)
-                                .background(buttonColor)
-                                .clipShape(Capsule())
-                        }
-                        .accessibilityLabel("Escolher date")
-                        .accessibilityHint("Confirma a seleção da opção \(card.title)")
-                    }
-                    .padding(15)
-                    .background(
-                        RoundedRectangle(cornerRadius: 32)
-                            .fill(backgroundColor)
-                            .shadow(color: Color.black.opacity(0.15), radius: 10, x: 10, y: 10)
-                    )
-                    .padding(.horizontal)
-                    .frame(maxWidth: 300, maxHeight: 420)   // AUMENTADO — veja o passo 3 abaixo
-                }
+                let persistedMeet = getPersistedModel(from: card)
+                savePersistedMeet(persistedMeet)
+                onSelectDate()   // só avisa pra cima; quem mostra o popup é a ResultsView
+            } label: {
+                Text("Escolher date")
+                    .foregroundStyle(.white)
+                    .font(.subheadline.weight(.bold))
+                    .frame(maxWidth: .infinity)
+                    .frame(minHeight: 44)
+                    .background(buttonColor)
+                    .clipShape(Capsule())
+            }
+            .padding(.horizontal, 15)
+            .accessibilityLabel("Escolher date")
+            .accessibilityHint("Confirma a seleção da opção \(card.title)")
+        }
+        .frame(width: 350, height: 400)
+        .padding(15)
+        .background(
+            RoundedRectangle(cornerRadius: 32)
+                .fill(backgroundColor)
+                .shadow(color: Color.black.opacity(0.15), radius: 10, x: 10, y: 10)
+        )
+    }
+    
     func getPersistedModel(from meet: Meet) -> SavedData {
         SavedData(
             title: meet.title,
@@ -135,6 +153,7 @@ struct CardView: View {
         }
     }
 }
+
 // MARK: - Preview
 
 #Preview {
