@@ -39,6 +39,8 @@ struct PassPhoneView: View {
                             .frame(width: 48, height: 48)
                             .background(buttonCircleColor)
                             .clipShape(Circle())
+                        
+                        //APLICAR ACESSIBILIDADE NO CHEVRON
                     }
                     Spacer()
                 }
