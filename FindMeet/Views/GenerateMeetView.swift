@@ -110,24 +110,28 @@ struct GenerateMeetView: View {
                 .resizable()
                 .scaledToFit()
                 .frame(width: 340, height: 400)
-                .scaleEffect(isPulsing ? 1.08 : 1.0)
-                .animation(
-                    .easeInOut(duration: 0.9)
-                    .repeatForever(autoreverses: true),
-                    value: isPulsing
-                )
+//                .scaleEffect(isPulsing ? 1.08 : 1.0)
+//                .animation(
+//                    .easeInOut(duration: 0.9)
+//                    .repeatForever(autoreverses: true),
+//                    value: isPulsing
+//                )
                 .offset(y: -80)
                 .onTapGesture {
                     path.append(.notice)
                 }
-                .accessibilityLabel("Criar encontro")
-                .accessibilityHint("Clique no botão para criar encontro")
+                .accessibilityLabel("Clique no botão para criar encontro")
+//                .accessibilityValue ("Botão")
+                .accessibilityAddTraits(.isButton)
+                .accessibilityRemoveTraits(.isImage)
+
+                .accessibilityHint("Esse botão tem o formato de uma cereja")
                 .onAppear {
                     isPulsing = true
                 }
             
             Spacer().frame(height: 24)
-
+//MARK: "Clique na cereja"
             Group {
                         if showTapHint {
                             Text("Clique na cereja")
@@ -139,6 +143,7 @@ struct GenerateMeetView: View {
                         }
                     }
                     .frame(height: 20)
+                    .accessibilityHidden(true)
 
                     Spacer()
                 }
