@@ -92,7 +92,7 @@ struct InfiniteCarouselView<T: CarouselItem>: View {
                             Spacer()
                             
                             Text(item.title)
-                                .font(.headline)
+                                .font(.custom("Fredoka-regular" , size: 20))
                                 .foregroundStyle(.secondary)
                         }
                         .frame(

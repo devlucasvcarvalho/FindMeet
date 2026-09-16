@@ -32,7 +32,7 @@ struct CardDetailView: View {
                         .fill(cardBackgroundColor)
                     
                     Text(card.descriptions)
-                        .font(.system(size: 16, design: .rounded))
+                        .font(.custom("Fredoka-Regular", size: 16))
                         .foregroundColor(.black)
                         .lineSpacing(4)
                         .padding(20)
@@ -47,7 +47,7 @@ struct CardDetailView: View {
                 }
                 
                 Text("Dicas")
-                    .font(.system(size: 32, weight: .bold, design: .rounded))
+                    .font(.custom("Fredoka-SemiBold", size: 32))
                     .foregroundColor(.primary)
                     .padding(.top, 10)
                 
@@ -60,11 +60,11 @@ struct CardDetailView: View {
                         ForEach(tips, id: \.self) { tip in
                             HStack(alignment: .top) {
                                 Text("•")
-                                    .font(.system(size: 16, weight: .bold))
+                                    .font(.custom("Fredoka-SemiBold", size: 16))
                                     .foregroundColor(.black)
                                 
                                 Text(tip)
-                                    .font(.system(size: 15, design: .rounded))
+                                    .font(.custom("Fredoka-Regular", size: 15))
                                     .foregroundColor(.black)
                                     .lineSpacing(3)
                             }

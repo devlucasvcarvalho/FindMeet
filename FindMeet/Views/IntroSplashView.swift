@@ -17,7 +17,7 @@ struct IntroSplashView: View {
             Spacer().frame(height: 40)
 
             Text("Find\nMeet")
-                .font(.system(size: 52, weight: .black, design: .rounded))
+                .font(.custom("Fredoka-SemiBold", size: 52))
                 .foregroundColor(Color(red: 144/255, green: 3/255, blue: 3/255))
                 .multilineTextAlignment(.center)
                 .rotationEffect(.degrees(-8))
@@ -38,7 +38,7 @@ struct IntroSplashView: View {
             Spacer().frame(height: 24)
 
             Text("Encontros que combinam\ncom vocês.")
-                .font(.system(size: 24, weight: .bold, design: .rounded))
+                .font(.custom("Fredoka-Medium", size: 24))
                 .foregroundColor(Color(red: 144/255, green: 3/255, blue: 3/255))
                 .multilineTextAlignment(.center)
                 .offset(y: -90)
