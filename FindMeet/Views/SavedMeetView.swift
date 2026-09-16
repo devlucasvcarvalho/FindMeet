@@ -62,7 +62,7 @@ struct SavedMeetView: View {
             }
             .toolbarBackground(.hidden, for: .navigationBar)
             .navigationDestination(for: SavedData.self) { card in
-                CardDetailView(card: card)
+                CardDetailView(card: card, tips: card)
             }
             .appPopup(isPresented: $showAlert) {
                 PopUpview(

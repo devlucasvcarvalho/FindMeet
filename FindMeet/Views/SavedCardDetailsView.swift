@@ -12,14 +12,8 @@ struct CardDetailView: View {
     @Environment(\.dismiss) var dismiss
     
     let card: SavedData
-    
-    let tips: [String] = [
-        "Escolham o filme juntos antes de sair.",
-        "Comprem os ingressos antecipadamente.",
-        "Dividam uma pipoca ou escolham o lanche favorito de cada um.",
-        "Cheguem um pouco antes para não perder os trailers.",
-        "Depois do filme, parem em algum lugar para conversar sobre ele."
-    ]
+    //descriptions
+    let tips: SavedData
     private let cardBackgroundColor = Color(red: 255/255, green: 228/255, blue: 228/255)
     private let buttonCircleColor = Color.black.opacity(0.05)
     
@@ -57,7 +51,7 @@ struct CardDetailView: View {
                         .fill(cardBackgroundColor)
                     
                     VStack(alignment: .leading, spacing: 10) {
-                        ForEach(tips, id: \.self) { tip in
+                        ForEach(tips.ideas, id: \.self) { tip in
                             HStack(alignment: .top) {
                                 Text("•")
                                     .font(.system(size: 16, weight: .bold))
@@ -99,7 +93,7 @@ struct CardDetailView: View {
     )
     
     NavigationStack {
-        CardDetailView(card: card)
+        CardDetailView(card: card, tips: card)
     }
     .modelContainer(for: SavedData.self, inMemory: true)
 }
