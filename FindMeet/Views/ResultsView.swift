@@ -37,7 +37,7 @@ struct ResultsView: View {
                 } label: {
                     Image(systemName: "chevron.left")
                         .font(.system(size: 16, weight: .bold))
-                        .foregroundStyle(Color.black)
+                        .foregroundStyle(Color.primary)
                 }
             }
         }
