@@ -51,7 +51,7 @@ struct CardDetailView: View {
                         .fill(cardBackgroundColor)
                     
                     VStack(alignment: .leading, spacing: 10) {
-                        ForEach(tips.ideas, id: \.self) { tip in
+                        ForEach(tips.tips, id: \.self) { tip in
                             HStack(alignment: .top) {
                                 Text("•")
                                     .font(.system(size: 16, weight: .bold))

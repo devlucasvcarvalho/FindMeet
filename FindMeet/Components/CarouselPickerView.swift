@@ -208,9 +208,9 @@ struct Carousel3DEffect: ViewModifier {
 #Preview {
     InfiniteCarousel(
         meets: [
-            Meet(title: "Praia no sabado", time: "Manha", description: "Manhã na praia para curtir o sol, o mar e a companhia um do outro.", ideas: ["Praia", "Bronze", "Sol"]),
-            Meet(title: "Piquenique no domingo", time: "Tarde", description: "Um pequenique a tarde para conversar e dividir lanches", ideas: ["lanches", "natureza", "toalha"]),
-            Meet(title: "Cinema a dois", time: "Manhã", description: "Um cinema pertinho de casa, com filmes em lançamento, uma comedia romatica", ideas: ["Pipoca", "Casaco", "Sla"])
+            Meet(title: "Praia no sabado", time: "Manha", description: "Manhã na praia para curtir o sol, o mar e a companhia um do outro.", ideas: ["Praia", "Bronze", "Sol"], tips: ["", "", ""]),
+            Meet(title: "Piquenique no domingo", time: "Tarde", description: "Um pequenique a tarde para conversar e dividir lanches", ideas: ["lanches", "natureza", "toalha"], tips: ["", "", ""]),
+            Meet(title: "Cinema a dois", time: "Manhã", description: "Um cinema pertinho de casa, com filmes em lançamento, uma comedia romatica", ideas: ["Pipoca", "Casaco", "Sla"], tips: ["", "", ""])
         ], onSelectDate: { print("Date selecionado") },
     )
 }

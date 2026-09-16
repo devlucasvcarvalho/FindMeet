@@ -23,6 +23,9 @@ struct Meet {
     let ideas: [String]
 
 
+    @Guide(description: "A list of three simple tips on what to do on a date.")
+    @Guide(.count(3))
+    let tips: [String]
 }
 @Generable
 struct Suggestion {

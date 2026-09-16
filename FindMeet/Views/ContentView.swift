@@ -23,6 +23,7 @@ struct ContentView: View {
                 //notEnableView()
             case .deviceNotEligible:
                 "This device is not eligible for Apple Intelligence. Please use a compatible device."
+                
             case .modelNotReady:
                 "The language model is not ready yet. Please try again later."
             @unknown default:

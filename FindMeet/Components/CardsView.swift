@@ -159,7 +159,7 @@ struct CardView: View {
 #Preview {
     CardView(
         index: 0,
-        card: Meet(title: "Praia no sabado", time: "Manha", description: "Manhã na praia para curtir o sol, o mar e a companhia um do outro.", ideas: ["Praia", "Bronze", "Sol"]),
+        card: Meet(title: "Praia no sabado", time: "Manha", description: "Manhã na praia para curtir o sol, o mar e a companhia um do outro.", ideas: ["Praia", "Bronze", "Sol"], tips: ["", "", ""]),
         onSelectDate: { print("Date selecionado") }
     )
 }
