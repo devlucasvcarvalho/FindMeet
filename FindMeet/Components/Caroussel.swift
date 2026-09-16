@@ -139,7 +139,7 @@ struct InfiniteCarouselView<T: CarouselItem>: View {
                         .onChanged { value in
                             isSnapping = false
 
-                            let dragChange = value.translation.width - lastDragOffset
+                            _ = value.translation.width - lastDragOffset
                             lastDragOffset = value.translation.width
                             isManuallyDragging = true
 

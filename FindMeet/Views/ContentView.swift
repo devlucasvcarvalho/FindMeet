@@ -20,6 +20,7 @@ struct ContentView: View {
             let text = switch reason {
             case .appleIntelligenceNotEnabled:
                 "Apple Intelligence is not enabled. Please enable it in Settings."
+                //notEnableView()
             case .deviceNotEligible:
                 "This device is not eligible for Apple Intelligence. Please use a compatible device."
             case .modelNotReady:
