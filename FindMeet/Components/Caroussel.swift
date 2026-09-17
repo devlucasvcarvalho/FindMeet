@@ -79,27 +79,17 @@ struct InfiniteCarouselView<T: CarouselItem>: View {
                                     width: cardWidth,
                                     height: cardHeight
                                 )
-                            //                                .clipShape(
-                            //                                    RoundedRectangle(cornerRadius: 20)
-                            //                                )
-                            //                                .overlay {
-                            //                                    RoundedRectangle(cornerRadius: 20)
-                            //                                        .stroke(
-                            //                                            Color.white.opacity(0.2),
-                            //                                            lineWidth: 1
-                            //                                        )
-                            //                                }
+                                .accessibilityHidden(true)
+                            
                             Spacer()
                             
                             Text(item.title)
                                 .font(.custom("Fredoka-regular" , size: 20))
                                 .foregroundStyle(.secondary)
+                                .accessibilityLabel("\(item.title)")
+                                
                         }
-                        .frame(
-                            maxWidth: .infinity, maxHeight: 450
-                            //                            width: cardWidth,
-                            //                            height: cardHeight + 40
-                        )
+                        .frame( maxWidth: .infinity, maxHeight: 450)
                         .id(index)
                         .modifier(
                             Carousel3DEffect(

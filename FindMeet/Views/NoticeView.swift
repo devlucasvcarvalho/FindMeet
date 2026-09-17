@@ -33,17 +33,19 @@ struct NoticeView: View {
                     } label: {
                         Image(systemName: "chevron.left")
                             .font(.custom("Fredoka-Medium", size: 20))
-                            .foregroundColor(.black)
+                            .foregroundColor(.primary)
                             .frame(maxWidth: 48, maxHeight: 48)
                             .background(buttonCircleColor)
                             .clipShape(Circle())
                     }
+                    .accessibilityLabel("Voltar para tela inicial")
                     Spacer()
                 }
                 .padding(.top, 10)
                 .padding(.horizontal, 24)
                 
                 Image("escolher")
+                    .accessibilityHidden(true)
                 
                 Text("Hora de Escolher!")
                     .font(.custom("Fredoka-Medium", size: 35))
@@ -67,6 +69,7 @@ struct NoticeView: View {
                         .background(buttonColor)
                         .clipShape(Capsule())
                 }
+                .accessibilityLabel("Clique para escolher o estilo do seu encontro")
                 .padding(.bottom, 40)
             }
             .opacity(isVisible ? 1 : 0)
