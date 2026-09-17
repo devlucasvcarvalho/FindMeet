@@ -35,8 +35,8 @@ struct CardView: View {
             HStack (alignment: .bottom){
                 Text("Opção \(index + 1)")
                     .foregroundStyle(.black)
-                    .font(.title.weight(.bold))
-                
+                    .font(.custom("Fredoka-SemiBold" , size: 35))
+
                 Image("cerejinhas")
                     .resizable()
                     .scaledToFit()
@@ -53,12 +53,12 @@ struct CardView: View {
             VStack {
                 Text(card.title)
                     .foregroundStyle(.black)
-                    .font(.title.weight(.bold))
+                    .font(.custom("Fredoka-SemiBold", size: 35))
                     .frame(width: .infinity)
                 
                 Text("Durante a \(card.time)")
                     .foregroundStyle(.black)
-                    .font(.subheadline.weight(.bold))
+                    .font(.custom("Fredoka-Medium", size: 20))
                     .foregroundStyle(.primary)
             }
 //            .overlay(
@@ -72,7 +72,7 @@ struct CardView: View {
             ScrollView() {
                 Text(card.description)
                     .foregroundStyle(.black)
-                    .font(.title3.weight(.regular))
+                    .font(.custom("Fredoka-Regular", size: 24))
                     .frame(maxWidth: .infinity)        // NOVO: faz o texto ocupar toda a largura e centralizar de verdade
             }
 //            .overlay(
@@ -89,7 +89,7 @@ struct CardView: View {
                         ForEach(card.ideas, id: \.self) { idea in
                             Text(idea)
                                 .foregroundStyle(.black)
-                                .font(.system(.headline, weight: .semibold))
+                                .font(.custom("Fredoka-Medium", size: 20))
                                 .padding(.horizontal, 15)
                                 .padding(.vertical, 6)
                                 .background(ideasColor)
@@ -115,7 +115,7 @@ struct CardView: View {
             } label: {
                 Text("Escolher date")
                     .foregroundStyle(.white)
-                    .font(.subheadline.weight(.bold))
+                    .font(.custom("Fredoka-Medium", size: 22))
                     .frame(maxWidth: .infinity)
                     .frame(minHeight: 44)
                     .background(buttonColor)

@@ -87,7 +87,9 @@ struct SavedMeetView: View {
                     }
                 )
             }
-            .navigationTitle(Text("Ideias Salvas"))
+            .navigationTitle(Text("Ideias Salvas")
+                .font(Font.custom("Fredoka-SemiBold", size: 20))
+            )
             .toolbarBackground(.hidden, for: .navigationBar)
         }
     }
@@ -108,19 +110,19 @@ struct CustomAlertView: View {
             
             VStack(alignment: .leading, spacing: 16) {
                 Text("Tem certeza que seja conculir esse Date?")
-                    .font(.system(size: 20, weight: .bold, design: .rounded))
+                    .font(.custom("Fredoka-Regular", size: 20))
                     .foregroundColor(.black)
                     .lineSpacing(2)
                 
                 Text("Após finalizada, o date não será mais visível.")
-                    .font(.system(size: 16, weight: .regular, design: .rounded))
+                    .font(.custom("Fredoka-Regular", size: 20))
                     .foregroundColor(.black.opacity(0.8))
                     .lineSpacing(2)
                     .padding(.bottom, 8)
                 
                 Button(action: onConclude) {
                     Text("Concluir")
-                        .font(.system(size: 17, weight: .semibold, design: .rounded))
+                        .font(.custom("Fredoka-SemiBold", size: 17))
                         .foregroundColor(.white)
                         .frame(maxWidth: .infinity)
                         .frame(height: 52)
@@ -130,7 +132,7 @@ struct CustomAlertView: View {
                 
                 Button(action: onCancel) {
                     Text("Cancelar")
-                        .font(.system(size: 17, weight: .semibold, design: .rounded))
+                        .font(.custom("Fredoka-SemiBold", size: 17))
                         .foregroundColor(.black)
                         .frame(maxWidth: .infinity)
                         .frame(height: 52)

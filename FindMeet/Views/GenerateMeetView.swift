@@ -100,7 +100,7 @@ struct GenerateMeetView: View {
                 .frame(height: 40)
             
             Text("Qual a boa?")
-                .font(.system(size: 38, weight: .black, design: .rounded))
+                .font(.custom("Fredoka-SemiBold" , size: 38))
                 .multilineTextAlignment(.center)
                 .zIndex(1)
             
@@ -131,7 +131,7 @@ struct GenerateMeetView: View {
             Group {
                         if showTapHint {
                             Text("Clique na cereja")
-                                .font(.subheadline.bold())
+                                .font(.custom("Fredoka-Regular" , size: 14))
                                 .foregroundColor(.secondary)
                                 .transition(.opacity)
                         } else {
