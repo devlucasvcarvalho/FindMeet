@@ -20,7 +20,7 @@ struct SavedMeetView: View {
     
     @Environment(\.modelContext) private var modelContext
     @Query private var savedData: [SavedData]
-
+    
     @State private var selectedTab: Int = 1
     @State private var path: [SavedData] = []
     
