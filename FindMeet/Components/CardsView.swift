@@ -13,6 +13,7 @@ struct CardView: View {
     @Environment(\.modelContext) private var modelContext
     @Query private var savedData: [SavedData]
     
+    
     let index: Int
     let card: Meet
     var shadowRadius: CGFloat = 4.0
