@@ -52,6 +52,7 @@ struct SavedMeetView: View {
                     .padding(.bottom, 110)
                 }
             }
+            .toolbar(.visible, for: .tabBar)
             .navigationDestination(for: SavedData.self) { card in
                 CardDetailView(card: card, tips: card)
             }

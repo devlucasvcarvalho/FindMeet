@@ -20,11 +20,14 @@ struct GenerateMeetView: View {
             Group {
                 if showHome {
                     homeContent
+                        .toolbar(path.isEmpty ? .visible : .hidden, for: .tabBar)
+
                 } else {
                     IntroSplashView {
                         showHome = true
                         showTapHint = true
                     }
+                    .toolbar(.hidden, for: .tabBar)
                 }
             }
             .navigationDestination(for: MeetFlowRoute.self) { route in
@@ -90,9 +93,9 @@ struct GenerateMeetView: View {
                 }
             }
             // única fonte de verdade pra visibilidade da tabbar
-            .toolbar((showHome && path.isEmpty) ? .visible : .hidden, for: .tabBar)        }
+//            .toolbar((showHome && path.isEmpty) ? .visible : .hidden, for: .tabBar)
+        }
     }
-    
     @ViewBuilder
     private var homeContent: some View {
         VStack(spacing: 0) {
@@ -127,21 +130,21 @@ struct GenerateMeetView: View {
                 }
             
             Spacer().frame(height: 24)
-
+            
             Group {
-                        if showTapHint {
-                            Text("Clique na cereja")
-                                .font(.custom("Fredoka-Regular" , size: 14))
-                                .foregroundColor(.secondary)
-                                .transition(.opacity)
-                        } else {
-                            Color.clear
-                        }
-                    }
-                    .frame(height: 20)
-
-                    Spacer()
+                if showTapHint {
+                    Text("Clique na cereja")
+                        .font(.custom("Fredoka-Regular" , size: 14))
+                        .foregroundColor(.secondary)
+                        .transition(.opacity)
+                } else {
+                    Color.clear
                 }
+            }
+            .frame(height: 20)
+            
+            Spacer()
+        }
         .appBackground()
         .padding()
         .ignoresSafeArea(edges: .all)
