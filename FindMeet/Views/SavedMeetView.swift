@@ -5,14 +5,6 @@
 //  Created by Cintia Raquel on 01/09/26.
 //
 
-
-//
-//  SavedMeetView.swift
-//  FindMeet
-//
-//  Created by Cintia Raquel on 01/09/26.
-//
-
 import SwiftUI
 import SwiftData
 
@@ -60,7 +52,6 @@ struct SavedMeetView: View {
                     .padding(.bottom, 110)
                 }
             }
-            .toolbarBackground(.hidden, for: .navigationBar)
             .navigationDestination(for: SavedData.self) { card in
                 CardDetailView(card: card, tips: card)
             }
@@ -87,10 +78,8 @@ struct SavedMeetView: View {
                     }
                 )
             }
-            .navigationTitle(Text("Ideias Salvas")
-                .font(Font.custom("Fredoka-SemiBold", size: 20))
-            )
-            .toolbarBackground(.hidden, for: .navigationBar)
+//            .toolbarBackground(.hidden, for: .navigationBar)
+            .navigationTitle(Text("Ideias Salvas"))
         }
     }
 }

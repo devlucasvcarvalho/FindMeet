@@ -80,7 +80,6 @@ struct CardDetailView: View {
         }
         .navigationTitle(card.title)
         .appBackground()
-//        .toolbarBackground(.hidden, for: .navigationBar)
     }
 }
 
