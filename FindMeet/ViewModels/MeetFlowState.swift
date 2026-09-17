@@ -1,5 +1,5 @@
 //
-//  LoadingViewModel.swift
+//  MeetFLowState.swift
 //  FindMeet
 //
 //  Created by Lucas Vieira de Carvalho on 03/09/26.
@@ -19,18 +19,11 @@ final class MeetFlowState {
     var user2SelectedStyle: MeetStyleEnum = .festive
     var user2SelectedTime: MeetTimeEnum = .night
     
-    var suggestion: Suggestion?   // <- novo
-    
-    //var selectedStyleString: String { selectedStyle.styles }
-    //var selectedTimeString: String { selectedTime.time }
-    
+    var suggestion: Suggestion?
     var promptQuery: String {
         """
-        Pessoa 1 quer: Estilo do encontro: \(user1SelectedStyle). Período do encontro: \(user1SelectedTime).
-        Pessoa 2 quer: Estilo do encontro: \(user2SelectedStyle). Período do encontro: \(user2SelectedTime).
-        Gere opções de encontro que agradem as duas pessoas, combinando essas preferências. Todas as respostas em pt BR.
-    """
+        Pessoa 1 quer: Estilo do encontro: \(user1SelectedStyle.styles). Período do encontro: \(user1SelectedTime.time).
+        Pessoa 2 quer: Estilo do encontro: \(user2SelectedStyle.styles). Período do encontro: \(user2SelectedTime.time).
+        """
     }
 }
-
-//        Estilo do encontro: \(selectedStyleString). Período do encontro: \(selectedTimeString).
