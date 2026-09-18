@@ -18,7 +18,7 @@ struct CardView: View {
     let card: Meet
     var shadowRadius: CGFloat = 4.0
     
-    var onSelectDate: () -> Void   // NOVO: substitui onGoHome/onGoSaved e o popup interno
+    var onSelectDate: () -> Void
     
     let backgroundColor: Color = Color(red: 239/255, green: 182/255, blue: 182/255)
     let ideasColor: Color = Color(red: 255/255, green: 228/255, blue: 228/255)
@@ -36,8 +36,8 @@ struct CardView: View {
             HStack (alignment: .bottom){
                 Text("Opção \(index + 1)")
                     .foregroundStyle(.black)
-                    .font(.custom("Fredoka-SemiBold" , size: 35))
-
+                    .font(.title.weight(.bold))
+                
                 Image("cerejinhas")
                     .resizable()
                     .scaledToFit()
@@ -54,12 +54,12 @@ struct CardView: View {
             VStack {
                 Text(card.title)
                     .foregroundStyle(.black)
-                    .font(.custom("Fredoka-SemiBold", size: 35))
+                    .font(.title.weight(.bold))
                     .frame(width: .infinity)
                 
                 Text("Durante a \(card.time)")
                     .foregroundStyle(.black)
-                    .font(.custom("Fredoka-Medium", size: 20))
+                    .font(.subheadline.weight(.bold))
                     .foregroundStyle(.primary)
             }
 //            .overlay(
@@ -73,8 +73,8 @@ struct CardView: View {
             ScrollView() {
                 Text(card.description)
                     .foregroundStyle(.black)
-                    .font(.custom("Fredoka-Regular", size: 24))
-                    .frame(maxWidth: .infinity)        // NOVO: faz o texto ocupar toda a largura e centralizar de verdade
+                    .font(.title3.weight(.regular))
+                    .frame(maxWidth: .infinity)
             }
 //            .overlay(
 //                Rectangle()
@@ -90,7 +90,7 @@ struct CardView: View {
                         ForEach(card.ideas, id: \.self) { idea in
                             Text(idea)
                                 .foregroundStyle(.black)
-                                .font(.custom("Fredoka-Medium", size: 20))
+                                .font(.system(.headline, weight: .semibold))
                                 .padding(.horizontal, 15)
                                 .padding(.vertical, 6)
                                 .background(ideasColor)
@@ -112,11 +112,11 @@ struct CardView: View {
             Button {
                 let persistedMeet = getPersistedModel(from: card)
                 savePersistedMeet(persistedMeet)
-                onSelectDate()   // só avisa pra cima; quem mostra o popup é a ResultsView
+                onSelectDate()
             } label: {
                 Text("Escolher date")
                     .foregroundStyle(.white)
-                    .font(.custom("Fredoka-Medium", size: 22))
+                    .font(.subheadline.weight(.bold))
                     .frame(maxWidth: .infinity)
                     .frame(minHeight: 44)
                     .background(buttonColor)
@@ -155,7 +155,7 @@ struct CardView: View {
     }
 }
 
-// MARK: - Preview
+
 
 #Preview {
     CardView(
