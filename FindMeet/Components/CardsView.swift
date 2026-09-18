@@ -60,7 +60,7 @@ struct CardView: View {
                 Text(card.title)
                     .foregroundStyle(.black)
                     .font(.title.weight(.bold))
-                    .frame(width: .infinity)
+                    .frame(maxWidth: .infinity)
                 
                 Text("Durante a \(card.time)")
                     .foregroundStyle(.black)
@@ -81,11 +81,11 @@ struct CardView: View {
                     .font(.title3.weight(.regular))
                     .frame(maxWidth: .infinity)
             }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
 //            .overlay(
 //                Rectangle()
 //                    .stroke(lineWidth: 3)
 //            )
-            .frame(width: .infinity, height: .infinity)
             
             // MARK: Ideas
 
@@ -137,7 +137,7 @@ struct CardView: View {
                             : "Confirma a seleção da opção \(card.title)"
                     )
         }
-        .frame(width: 350, height: 400)
+        .frame(width: 300, height: 400)
         .padding(15)
         .background(
             RoundedRectangle(cornerRadius: 32)

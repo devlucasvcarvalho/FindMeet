@@ -19,7 +19,7 @@ struct InfiniteCarousel: View {
     private let spacing: CGFloat = 0
     private let cardWidth: CGFloat = 320    // ANTES: 250
     private let cardHeight: CGFloat = 500
-   
+    
     @State private var offset: CGFloat = 0
     @State private var currentIndex: Int = 0
     @State private var isAutoScrollingEnabled = false
@@ -50,7 +50,7 @@ struct InfiniteCarousel: View {
             GeometryReader { geometry in
                 let totalWidth = cardWidth + spacing
                 let midX = geometry.size.width / 2
-
+                
                 HStack(spacing: spacing) {
                     ForEach(meets.indices, id: \.self) { index in
                         
@@ -60,15 +60,15 @@ struct InfiniteCarousel: View {
                             onSelectDate: onSelectDate
                         )
                         .id(index)
-                            .frame(width: cardWidth, height: cardHeight)
-                            .modifier(Carousel3DEffect(
-                                currentOffset: offset,
-                                cardWidth: cardWidth,
-                                cardHeight: cardHeight,
-                                spacing: spacing,
-                                midX: midX,
-                                index: index
-                            ))
+                        .frame(width: cardWidth, height: cardHeight)
+                        .modifier(Carousel3DEffect(
+                            currentOffset: offset,
+                            cardWidth: cardWidth,
+                            cardHeight: cardHeight,
+                            spacing: spacing,
+                            midX: midX,
+                            index: index
+                        ))
                     }
                 }
                 .offset(x: isSnapping ? snapOffset : offset)
@@ -83,7 +83,7 @@ struct InfiniteCarousel: View {
                         }
                     }
                 }
-                .gesture(
+                .simultaneousGesture(
                     DragGesture()
                         .onChanged { value in
                             isSnapping = false
@@ -175,18 +175,18 @@ struct Carousel3DEffect: ViewModifier {
     let spacing: CGFloat
     let midX: CGFloat
     let index: Int
-
+    
     func body(content: Content) -> some View {
         GeometryReader { geometry in
             let cardX = geometry.frame(in: .global).midX
             let distance = cardX - midX
-
+            
             let maxDistance = (UIScreen.main.bounds.width / 2) + cardWidth / 2
             let normalised = max(-1, min(1, distance / maxDistance))
-
+            
             let rotationAngle: Double = Double(normalised * -30)
             let scale = 1.0 - abs(normalised) * 0.15
-
+            
             content
                 .scaleEffect(scale)
                 .rotation3DEffect(
