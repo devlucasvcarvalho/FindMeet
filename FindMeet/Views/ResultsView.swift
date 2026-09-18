@@ -13,14 +13,21 @@ struct ResultsView: View {
     @Binding var selectedTab: Int
     
     @State private var showConfirmPopup = false
+    @State private var showAlreadySavedPopup = false
 
     var body: some View {
         Group {
             if let suggestion = flow.suggestion {
                 InfiniteCarousel(
                     meets: suggestion.suggestions,
-                    onSelectDate: {
-                        withAnimation { showConfirmPopup = true }
+                    onSelectDate: { wasAlreadySaved in
+                        withAnimation {
+                            if wasAlreadySaved {
+                                showAlreadySavedPopup = true
+                            } else {
+                                showConfirmPopup = true
+                            }
+                        }
                     }
                 )
             } else {
@@ -62,41 +69,66 @@ struct ResultsView: View {
                 }
             )
         }
-    }
+        .appPopup(isPresented: $showAlreadySavedPopup) {
+                PopUpview(
+                    icon: "checkmark.circle.fill",
+                    title: "Já salvo!",
+                    message: "Essa opção já está na sua lista de encontros salvos.",
+                    secondaryButton: .init(label: "Fechar", style: .secondary, action: {
+                        withAnimation { showAlreadySavedPopup = false }
+                    }),
+                    primaryButton: .init(label: "Ver salvos", style: .primary, action: {
+                        withAnimation { showAlreadySavedPopup = false }
+                        path.removeAll()
+                        selectedTab = 1
+                    }),
+                    onTapBackground: {
+                        withAnimation { showAlreadySavedPopup = false }
+                    }
+                )
+            }
+        }
 }
 
 #Preview {
     @Previewable @State var path: [MeetFlowRoute] = []
     @Previewable @State var selectedTab: Int = 0
     
-    let flow = MeetFlowState()
-    flow.suggestion = Suggestion(suggestions: [
-        Meet(
-            title: "Praia no sábado",
-            time: "Manhã",
-            description: "Manhã na praia para curtir o sol, o mar e a companhia um do outro.",
-            ideas: ["Praia", "Bronze", "Sol"],
-            tips: ["", "", ""]
-        ),
-        Meet(
-            title: "Piquenique no domingo",
-            time: "Tarde",
-            description: "Um piquenique à tarde para conversar e dividir lanches",
-            ideas: ["Lanches", "Natureza", "Toalha"],
-            tips: ["", "", ""]
-        ),
-        Meet(
-            title: "Cinema a dois",
-            time: "Noite",
-            description: "Um cinema pertinho de casa, com filmes em lançamento, uma comédia romântica",
-            ideas: ["Pipoca", "Casaco", "Escolher juntos"],
-            tips: ["", "", ""]
-        )
-    ])
+    // 1. Configura o objeto dentro de uma closure para funcionar no ViewBuilder
+    let flow: MeetFlowState = {
+        let state = MeetFlowState()
+        state.suggestion = Suggestion(suggestions: [
+            Meet(
+                title: "Praia no sábado",
+                time: "Manhã",
+                description: "Manhã na praia para curtir o sol, o mar e a companhia um do outro.",
+                ideas: ["Praia", "Bronze", "Sol"],
+                tips: ["", "", ""]
+            ),
+            Meet(
+                title: "Piquenique no domingo",
+                time: "Tarde",
+                description: "Um piquenique à tarde para conversar e dividir lanches",
+                ideas: ["Lanches", "Natureza", "Toalha"],
+                tips: ["", "", ""]
+            ),
+            Meet(
+                title: "Cinema a dois",
+                time: "Noite",
+                description: "Um cinema pertinho de casa, com filmes em lançamento, uma comédia romântica",
+                ideas: ["Pipoca", "Casaco", "Escolher juntos"],
+                tips: ["", "", ""]
+            )
+        ])
+        return state
+    }()
     
-    return ResultsView(
-        flow: flow,
-        path: $path,
-        selectedTab: $selectedTab
-    )
+    // 2. NavigationStack para a toolbar e navegação funcionarem no Preview
+    NavigationStack {
+        ResultsView(
+            flow: flow,
+            path: $path,
+            selectedTab: $selectedTab
+        )
+    }
 }

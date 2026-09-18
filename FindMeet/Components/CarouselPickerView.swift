@@ -14,9 +14,6 @@
 import SwiftUI
 import Combine
 
-
-
-// MARK: - Main View
 struct InfiniteCarousel: View {
     private let cardCount = 3
     private let spacing: CGFloat = 0
@@ -39,7 +36,7 @@ struct InfiniteCarousel: View {
     @State private var snapOffset: CGFloat = 0
     
     let meets: [Meet]
-    var onSelectDate: () -> Void
+    var onSelectDate: (Bool) -> Void
     
     @State private var scrollPosition: Int?
     private var selection: Int {
@@ -203,13 +200,36 @@ struct Carousel3DEffect: ViewModifier {
 }
 
 
-// MARK: - Preview
 #Preview {
+    let dummyMeets = [
+        Meet(
+            title: "Praia no sábado",
+            time: "Manhã",
+            description: "Manhã na praia para curtir o sol, o mar e a companhia um do outro.",
+            ideas: ["Praia", "Bronze", "Sol"],
+            tips: ["Protetor solar", "Água", "Óculos"]
+        ),
+        Meet(
+            title: "Piquenique no domingo",
+            time: "Tarde",
+            description: "Um piquenique à tarde para conversar e dividir lanches.",
+            ideas: ["Lanches", "Natureza", "Toalha"],
+            tips: ["Frutas", "Repelente", "Cesta"]
+        ),
+        Meet(
+            title: "Cinema a dois",
+            time: "Noite",
+            description: "Um cinema pertinho de casa, com filmes em lançamento.",
+            ideas: ["Pipoca", "Casaco", "Romance"],
+            tips: ["Comprar antes", "Chegar cedo", "Escolher juntos"]
+        )
+    ]
+    
     InfiniteCarousel(
-        meets: [
-            Meet(title: "Praia no sabado", time: "Manha", description: "Manhã na praia para curtir o sol, o mar e a companhia um do outro.", ideas: ["Praia", "Bronze", "Sol"], tips: ["", "", ""]),
-            Meet(title: "Piquenique no domingo", time: "Tarde", description: "Um pequenique a tarde para conversar e dividir lanches", ideas: ["lanches", "natureza", "toalha"], tips: ["", "", ""]),
-            Meet(title: "Cinema a dois", time: "Manhã", description: "Um cinema pertinho de casa, com filmes em lançamento, uma comedia romatica", ideas: ["Pipoca", "Casaco", "Sla"], tips: ["", "", ""])
-        ], onSelectDate: { print("Date selecionado") },
+        meets: dummyMeets,
+        onSelectDate: { isDuplicate in
+            // O print ajuda a testar no console do Xcode se o botão está funcionando
+            print("Date selecionado. Foi duplicado? \(isDuplicate)")
+        }
     )
 }

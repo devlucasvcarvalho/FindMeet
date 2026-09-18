@@ -4,7 +4,6 @@
 //
 //  Created by Cintia Raquel on 01/09/26.
 //
-//perguntar como deixo um espaco especifico para cada componente do card
 
 import SwiftUI
 import SwiftData
@@ -18,7 +17,13 @@ struct CardView: View {
     let card: Meet
     var shadowRadius: CGFloat = 4.0
     
-    var onSelectDate: () -> Void
+    var onSelectDate: (Bool) -> Void
+    
+    private var isAlreadySaved: Bool {
+        savedData.contains {
+            $0.title == card.title && $0.descriptions == card.description
+        }
+    }
     
     let backgroundColor: Color = Color(red: 239/255, green: 182/255, blue: 182/255)
     let ideasColor: Color = Color(red: 255/255, green: 228/255, blue: 228/255)
@@ -108,23 +113,29 @@ struct CardView: View {
             .accessibilityLabel("Ideias inclusas: \(card.ideas.joined(separator: ", "))")
             .accessibilityElement(children: .ignore)
             
-            // MARK: Select Button
-            Button {
+            Button {if isAlreadySaved {
+                onSelectDate(true)
+            } else {
                 let persistedMeet = getPersistedModel(from: card)
                 savePersistedMeet(persistedMeet)
-                onSelectDate()
+                onSelectDate(false)
+            }
             } label: {
-                Text("Escolher date")
+                Text(isAlreadySaved ? "Já salvo" : "Escolher date")
                     .foregroundStyle(.white)
                     .font(.subheadline.weight(.bold))
                     .frame(maxWidth: .infinity)
                     .frame(minHeight: 44)
-                    .background(buttonColor)
+                    .background(isAlreadySaved ? Color.green : buttonColor)
                     .clipShape(Capsule())
             }
             .padding(.horizontal, 15)
             .accessibilityLabel("Escolher date")
-            .accessibilityHint("Confirma a seleção da opção \(card.title)")
+            .accessibilityHint(
+                        isAlreadySaved
+                            ? "Este encontro já foi salvo anteriormente"
+                            : "Confirma a seleção da opção \(card.title)"
+                    )
         }
         .frame(width: 350, height: 400)
         .padding(15)
@@ -157,10 +168,34 @@ struct CardView: View {
 
 
 
-#Preview {
-    CardView(
-        index: 0,
-        card: Meet(title: "Praia no sabado", time: "Manha", description: "Manhã na praia para curtir o sol, o mar e a companhia um do outro.", ideas: ["Praia", "Bronze", "Sol"], tips: ["", "", ""]),
-        onSelectDate: { print("Date selecionado") }
+#Preview("Já salvo") {
+    let container = try! ModelContainer(
+        for: SavedData.self,
+        configurations: ModelConfiguration(isStoredInMemoryOnly: true)
     )
+    
+    let meet = Meet(
+        title: "Praia no sabado",
+        time: "Manha",
+        description: "Manhã na praia para curtir o sol, o mar e a companhia um do outro.",
+        ideas: ["Praia", "Bronze", "Sol"],
+        tips: ["", "", ""]
+    )
+    
+    container.mainContext.insert(
+        SavedData(
+            title: meet.title,
+            time: meet.time,
+            descriptions: meet.description,
+            ideas: meet.ideas
+        )
+    )
+    
+    return CardView(
+        index: 0,
+        card: meet,
+        onSelectDate: { wasAlreadySaved in print("Date selecionado, já salvo? \(wasAlreadySaved)") }
+    )
+    .modelContainer(container)
 }
+ 
