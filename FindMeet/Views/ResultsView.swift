@@ -13,16 +13,23 @@ struct ResultsView: View {
     @Binding var selectedTab: Int
     
     @State private var showConfirmPopup = false
+    @State private var showAlreadySavedPopup = false
 
     var body: some View {
         Group {
             if let suggestion = flow.suggestion {
                 InfiniteCarousel(
                     meets: suggestion.suggestions,
-                    onSelectDate: {
-                        withAnimation { showConfirmPopup = true }
-                    }
-                )
+                    onSelectDate: { wasAlreadySaved in
+                                        withAnimation {
+                                            if wasAlreadySaved {
+                                                showAlreadySavedPopup = true
+                                            } else {
+                                                showConfirmPopup = true
+                                            }
+                                        }
+                                    }
+                                )
             } else {
                 Text("Nenhuma sugestão disponível.")
             }
@@ -41,28 +48,25 @@ struct ResultsView: View {
                 }
             }
         }
-        .appPopup(isPresented: $showConfirmPopup) {
-            PopUpview(
-                title: "Date escolhido!",
-                message: "O que você quer fazer agora?",
-                secondaryButton: .init(label: "Ver salvos", style: .secondary, action: {
-                    withAnimation { showConfirmPopup = false }
-                    path.removeAll()
-                    selectedTab = 1
-                }),
-                primaryButton: .init(label: "Tela inicial", style: .primary, action: {
-                    withAnimation { showConfirmPopup = false }
-                    path.removeAll()
-                }),
-                tertiaryButton: .init(label: "Salvar mais ideias", style: .secondary, action: {
-                    withAnimation { showConfirmPopup = false }
-                }),
-                onTapBackground: {
-                    withAnimation { showConfirmPopup = false }
-                }
-            )
+        .appPopup(isPresented: $showAlreadySavedPopup) {
+                PopUpview(
+                    icon: "checkmark.circle.fill",
+                    title: "Já salvo!",
+                    message: "Essa opção já está na sua lista de encontros salvos.",
+                    secondaryButton: .init(label: "Fechar", style: .secondary, action: {
+                        withAnimation { showAlreadySavedPopup = false }
+                    }),
+                    primaryButton: .init(label: "Ver salvos", style: .primary, action: {
+                        withAnimation { showAlreadySavedPopup = false }
+                        path.removeAll()
+                        selectedTab = 1
+                    }),
+                    onTapBackground: {
+                        withAnimation { showAlreadySavedPopup = false }
+                    }
+                )
+            }
         }
-    }
 }
 
 #Preview {
