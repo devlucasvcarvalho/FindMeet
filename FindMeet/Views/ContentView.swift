@@ -14,7 +14,7 @@ struct ContentView: View {
         switch SystemLanguageModel.default.availability {
         case .available:
 //            //Puxar view inicial
-            GenerateMeetView(selectedTab: .constant(0))
+            TelaView()
                 .ignoresSafeArea()
         case .unavailable(let reason):
             let text = switch reason {
