@@ -1,9 +1,3 @@
-//
-//  GenerateMeetView.swift
-//  FindMeet
-//
-//  Created by Cintia Raquel on 01/09/26.
-//
 import SwiftUI
 
 struct GenerateMeetView: View {
@@ -90,7 +84,7 @@ struct GenerateMeetView: View {
                 }
             }
             // única fonte de verdade pra visibilidade da tabbar
-            .toolbar((showHome && path.isEmpty) ? .visible : .hidden, for: .tabBar)        }
+            .toolbar((showHome && path.isEmpty) ? .visible : .hidden, for: .tabBar) }
     }
     
     @ViewBuilder
@@ -120,18 +114,14 @@ struct GenerateMeetView: View {
                 .onTapGesture {
                     path.append(.notice)
                 }
-                .accessibilityLabel("Clique no botão para criar encontro")
-//                .accessibilityValue ("Botão")
-                .accessibilityAddTraits(.isButton)
-                .accessibilityRemoveTraits(.isImage)
-
-                .accessibilityHint("Esse botão tem o formato de uma cereja")
+                .accessibilityLabel("Criar encontro")
+                .accessibilityHint("Clique no botão para criar encontro")
                 .onAppear {
                     isPulsing = true
                 }
             
             Spacer().frame(height: 24)
-//MARK: "Clique na cereja"
+            
             Group {
                 if showTapHint {
                     Text("Clique na cereja")
@@ -141,6 +131,11 @@ struct GenerateMeetView: View {
                 } else {
                     Color.clear
                 }
+            }
+            .frame(height: 20)
+            
+            Spacer()
+        }
         .appBackground()
         .padding()
         .ignoresSafeArea(edges: .all)
