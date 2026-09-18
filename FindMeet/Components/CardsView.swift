@@ -126,7 +126,7 @@ struct CardView: View {
             .accessibilityLabel("Escolher date")
             .accessibilityHint("Confirma a seleção da opção \(card.title)")
         }
-        .frame(width: 350, height: 400)
+        .frame(width: 300, height: 400)
         .padding(15)
         .background(
             RoundedRectangle(cornerRadius: 32)
