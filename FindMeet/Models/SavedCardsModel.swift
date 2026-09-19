@@ -14,7 +14,8 @@ class SavedData {
     var time: String
     var descriptions: String
     var ideas: [String]
-    var tips: [String]
+    var tips: [String] = []   // default direto na propriedade
+
     init(
         title: String,
         time: String,

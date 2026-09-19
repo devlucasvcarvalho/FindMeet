@@ -20,6 +20,7 @@ struct SavedMeetView: View {
     @State private var selectedCardToConclude: SavedData? = nil
     
     var body: some View {
+        let _ = print("📦 SavedMeetView tem \(savedData.count) itens")
         NavigationStack(path: $path) {
             ZStack {
                 AppBackgroundView()

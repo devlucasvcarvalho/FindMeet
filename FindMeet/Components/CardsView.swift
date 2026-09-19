@@ -101,6 +101,7 @@ struct CardView: View {
                                 .background(ideasColor)
                                 .clipShape(Capsule())
                         }
+                        
                     }
                     .frame(minWidth: proxy.size.width, alignment: .center)
                 }
@@ -113,13 +114,17 @@ struct CardView: View {
             .accessibilityLabel("Ideias inclusas: \(card.ideas.joined(separator: ", "))")
             .accessibilityElement(children: .ignore)
             
-            Button {if isAlreadySaved {
-                onSelectDate(true)
-            } else {
-                let persistedMeet = getPersistedModel(from: card)
-                savePersistedMeet(persistedMeet)
-                onSelectDate(false)
-            }
+            Button {
+                print("🔵 Botão tocado. isAlreadySaved = \(isAlreadySaved)")
+                if isAlreadySaved {
+                    onSelectDate(true)
+                } else {
+                    let persistedMeet = getPersistedModel(from: card)
+                    print("🔵 Tentando salvar: \(persistedMeet.title)")
+                    savePersistedMeet(persistedMeet)
+                    onSelectDate(false)
+                }
+            
             } label: {
                 Text(isAlreadySaved ? "Já salvo" : "Escolher date")
                     .foregroundStyle(.white)
@@ -151,17 +156,18 @@ struct CardView: View {
             title: meet.title,
             time: meet.time,
             descriptions: meet.description,
-            ideas: meet.ideas
+            ideas: meet.ideas,
+            tips: meet.tips
         )
     }
     
     func savePersistedMeet(_ savedData: SavedData) {
         modelContext.insert(savedData)
-        
         do {
             try modelContext.save()
+            print("✅ Salvou com sucesso: \(savedData.title)")
         } catch {
-            print("Erro ao salvar: \(error)")
+            print("❌ Erro ao salvar: \(error)")
         }
     }
 }
@@ -179,7 +185,7 @@ struct CardView: View {
         time: "Manha",
         description: "Manhã na praia para curtir o sol, o mar e a companhia um do outro.",
         ideas: ["Praia", "Bronze", "Sol"],
-        tips: ["", "", ""]
+        tips: ["teste", "testando", "testado", "testei", "testou"]
     )
     
     container.mainContext.insert(
