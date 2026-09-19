@@ -14,24 +14,60 @@ struct ResultsView: View {
     
     @State private var showConfirmPopup = false
     @State private var showAlreadySavedPopup = false
+    @State private var previewingCard: Meet?
 
     var body: some View {
-        Group {
-            if let suggestion = flow.suggestion {
-                InfiniteCarousel(
-                    meets: suggestion.suggestions,
-                    onSelectDate: { wasAlreadySaved in
-                        withAnimation {
-                            if wasAlreadySaved {
-                                showAlreadySavedPopup = true
-                            } else {
-                                showConfirmPopup = true
+        ZStack {
+            Text("Aperte e segure "
+            )
+                .font(.custom("Fredoka-Regular" , size: 14))
+                .foregroundColor(.secondary)
+                .transition(.opacity)
+            Group {
+                if let suggestion = flow.suggestion {
+                    VStack{
+                        Text("Aperte e segure "
+                        )
+                            .font(.custom("Fredoka-Regular" , size: 14))
+                            .foregroundColor(.secondary)
+                            .transition(.opacity)
+                        InfiniteCarousel(
+                            meets: suggestion.suggestions,
+                            onSelectDate: { wasAlreadySaved in
+                                withAnimation {
+                                    if wasAlreadySaved {
+                                        showAlreadySavedPopup = true
+                                    } else {
+                                        showConfirmPopup = true
+                                    }
+                                }
+                            },
+                            onLongPress: { meet in           // NOVO
+                                withAnimation(.spring(response: 0.35, dampingFraction: 0.75)) {
+                                    previewingCard = meet
+                                }
                             }
+                        )
+                        
+                    }
+                } else {
+                    Text("Nenhuma sugestão disponível.")
+                }
+            }
+
+            // MARK: Overlay de preview — NOVO
+            if let previewingCard {
+                Color.black.opacity(0.6)
+                    .ignoresSafeArea()
+                    .transition(.opacity)
+                    .onTapGesture {
+                        withAnimation(.spring(response: 0.3, dampingFraction: 0.8)) {
+                            self.previewingCard = nil
                         }
                     }
-                )
-            } else {
-                Text("Nenhuma sugestão disponível.")
+
+                CardDetailPreview(card: previewingCard)
+                    .transition(.scale(scale: 0.85).combined(with: .opacity))
             }
         }
         .appBackground()

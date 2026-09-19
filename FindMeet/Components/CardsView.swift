@@ -18,7 +18,10 @@ struct CardView: View {
     var shadowRadius: CGFloat = 4.0
     
     var onSelectDate: (Bool) -> Void
-    
+    var onLongPress: (Meet) -> Void   // NOVO
+    @State private var isPressed = false   // NOVO
+
+
     private var isAlreadySaved: Bool {
         savedData.contains {
             $0.title == card.title && $0.descriptions == card.description
@@ -143,13 +146,28 @@ struct CardView: View {
                     )
         }
         .frame(width: 300, height: 400)
-        .padding(15)
-        .background(
-            RoundedRectangle(cornerRadius: 32)
-                .fill(backgroundColor)
-                .shadow(color: Color.black.opacity(0.15), radius: 10, x: 10, y: 10)
-        )
-    }
+                .padding(15)
+                .background(
+                    RoundedRectangle(cornerRadius: 32)
+                        .fill(backgroundColor)
+                        .shadow(color: Color.black.opacity(0.15), radius: 10, x: 10, y: 10)
+                )
+                .scaleEffect(isPressed ? 1.04 : 1.0)   // NOVO
+                .simultaneousGesture(                   // NOVO
+                    LongPressGesture(minimumDuration: 0.35)
+                        .onChanged { _ in
+                            withAnimation(.spring(response: 0.25, dampingFraction: 0.6)) {
+                                isPressed = true
+                            }
+                        }
+                        .onEnded { _ in
+                            withAnimation(.spring(response: 0.25, dampingFraction: 0.6)) {
+                                isPressed = false
+                            }
+                            onLongPress(card)
+                        }
+                )
+            }
     
     func getPersistedModel(from meet: Meet) -> SavedData {
         SavedData(
@@ -174,34 +192,35 @@ struct CardView: View {
 
 
 
-#Preview("Já salvo") {
-    let container = try! ModelContainer(
-        for: SavedData.self,
-        configurations: ModelConfiguration(isStoredInMemoryOnly: true)
-    )
-    
-    let meet = Meet(
-        title: "Praia no sabado",
-        time: "Manha",
-        description: "Manhã na praia para curtir o sol, o mar e a companhia um do outro.",
-        ideas: ["Praia", "Bronze", "Sol"],
-        tips: ["teste", "testando", "testado", "testei", "testou"]
-    )
-    
-    container.mainContext.insert(
-        SavedData(
-            title: meet.title,
-            time: meet.time,
-            descriptions: meet.description,
-            ideas: meet.ideas
-        )
-    )
-    
-    return CardView(
-        index: 0,
-        card: meet,
-        onSelectDate: { wasAlreadySaved in print("Date selecionado, já salvo? \(wasAlreadySaved)") }
-    )
-    .modelContainer(container)
-}
+//#Preview("Já salvo") {
+//    let container = try! ModelContainer(
+//        for: SavedData.self,
+//        configurations: ModelConfiguration(isStoredInMemoryOnly: true)
+//    )
+//    
+//    let meet = Meet(
+//        title: "Praia no sabado",
+//        time: "Manha",
+//        description: "Manhã na praia para curtir o sol, o mar e a companhia um do outro.",
+//        ideas: ["Praia", "Bronze", "Sol"],
+//        tips: ["", "", ""]
+//    )
+//    
+//    container.mainContext.insert(
+//        SavedData(
+//            title: meet.title,
+//            time: meet.time,
+//            descriptions: meet.description,
+//            ideas: meet.ideas
+//        )
+//    )
+//    
+//    CardView(                                    // ← sem "return"
+//        index: 0,
+//        card: meet,
+//        onSelectDate: { wasAlreadySaved in print("Date selecionado, já salvo? \(wasAlreadySaved)") },
+//        onLongPress: { _ in }                     // ← NOVO, precisa desse parâmetro também
+//    )
+//    .modelContainer(container)
+//}
  

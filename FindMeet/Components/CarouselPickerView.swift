@@ -37,6 +37,8 @@ struct InfiniteCarousel: View {
     
     let meets: [Meet]
     var onSelectDate: (Bool) -> Void
+    var onLongPress: (Meet) -> Void   // NOVO
+
     
     @State private var scrollPosition: Int?
     private var selection: Int {
@@ -57,7 +59,8 @@ struct InfiniteCarousel: View {
                         CardView(
                             index: index,
                             card: meets[index],
-                            onSelectDate: onSelectDate
+                            onSelectDate: onSelectDate,
+                            onLongPress: onLongPress   // NOVO
                         )
                         .id(index)
                         .frame(width: cardWidth, height: cardHeight)
@@ -177,25 +180,28 @@ struct Carousel3DEffect: ViewModifier {
     let index: Int
     
     func body(content: Content) -> some View {
-        GeometryReader { geometry in
-            let cardX = geometry.frame(in: .global).midX
-            let distance = cardX - midX
-            
-            let maxDistance = (UIScreen.main.bounds.width / 2) + cardWidth / 2
-            let normalised = max(-1, min(1, distance / maxDistance))
-            
-            let rotationAngle: Double = Double(normalised * -30)
-            let scale = 1.0 - abs(normalised) * 0.15
-            
-            content
-                .scaleEffect(scale)
-                .rotation3DEffect(
-                    Angle(degrees: rotationAngle),
-                    axis: (x: 0, y: 1, z: 0),
-                    perspective: 0.5
-                )
+        VStack {
+           
+            GeometryReader { geometry in
+                let cardX = geometry.frame(in: .global).midX
+                let distance = cardX - midX
+                
+                let maxDistance = (UIScreen.main.bounds.width / 2) + cardWidth / 2
+                let normalised = max(-1, min(1, distance / maxDistance))
+                
+                let rotationAngle: Double = Double(normalised * -30)
+                let scale = 1.0 - abs(normalised) * 0.15
+                
+                content
+                    .scaleEffect(scale)
+                    .rotation3DEffect(
+                        Angle(degrees: rotationAngle),
+                        axis: (x: 0, y: 1, z: 0),
+                        perspective: 0.5
+                    )
+            }
+            .frame(width: cardWidth, height: cardHeight)
         }
-        .frame(width: cardWidth, height: cardHeight)
     }
 }
 
@@ -209,27 +215,16 @@ struct Carousel3DEffect: ViewModifier {
             ideas: ["Praia", "Bronze", "Sol"],
             tips: ["Protetor solar", "Água", "Óculos"]
         ),
-        Meet(
-            title: "Piquenique no domingo",
-            time: "Tarde",
-            description: "Um piquenique à tarde para conversar e dividir lanches.",
-            ideas: ["Lanches", "Natureza", "Toalha"],
-            tips: ["Frutas", "Repelente", "Cesta"]
-        ),
-        Meet(
-            title: "Cinema a dois",
-            time: "Noite",
-            description: "Um cinema pertinho de casa, com filmes em lançamento.",
-            ideas: ["Pipoca", "Casaco", "Romance"],
-            tips: ["Comprar antes", "Chegar cedo", "Escolher juntos"]
-        )
+        // ... resto igual
     ]
     
     InfiniteCarousel(
         meets: dummyMeets,
         onSelectDate: { isDuplicate in
-            // O print ajuda a testar no console do Xcode se o botão está funcionando
             print("Date selecionado. Foi duplicado? \(isDuplicate)")
+        },
+        onLongPress: { meet in                    // ← NOVO
+            print("Long press: \(meet.title)")
         }
     )
 }
