@@ -25,7 +25,7 @@ struct NoticeView: View {
                 .ignoresSafeArea(edges: .all)
             
             // Camada de conteúdo: essa é a que anima (fade + slide)
-            VStack(spacing: 30) {
+            VStack(spacing: 20) {
                 
                 HStack {
                     Button {
@@ -52,6 +52,7 @@ struct NoticeView: View {
                     .bold()
                 
                 Text("Decidam quem será o primeiro a selecionar as preferencias para o encontro. Mas atenção, para ficar mais divertido, não deixe a outra pessoa saber o que você escolheu! Depois, passe o celular para ela.")
+                    .multilineTextAlignment(.center)
                     .font(.custom("Fredoka-Medium", size: 19))
                     .foregroundColor(.secondary)
                     .multilineTextAlignment(.leading)
