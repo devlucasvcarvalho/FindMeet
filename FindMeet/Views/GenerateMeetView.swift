@@ -137,8 +137,8 @@ struct GenerateMeetView: View {
             Spacer()
         }
         .appBackground()
-        .padding()
-        .ignoresSafeArea(edges: .all)
+//        .padding()
+//        .ignoresSafeArea(edges: .all)
         .navigationBarTitleDisplayMode(.inline)
         .task {
             guard !showTapHint else { return }

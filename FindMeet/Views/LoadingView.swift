@@ -55,12 +55,11 @@ struct LoadingView: View {
                     .lineSpacing(4)
             }
             .frame(maxWidth: .infinity)
-            .padding(.horizontal, 24)
-            .padding(.top, 150)
-            .padding(.horizontal, 24)
+//            .padding(.horizontal, 24)
+//            .padding(.top, 150)
 
-            Spacer()
-            Spacer()
+//            Spacer()
+//            Spacer()
         }
         .appBackground()
         .ignoresSafeArea(edges: .all)
@@ -71,23 +70,25 @@ struct LoadingView: View {
         .task {
             await generateSuggestion()
         }
-        .appPopup(isPresented: $showBackAlert) {
-            PopUpview(
-                icon: "exclamationmark.triangle.fill",
-                title: "Voltar para a seleção?",
-                message: "Tem certeza que deseja voltar para a tela de seleção de horário?",
-                secondaryButton: .init(label: "Cancelar", style: .secondary, action: {
-                    withAnimation { showBackAlert = false }
-                }),
-                primaryButton: .init(label: "Voltar", style: .primary, action: {
-                    withAnimation { showBackAlert = false }
-                    path.removeLast()
-                }),
-                onTapBackground: {
-                    withAnimation { showBackAlert = false }
-                }
-            )
-        }
+        
+        //MARK: POP UP PARA VOLTAR PARA TELA DE SELEÇÃO
+//        .appPopup(isPresented: $showBackAlert) {
+//            PopUpview(
+//                icon: "exclamationmark.triangle.fill",
+//                title: "Voltar para a seleção?",
+//                message: "Tem certeza que deseja voltar para a tela de seleção de horário?",
+//                secondaryButton: .init(label: "Cancelar", style: .secondary, action: {
+//                    withAnimation { showBackAlert = false }
+//                }),
+//                primaryButton: .init(label: "Voltar", style: .primary, action: {
+//                    withAnimation { showBackAlert = false }
+//                    path.removeLast()
+//                }),
+//                onTapBackground: {
+//                    withAnimation { showBackAlert = false }
+//                }
+//            )
+//        }
     }
 
     private func generateSuggestion() async {

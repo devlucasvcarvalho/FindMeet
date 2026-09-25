@@ -47,7 +47,7 @@ struct IntroSplashView: View {
         }
         .padding()
         .appBackground()
-        .ignoresSafeArea(edges: .all)
+//        .ignoresSafeArea(edges: .all)
         .task {
             isPulsing = true
             try? await Task.sleep(nanoseconds: 1_500_000_000)
