@@ -55,14 +55,13 @@ struct LoadingView: View {
                     .lineSpacing(4)
             }
             .frame(maxWidth: .infinity)
-//            .padding(.horizontal, 24)
-//            .padding(.top, 150)
+            .padding(.horizontal, 24)
+            .padding(.top, 150)
 
-//            Spacer()
-//            Spacer()
+            Spacer()
+            Spacer()
         }
         .appBackground()
-        .ignoresSafeArea(edges: .all)
         .navigationBarBackButtonHidden(true)
         .onAppear {
             isAnimating = true

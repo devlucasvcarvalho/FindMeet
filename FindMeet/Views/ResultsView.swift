@@ -7,7 +7,7 @@
 import SwiftUI
 
 struct ResultsView: View {
-
+    
     var flow: MeetFlowState
     @Binding var path: [MeetFlowRoute]
     @Binding var selectedTab: Int
@@ -15,22 +15,20 @@ struct ResultsView: View {
     @State private var showConfirmPopup = false
     @State private var showAlreadySavedPopup = false
     @State private var previewingCard: Meet?
-
+    @State private var showHoldHint = false
+    
+    
     var body: some View {
         ZStack {
-            Text("Aperte e segure "
-            )
-                .font(.custom("Fredoka-Regular" , size: 14))
-                .foregroundColor(.secondary)
-                .transition(.opacity)
             Group {
                 if let suggestion = flow.suggestion {
                     VStack{
-                        Text("Aperte e segure "
+                        Text("         Aperte e segure \n para ver mais informações "
                         )
-                            .font(.custom("Fredoka-Regular" , size: 14))
-                            .foregroundColor(.secondary)
-                            .transition(.opacity)
+                        .font(.custom("Fredoka-Regular", size: 14))
+                        .foregroundColor(.secondary)
+                        .opacity(showHoldHint ? 1 : 0)
+                        .animation(.easeIn(duration: 0.6), value: showHoldHint)
                         InfiniteCarousel(
                             meets: suggestion.suggestions,
                             onSelectDate: { wasAlreadySaved in
@@ -50,11 +48,14 @@ struct ResultsView: View {
                         )
                         
                     }
-                } else {
-                    Text("Nenhuma sugestão disponível.")
-                }
+                    .task {
+                        try? await Task.sleep(for: .seconds(1))
+                        showHoldHint = true
+                    }                } else {
+                        Text("Nenhuma sugestão disponível.")
+                    }
             }
-
+            
             // MARK: Overlay de preview — NOVO
             if let previewingCard {
                 Color.black.opacity(0.6)
@@ -65,7 +66,7 @@ struct ResultsView: View {
                             self.previewingCard = nil
                         }
                     }
-
+                
                 CardDetailPreview(card: previewingCard)
                     .transition(.scale(scale: 0.85).combined(with: .opacity))
             }
@@ -106,24 +107,24 @@ struct ResultsView: View {
             )
         }
         .appPopup(isPresented: $showAlreadySavedPopup) {
-                PopUpview(
-                    icon: "checkmark.circle.fill",
-                    title: "Já salvo!",
-                    message: "Essa opção já está na sua lista de encontros salvos.",
-                    secondaryButton: .init(label: "Fechar", style: .secondary, action: {
-                        withAnimation { showAlreadySavedPopup = false }
-                    }),
-                    primaryButton: .init(label: "Ver salvos", style: .primary, action: {
-                        withAnimation { showAlreadySavedPopup = false }
-                        path.removeAll()
-                        selectedTab = 1
-                    }),
-                    onTapBackground: {
-                        withAnimation { showAlreadySavedPopup = false }
-                    }
-                )
-            }
+            PopUpview(
+                icon: "checkmark.circle.fill",
+                title: "Já salvo!",
+                message: "Essa opção já está na sua lista de encontros salvos.",
+                secondaryButton: .init(label: "Fechar", style: .secondary, action: {
+                    withAnimation { showAlreadySavedPopup = false }
+                }),
+                primaryButton: .init(label: "Ver salvos", style: .primary, action: {
+                    withAnimation { showAlreadySavedPopup = false }
+                    path.removeAll()
+                    selectedTab = 1
+                }),
+                onTapBackground: {
+                    withAnimation { showAlreadySavedPopup = false }
+                }
+            )
         }
+    }
 }
 
 #Preview {

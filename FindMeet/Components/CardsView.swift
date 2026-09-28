@@ -20,8 +20,8 @@ struct CardView: View {
     var onSelectDate: (Bool) -> Void
     var onLongPress: (Meet) -> Void   // NOVO
     @State private var isPressed = false   // NOVO
-
-
+    
+    
     private var isAlreadySaved: Bool {
         savedData.contains {
             $0.title == card.title && $0.descriptions == card.description
@@ -34,6 +34,13 @@ struct CardView: View {
     
     var body: some View {
         content
+            .background(
+                RoundedRectangle(cornerRadius: 32)
+                    .fill(backgroundColor)
+                    .shadow(color: .black.opacity(0.15), radius: 10, x: 10, y: 10)
+                    .scaleEffect(isPressed ? 1.04 : 1.0)   // 👈 só o fundo escala
+            )
+        
     }
     
     var content: some View {
@@ -52,10 +59,10 @@ struct CardView: View {
                     .frame(width: 50, height: 50)
                     .accessibilityHidden(true)
             }
-//            .overlay(
-//                Rectangle()
-//                    .stroke(lineWidth: 3)
-//            )
+            //            .overlay(
+            //                Rectangle()
+            //                    .stroke(lineWidth: 3)
+            //            )
             
             // MARK: Title & Time
             
@@ -70,10 +77,10 @@ struct CardView: View {
                     .font(.subheadline.weight(.bold))
                     .foregroundStyle(.primary)
             }
-//            .overlay(
-//                Rectangle()
-//                    .stroke(lineWidth: 3)
-//            )
+            //            .overlay(
+            //                Rectangle()
+            //                    .stroke(lineWidth: 3)
+            //            )
             .accessibilityElement(children: .combine)
             
             // MARK: Description
@@ -85,13 +92,13 @@ struct CardView: View {
                     .frame(maxWidth: .infinity)
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
-//            .overlay(
-//                Rectangle()
-//                    .stroke(lineWidth: 3)
-//            )
+            //            .overlay(
+            //                Rectangle()
+            //                    .stroke(lineWidth: 3)
+            //            )
             
             // MARK: Ideas
-
+            
             GeometryReader { proxy in
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack {
@@ -110,10 +117,10 @@ struct CardView: View {
                 }
             }
             .frame(height: 40)
-//            .overlay(
-//                Rectangle()
-//                    .stroke(lineWidth: 3)
-//            )
+            //            .overlay(
+            //                Rectangle()
+            //                    .stroke(lineWidth: 3)
+            //            )
             .accessibilityLabel("Ideias inclusas: \(card.ideas.joined(separator: ", "))")
             .accessibilityElement(children: .ignore)
             
@@ -127,7 +134,7 @@ struct CardView: View {
                     savePersistedMeet(persistedMeet)
                     onSelectDate(false)
                 }
-            
+                
             } label: {
                 Text(isAlreadySaved ? "Já salvo" : "Escolher date")
                     .foregroundStyle(.white)
@@ -140,34 +147,30 @@ struct CardView: View {
             .padding(.horizontal, 15)
             .accessibilityLabel("Escolher date")
             .accessibilityHint(
-                        isAlreadySaved
-                            ? "Este encontro já foi salvo anteriormente"
-                            : "Confirma a seleção da opção \(card.title)"
-                    )
+                isAlreadySaved
+                ? "Este encontro já foi salvo anteriormente"
+                : "Confirma a seleção da opção \(card.title)"
+            )
         }
         .frame(width: 300, height: 400)
-                .padding(15)
-                .background(
-                    RoundedRectangle(cornerRadius: 32)
-                        .fill(backgroundColor)
-                        .shadow(color: Color.black.opacity(0.15), radius: 10, x: 10, y: 10)
-                )
-                .scaleEffect(isPressed ? 1.04 : 1.0)   // NOVO
-                .simultaneousGesture(                   // NOVO
-                    LongPressGesture(minimumDuration: 0.35)
-                        .onChanged { _ in
-                            withAnimation(.spring(response: 0.25, dampingFraction: 0.6)) {
-                                isPressed = true
-                            }
-                        }
-                        .onEnded { _ in
-                            withAnimation(.spring(response: 0.25, dampingFraction: 0.6)) {
-                                isPressed = false
-                            }
-                            onLongPress(card)
-                        }
-                )
-            }
+        .padding(15)
+        //        .scaleEffect(isPressed ? 1.04 : 1.0)
+        .simultaneousGesture(
+            LongPressGesture(minimumDuration: 0.35)
+                .onChanged { _ in
+                    withAnimation(.spring(response: 0.25, dampingFraction: 0.6)) {
+                        isPressed = true
+                    }
+                    UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                }
+                .onEnded { _ in
+                    withAnimation(.spring(response: 0.25, dampingFraction: 0.6)) {
+                        isPressed = false
+                    }
+                    onLongPress(card)
+                }
+        )
+    }
     
     func getPersistedModel(from meet: Meet) -> SavedData {
         SavedData(
@@ -197,7 +200,7 @@ struct CardView: View {
 //        for: SavedData.self,
 //        configurations: ModelConfiguration(isStoredInMemoryOnly: true)
 //    )
-//    
+//
 //    let meet = Meet(
 //        title: "Praia no sabado",
 //        time: "Manha",
@@ -205,7 +208,7 @@ struct CardView: View {
 //        ideas: ["Praia", "Bronze", "Sol"],
 //        tips: ["", "", ""]
 //    )
-//    
+//
 //    container.mainContext.insert(
 //        SavedData(
 //            title: meet.title,
@@ -214,7 +217,7 @@ struct CardView: View {
 //            ideas: meet.ideas
 //        )
 //    )
-//    
+//
 //    CardView(                                    // ← sem "return"
 //        index: 0,
 //        card: meet,
@@ -223,4 +226,4 @@ struct CardView: View {
 //    )
 //    .modelContainer(container)
 //}
- 
+

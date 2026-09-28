@@ -88,7 +88,13 @@ struct CardDetailPreview: View {
         }
         .appBackground()
         .frame(width: 320, height: 480)
-        
+        .overlay(
+            RoundedRectangle(cornerRadius: 20)
+                .stroke(Color(red: 144/255, green: 3/255, blue: 3/255), lineWidth: 3)
+                .ignoresSafeArea(edges: .all)
+            
+            
+        )
     }
 }
 

@@ -17,7 +17,7 @@ struct GenerateMeetView: View {
                 } else {
                     IntroSplashView {
                         showHome = true
-                        showTapHint = true
+//                        showTapHint = true
                     }
                 }
             }
@@ -133,20 +133,20 @@ struct GenerateMeetView: View {
                 }
             }
             .frame(height: 20)
-            
+            .task {
+                guard !showTapHint else { return }
+                try? await Task.sleep(for: .seconds(1))
+                withAnimation(.easeIn) {
+                    showTapHint = true
+                }
+            }
+
             Spacer()
         }
         .appBackground()
 //        .padding()
 //        .ignoresSafeArea(edges: .all)
         .navigationBarTitleDisplayMode(.inline)
-        .task {
-            guard !showTapHint else { return }
-            try? await Task.sleep(nanoseconds: 300_000_000)
-            withAnimation(.easeIn) {
-                showTapHint = true
-            }
-        }
     }
 }
 
