@@ -2,8 +2,6 @@
 //  SelectView.swift
 //  FindMeet
 //
-//  Created by Cintia Raquel on 09/09/26.
-//
 
 import SwiftUI
 
@@ -26,49 +24,49 @@ struct SelectOptionView<T: CarouselItem>: View {
     private let buttonColor: Color = Color(red: 144/255, green: 3/255, blue: 3/255)
     
     var body: some View {
-        ZStack {
-            VStack {
-                Spacer()
-                
-                Text(step)
-                    .font(.custom("Fredoka-Medium", size: 20))
-                    .foregroundStyle(.secondary)
-                
-                Text(question)
-                    .padding(20)
-                    .font(.custom("Fredoka-Medium", size: 30))
-                    .bold()
-                    .multilineTextAlignment(.center)
-                
-                InfiniteCarouselView(
-                    items: items,
-                    selected: $selected
-                )
-                
-                Button {
-                    path.append(nextRoute)
-                } label: {
-                    HStack(spacing: 8) {
-                        Text("Selecionar")
-                            .font(.custom("Fredoka-Medium", size: 22))
-                            .fontWeight(.bold)
-                            .minimumScaleFactor(0.8)
-                        
-                        Image(systemName: "arrow.right")
-                            .font(.custom("Fredoka-Medium", size: 22))
-                            .fontWeight(.bold)
-                    }
-                    .frame(maxWidth: 250)
-                    .padding(.vertical, 16)
-                    .foregroundStyle(Color.white)
-                    .background(Color(buttonColor))
-                    .clipShape(Capsule())
-                    .shadow(color: Color.white.opacity(0.2), radius: 10, x: 0, y: 5)
+        VStack {
+            Text(step)
+                .font(.custom("Fredoka-Medium", size: 20))
+                .foregroundStyle(.secondary)
+            
+            Text(question)
+                .padding(20)
+                .font(.custom("Fredoka-Medium", size: 30))
+                .bold()
+                .multilineTextAlignment(.center)
+            
+            InfiniteCarouselView(
+                items: items,
+                selected: $selected
+            )
+            .frame(maxHeight: .infinity)
+        }
+        .padding(.top, 40)
+        // O botão fica sempre visível, independente do tamanho da tela
+        .safeAreaInset(edge: .bottom) {
+            Button {
+                path.append(nextRoute)
+            } label: {
+                HStack(spacing: 8) {
+                    Text("Selecionar")
+                        .font(.custom("Fredoka-Medium", size: 22))
+                        .fontWeight(.bold)
+                        .minimumScaleFactor(0.8)
+                    
+                    Image(systemName: "arrow.right")
+                        .font(.custom("Fredoka-Medium", size: 22))
+                        .fontWeight(.bold)
                 }
-                .accessibilityLabel("Avançar")
-                .padding(.horizontal, 30)
+                .frame(maxWidth: 250)
+                .padding(.vertical, 16)
+                .foregroundStyle(Color.white)
+                .background(Color(buttonColor))
+                .clipShape(Capsule())
+                .shadow(color: Color.white.opacity(0.2), radius: 10, x: 0, y: 5)
             }
-            .padding(.vertical, 40)
+            .accessibilityLabel("Avançar")
+            .padding(.horizontal, 30)
+            .padding(.vertical, 16)
         }
         .appBackground()
         .navigationBarBackButtonHidden(backConfirmationTitle != nil)
@@ -108,30 +106,82 @@ struct SelectOptionView<T: CarouselItem>: View {
 
 // MARK: - Previews
 
+/// Container que simula o fluxo real: tem NavigationStack e destino,
+/// então o botão "Selecionar" realmente navega no preview.
+private struct SelectPreviewContainer<Content: View>: View {
+    @State private var path: [MeetFlowRoute] = []
+    let content: (Binding<[MeetFlowRoute]>) -> Content
+    
+    var body: some View {
+        NavigationStack(path: $path) {
+            content($path)
+                .navigationDestination(for: MeetFlowRoute.self) { route in
+                    Text("Navegou para: \(String(describing: route))")
+                }
+        }
+    }
+}
+
 #Preview("Estilo - Pessoa 1") {
     @Previewable @State var flow = MeetFlowState()
-    @Previewable @State var path: [MeetFlowRoute] = []
     
-    SelectOptionView(
-        path: $path,
-        step: "1/2",
-        question: "Qual atividade tem \n em mente?",
-        items: MeetStyleEnum.allCases,
-        selected: $flow.user1SelectedStyle,
-        nextRoute: .selectTimeUser1
-    )
+    SelectPreviewContainer { path in
+        SelectOptionView(
+            path: path,
+            step: "1/2",
+            question: "Qual atividade tem \n em mente?",
+            items: MeetStyleEnum.allCases,
+            selected: $flow.user1SelectedStyle,
+            nextRoute: .selectTimeUser1
+        )
+    }
 }
 
 #Preview("Horário - Pessoa 1") {
     @Previewable @State var flow = MeetFlowState()
-    @Previewable @State var path: [MeetFlowRoute] = []
     
-    SelectOptionView(
-        path: $path,
-        step: "2/2",
-        question: "Qual o melhor \nhorário?",
-        items: MeetTimeEnum.allCases,
-        selected: $flow.user1SelectedTime,
-        nextRoute: .passPhone
-    )
+    SelectPreviewContainer { path in
+        SelectOptionView(
+            path: path,
+            step: "2/2",
+            question: "Qual o melhor \nhorário?",
+            items: MeetTimeEnum.allCases,
+            selected: $flow.user1SelectedTime,
+            nextRoute: .passPhone
+        )
+    }
+}
+
+// Janela do iPad em modo de compatibilidade (o caso que o revisor viu)
+#Preview("iPad - janela compatibilidade") {
+    @Previewable @State var flow = MeetFlowState()
+    
+    SelectPreviewContainer { path in
+        SelectOptionView(
+            path: path,
+            step: "2/2",
+            question: "Qual o melhor \nhorário?",
+            items: MeetTimeEnum.allCases,
+            selected: $flow.user1SelectedTime,
+            nextRoute: .passPhone
+        )
+    }
+    .frame(width: 600, height: 1000)
+}
+
+// Tela baixa (iPhone SE) para garantir que o botão não some
+#Preview("iPhone SE - tela pequena") {
+    @Previewable @State var flow = MeetFlowState()
+    
+    SelectPreviewContainer { path in
+        SelectOptionView(
+            path: path,
+            step: "1/2",
+            question: "Qual atividade tem \n em mente?",
+            items: MeetStyleEnum.allCases,
+            selected: $flow.user1SelectedStyle,
+            nextRoute: .selectTimeUser1
+        )
+    }
+    .frame(width: 375, height: 667)
 }
