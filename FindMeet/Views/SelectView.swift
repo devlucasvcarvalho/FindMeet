@@ -30,19 +30,17 @@ struct SelectOptionView<T: CarouselItem>: View {
                 .foregroundStyle(.secondary)
             
             Text(question)
-                .padding(20)
+                .padding(.horizontal, 20)
+                .padding(.vertical, 8)
                 .font(.custom("Fredoka-Medium", size: 30))
                 .bold()
                 .multilineTextAlignment(.center)
+                .minimumScaleFactor(0.7)
             
-            InfiniteCarouselView(
-                items: items,
-                selected: $selected
-            )
-            .frame(maxHeight: .infinity)
+            InfiniteCarouselView(items: items, selected: $selected)
+                .frame(maxHeight: .infinity)
         }
-        .padding(.top, 40)
-        // O botão fica sempre visível, independente do tamanho da tela
+        .padding(.top, 8)
         .safeAreaInset(edge: .bottom) {
             Button {
                 path.append(nextRoute)

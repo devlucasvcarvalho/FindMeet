@@ -24,70 +24,46 @@ struct LoadingView: View {
     var body: some View {
         VStack {
             VStack(spacing: 24) {
-                ZStack(alignment: .topLeading) {
-                    Image("feliz")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 380, height: 380)
-
-                    VStack(alignment: .leading, spacing: 2) {
-                        Text("Find")
-                            .font(.custom("Fredoka-SemiBold", size: 50))
-                        Text("Meet")
-                            .font(.custom("Fredoka-SemiBold", size: 50))
+                Image("feliz")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(maxWidth: 380, maxHeight: 380)
+                    .overlay(alignment: .topLeading) {
+                        VStack(alignment: .leading, spacing: 2) {
+                            Text("Find")
+                            Text("Meet")
+                        }
+                        .font(.custom("Fredoka-SemiBold", size: 50))
+                        .foregroundColor(primaryRed)
+                        .rotationEffect(.degrees(-12))
+                        .offset(x: 80, y: -30)
                     }
-                    .foregroundColor(primaryRed)
-                    .rotationEffect(.degrees(-12))
-                    .offset(x: 80, y: -30)
-                }
-                .scaleEffect(isAnimating ? 1.04 : 0.96)
-                .animation(
-                    .easeInOut(duration: 1.2)
-                    .repeatForever(autoreverses: true),
-                    value: isAnimating
-                )
-                .padding(30)
+                    .scaleEffect(isAnimating ? 1.04 : 0.96)
+                    .animation(
+                        .easeInOut(duration: 1.2)
+                        .repeatForever(autoreverses: true),
+                        value: isAnimating
+                    )
+                    .padding(.horizontal, 30)
 
-                Text("Gerando encontros que combinam\ncom vocês.")
+                Text("Gerando encontros que combinam com vocês.")
                     .font(.custom("Fredoka-Medium", size: 25))
                     .foregroundColor(primaryRed)
                     .multilineTextAlignment(.center)
                     .lineSpacing(4)
+                    .fixedSize(horizontal: false, vertical: true)
             }
             .frame(maxWidth: .infinity)
             .padding(.horizontal, 24)
-            .padding(.top, 150)
+            .padding(.top, 60)
 
             Spacer()
             Spacer()
         }
         .appBackground()
         .navigationBarBackButtonHidden(true)
-        .onAppear {
-            isAnimating = true
-        }
-        .task {
-            await generateSuggestion()
-        }
-        
-        //MARK: POP UP PARA VOLTAR PARA TELA DE SELEÇÃO
-//        .appPopup(isPresented: $showBackAlert) {
-//            PopUpview(
-//                icon: "exclamationmark.triangle.fill",
-//                title: "Voltar para a seleção?",
-//                message: "Tem certeza que deseja voltar para a tela de seleção de horário?",
-//                secondaryButton: .init(label: "Cancelar", style: .secondary, action: {
-//                    withAnimation { showBackAlert = false }
-//                }),
-//                primaryButton: .init(label: "Voltar", style: .primary, action: {
-//                    withAnimation { showBackAlert = false }
-//                    path.removeLast()
-//                }),
-//                onTapBackground: {
-//                    withAnimation { showBackAlert = false }
-//                }
-//            )
-//        }
+        .onAppear { isAnimating = true }
+        .task { await generateSuggestion() }
     }
 
     private func generateSuggestion() async {

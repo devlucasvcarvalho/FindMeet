@@ -1,10 +1,3 @@
-//
-//  SwiftUIView.swift
-//  FindMeet
-//
-//  Created by Lucas Vieira de Carvalho on 03/09/26.
-//
-
 import SwiftUI
 import Combine
 
@@ -16,11 +9,25 @@ protocol CarouselItem: Equatable {
 
 struct InfiniteCarouselView<T: CarouselItem>: View {
     
-    // MARK: - Configuration
+    // MARK: - Layout (calculado a partir do espaço disponível)
     
-    private let spacing: CGFloat = 0
-    private let cardWidth: CGFloat = 178
-    private let cardHeight: CGFloat = 350
+    private struct Metrics {
+        let cardWidth: CGFloat
+        let cardHeight: CGFloat
+        let spacing: CGFloat = 0
+        
+        var step: CGFloat { cardWidth + spacing }
+        /// carta + título embaixo
+        var contentHeight: CGFloat { cardHeight + 60 }
+        
+        init(available: CGSize) {
+            // espaço reservado: título da carta (60) + pontinhos (8) + espaçamento (20) + folga
+            let reserved: CGFloat = 60 + 8 + 20 + 8
+            let height = min(350, max(140, available.height - reserved))
+            cardHeight = height
+            cardWidth = height * (178.0 / 350.0)
+        }
+    }
     
     let items: [T]
     
@@ -54,124 +61,123 @@ struct InfiniteCarouselView<T: CarouselItem>: View {
     // MARK: - Body
     
     var body: some View {
-        
-        VStack(spacing: 20) {
+        GeometryReader { outer in
+            let m = Metrics(available: outer.size)
             
-            Spacer()
-            
-            GeometryReader { geometry in
+            VStack(spacing: 20) {
                 
-                let totalWidth = cardWidth + spacing
-                let midX = geometry.size.width / 2
-                
-                HStack(spacing: spacing) {
+                GeometryReader { geometry in
                     
-                    ForEach(items.indices, id: \.self) { index in
+                    let midX = geometry.size.width / 2
+                    
+                    HStack(spacing: m.spacing) {
                         
-                        let item = items[index]
-                        
-                        VStack(spacing: 12) {
+                        ForEach(items.indices, id: \.self) { index in
                             
-                            Image(item.imageName)
-                                .resizable()
-                                .scaledToFill()
-                                .frame(
-                                    width: cardWidth,
-                                    height: cardHeight
-                                )
-                                .accessibilityHidden(true)
+                            let item = items[index]
                             
-                            Spacer()
-                            
-                            Text(item.title)
-                                .font(.custom("Fredoka-regular" , size: 20))
-                                .foregroundStyle(.secondary)
-                                .accessibilityLabel("\(item.title)")
+                            VStack(spacing: 12) {
                                 
-                        }
-                        .frame( maxWidth: .infinity, maxHeight: 450)
-                        .id(index)
-                        .modifier(
-                            Carousel3DEffect(
-                                currentOffset: offset,
-                                cardWidth: cardWidth,
-                                cardHeight: cardHeight,
-                                spacing: spacing,
-                                midX: midX,
-                                index: index
+                                Image(item.imageName)
+                                    .resizable()
+                                    .scaledToFill()
+                                    .frame(
+                                        width: m.cardWidth,
+                                        height: m.cardHeight
+                                    )
+                                    .accessibilityHidden(true)
+                                
+                                Spacer()
+                                
+                                Text(item.title)
+                                    .font(.custom("Fredoka-regular", size: 20))
+                                    .foregroundStyle(.secondary)
+                                    .accessibilityLabel("\(item.title)")
+                            }
+                            .frame(width: m.cardWidth, height: m.contentHeight)
+                            .id(index)
+                            .modifier(
+                                Carousel3DEffect(
+                                    currentOffset: offset,
+                                    cardWidth: m.cardWidth,
+                                    cardHeight: m.cardHeight,
+                                    spacing: m.spacing,
+                                    midX: midX,
+                                    index: index
+                                )
                             )
-                        )
-                        .onTapGesture {
-                            selectItem(index: index, geometry: geometry)
+                            .onTapGesture {
+                                selectItem(index: index, geometry: geometry, m: m)
+                            }
                         }
                     }
-                }
-                .offset(x: isSnapping ? snapOffset : offset)
-                .onReceive(timer) { _ in
-                    
-                    if isAutoScrollingEnabled &&
-                        !isManuallyDragging &&
-                        !isSnapping {
-                        
-                        withAnimation(.linear(duration: 0.03)) {
-                            offset -= CGFloat(speedMultiplier)
-                        }
-                        
-                        let fullSetWidth = totalWidth * CGFloat(items.count)
-                        
-                        if -offset >= fullSetWidth {
-                            offset += fullSetWidth
-                        }
-                    }
-                }
-                .gesture(
-                    DragGesture()
-                        .onChanged { value in
-                            isSnapping = false
+                    .offset(x: isSnapping ? snapOffset : offset)
+                    .onReceive(timer) { _ in
+                        if isAutoScrollingEnabled &&
+                            !isManuallyDragging &&
+                            !isSnapping {
                             
-                            _ = value.translation.width - lastDragOffset
-                            lastDragOffset = value.translation.width
-                            isManuallyDragging = true
+                            withAnimation(.linear(duration: 0.03)) {
+                                offset -= CGFloat(speedMultiplier)
+                            }
                             
-                            offset = dragStartOffset + value.translation.width
+                            let fullSetWidth = m.step * CGFloat(items.count)
+                            
+                            if -offset >= fullSetWidth {
+                                offset += fullSetWidth
+                            }
                         }
-                        .onEnded { value in
-                            isManuallyDragging = false
-                            lastDragOffset = 0
-                            snapToNearestItem(geometry: geometry)
+                    }
+                    .gesture(
+                        DragGesture()
+                            .onChanged { value in
+                                isSnapping = false
+                                lastDragOffset = value.translation.width
+                                isManuallyDragging = true
+                                offset = dragStartOffset + value.translation.width
+                            }
+                            .onEnded { _ in
+                                isManuallyDragging = false
+                                lastDragOffset = 0
+                                snapToNearestItem(geometry: geometry, m: m)
+                            }
+                    )
+                    .onAppear {
+                        dragStartOffset = offset
+                        
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                            snapToNearestItem(geometry: geometry, m: m)
                         }
-                )
-                .onAppear {
-                    dragStartOffset = offset
-                    
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                        snapToNearestItem(geometry: geometry)
+                    }
+                    // se a janela/orientação mudar, recentraliza a carta atual
+                    .onChange(of: m.cardWidth) {
+                        let target = midX - (CGFloat(currentIndex) * m.step + m.cardWidth / 2)
+                        offset = target
+                        snapOffset = target
+                        dragStartOffset = target
                     }
                 }
+                .frame(height: m.contentHeight)
+                .clipped()
                 
-            }
-            .frame(height: cardHeight + 80)
-            .clipped()
-            
-            HStack {
-                ForEach(0..<items.count, id: \.self) { i in
-                    Circle()
-                        .fill(i == currentIndex
-                              ? Color(red: 0.55, green: 0.02, blue: 0.05)
-                              : Color.gray.opacity(0.4))
-                        .frame(width: 8, height: 8)
+                HStack {
+                    ForEach(0..<items.count, id: \.self) { i in
+                        Circle()
+                            .fill(i == currentIndex
+                                  ? Color(red: 0.55, green: 0.02, blue: 0.05)
+                                  : Color.gray.opacity(0.4))
+                            .frame(width: 8, height: 8)
+                    }
                 }
             }
-            
-            Spacer()
+            .frame(width: outer.size.width, height: outer.size.height)
         }
     }
     
     // MARK: - Snap To Nearest Item
     
-    private func snapToNearestItem(geometry: GeometryProxy) {
+    private func snapToNearestItem(geometry: GeometryProxy, m: Metrics) {
         
-        let totalWidth = cardWidth + spacing
         let screenCenter = geometry.size.width / 2
         
         var minDistance: CGFloat = .infinity
@@ -180,12 +186,12 @@ struct InfiniteCarouselView<T: CarouselItem>: View {
         
         for i in items.indices {
             
-            let cardPosition = CGFloat(i) * totalWidth + offset + cardWidth / 2
+            let cardPosition = CGFloat(i) * m.step + offset + m.cardWidth / 2
             let distance = abs(cardPosition - screenCenter)
             
             if distance < minDistance {
                 minDistance = distance
-                targetOffset = screenCenter - (CGFloat(i) * totalWidth + cardWidth / 2)
+                targetOffset = screenCenter - (CGFloat(i) * m.step + m.cardWidth / 2)
                 targetIndex = i
             }
         }
@@ -207,12 +213,10 @@ struct InfiniteCarouselView<T: CarouselItem>: View {
     
     // MARK: - Select Item
     
-    private func selectItem(index: Int, geometry: GeometryProxy) {
+    private func selectItem(index: Int, geometry: GeometryProxy, m: Metrics) {
         
-        let totalWidth = cardWidth + spacing
         let screenCenter = geometry.size.width / 2
-        
-        let targetOffset = screenCenter - (CGFloat(index) * totalWidth + cardWidth / 2)
+        let targetOffset = screenCenter - (CGFloat(index) * m.step + m.cardWidth / 2)
         
         currentIndex = index
         selected = items[index]
